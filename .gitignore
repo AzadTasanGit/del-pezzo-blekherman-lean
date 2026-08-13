@@ -1,0 +1,9 @@
+.DS_Store
+.lake/
+*.olean
+*.ilean
+*.c
+*.o
+*.a
+*.so
+*.dylib

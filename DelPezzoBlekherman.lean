@@ -1,0 +1,29 @@
+import DelPezzoBlekherman.LinearAlgebra.HyperplaneInertia
+import DelPezzoBlekherman.LinearAlgebra.HyperplaneRadical
+import DelPezzoBlekherman.LinearAlgebra.KernelFace
+import DelPezzoBlekherman.LinearAlgebra.DiagonalDomination
+import DelPezzoBlekherman.LinearAlgebra.RankOneEvaluation
+import DelPezzoBlekherman.Fiber.RealDiagonal
+import DelPezzoBlekherman.Fiber.Lorentzian
+import DelPezzoBlekherman.Fiber.MultipleComplex
+import DelPezzoBlekherman.Fiber.EvaluationAlgebra
+import DelPezzoBlekherman.Fiber.ComplexNormalization
+import DelPezzoBlekherman.Fiber.ConjugatePairs
+import DelPezzoBlekherman.Fiber.Perturbation
+import DelPezzoBlekherman.Fiber.RealAlgebraicDensity
+import DelPezzoBlekherman.Fiber.GeometricObstruction
+import DelPezzoBlekherman.Algebra.PerfectPairing
+import DelPezzoBlekherman.Algebra.HilbertArithmetic
+import DelPezzoBlekherman.Convexity.ExtremeSupport
+import DelPezzoBlekherman.Convexity.DualSlice
+import DelPezzoBlekherman.Convexity.ClosedConeImage
+import DelPezzoBlekherman.Convexity.SumSquaresDual
+import DelPezzoBlekherman.Convexity.GramCone
+import DelPezzoBlekherman.Convexity.SOSLength
+import DelPezzoBlekherman.Convexity.FinalSeparation
+
+/-!
+# A Del Pezzo--Blekherman separation theorem
+
+This is the root import for the machine-checked components of the formalization.
+-/
