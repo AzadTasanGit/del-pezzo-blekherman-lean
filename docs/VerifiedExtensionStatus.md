@@ -1,5 +1,9 @@
 # Formalization status supplement (2026-08-13)
 
+This records the results originally developed as a verified extension. The modules are now
+integrated into the canonical `DelPezzoBlekherman/` subject hierarchy and the paths referenced by
+the integration notes are their current locations.
+
 These files were forced-fresh compiled with Lean `v4.33.0-rc2` and mathlib commit
 `51e6992efd06126df61a496bebf8f49482a4e129`.
 

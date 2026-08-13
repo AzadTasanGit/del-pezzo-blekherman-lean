@@ -1,5 +1,9 @@
 # Progress supplement
 
+This is the chronological log for the extension modules that are now integrated into the
+canonical `DelPezzoBlekherman/` hierarchy. References below to staging describe their historical
+development state; the current integration outcome is recorded at the end.
+
 ## 2026-08-13
 
 1. Re-read the full formalization instructions.

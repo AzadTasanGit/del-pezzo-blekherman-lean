@@ -93,7 +93,7 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
   the scalar socle pairing is nondegenerate;
 - with `dim R₁ = m+c+1` and `dim (R/(W))₁ = c`, this proves `dim W = m+1` and Hankel rank `c`.
 
-## `LinearAlgebra/NonrealPairInertia.lean` and `RealFiberInertiaGeometry/Proj/GradedEvaluation.lean`
+## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`
 
 - restriction of a real quadratic form to a subspace cannot increase its negative index;
 - one independent negative direction per quadratic closed point bounds the number of conjugate
@@ -109,7 +109,7 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
 - conversely, that identity constructs the radical vector `(uᵢ/μᵢ)ᵢ`;
 - nonnegativity on the relation hyperplane forces exactly one negative coefficient.
 
-## `MixedFiber/ReciprocalHyperplane.lean`
+## `Fiber/MixedReciprocalHyperplane.lean`
 
 - the same radical/reciprocal equivalence for real evaluation points plus one
   complex-conjugate pair:
