@@ -92,6 +92,11 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
 - symmetric degree-one multiplication and the Gorenstein socle-annihilator property imply that
   the scalar socle pairing is nondegenerate;
 - with `dim R₁ = m+c+1` and `dim (R/(W))₁ = c`, this proves `dim W = m+1` and Hankel rank `c`.
+- every nonzero functional induced on the one-dimensional socle is injective and therefore
+  preserves perfection of the multiplication pairing;
+- a pointwise factorization identifies the original ambient Hankel form with the quotient
+  pullback, proves its actual kernel equals the parameter space, and yields the PDF's
+  `m+1` kernel dimension and rank `c` conclusion without choosing a socle coordinate.
 
 ## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`
 

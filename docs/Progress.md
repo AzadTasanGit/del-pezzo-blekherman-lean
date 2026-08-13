@@ -161,5 +161,8 @@
 - Proved that this specific functional is injective, preserves nondegeneracy of the Gorenstein
   multiplication pairing, and gives the actual pulled-back Hankel form radical dimension `m+1`
   and rank `c` without choosing an auxiliary socle coordinate.
+- Proved that pointwise factorization through quotient multiplication identifies the original
+  ambient Hankel form with that pullback, hence its actual radical is the parameter space and its
+  kernel dimension/rank are `m+1`/`c`.
 - Added the new endpoint to the axiom audit, ran the full 3,717-job build, and confirmed the
   placeholder scan remains empty.

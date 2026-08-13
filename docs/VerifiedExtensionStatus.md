@@ -40,6 +40,7 @@ These files were forced-fresh compiled with Lean `v4.33.0-rc2` and mathlib commi
 | The parameter space has dimension `m+1` and its Hankel form has rank `c` | `ArtinianGorensteinDegreeOneCertificate.parameterSpace_finrank_and_hankelRank_of_socleAnnihilator` | proved from explicit Hilbert-dimension and socle inputs |
 | Every nonzero functional on the one-dimensional socle is injective and preserves perfection of the multiplication pairing | `ArtinianGorensteinDegreeOneCertificate.socleFunctional_injective`, `ArtinianGorensteinDegreeOneCertificate.nondegenerate_soclePairing_of_nonzero_functional` | proved |
 | The actual nonzero pulled-back Hankel form has radical dimension `m+1` and rank `c`, without choosing a socle coordinate | `ArtinianGorensteinDegreeOneCertificate.parameterSpace_finrank_and_hankelRank_of_nonzeroHankel` | proved from explicit Hilbert dimensions and the socle-annihilator input |
+| An ambient Hankel form factoring pointwise through quotient multiplication has actual kernel equal to the parameter space, kernel dimension `m+1`, and rank `c` | `ArtinianGorensteinDegreeOneCertificate.hankelForm_eq_pullbackQuotient_of_factorization`, `ArtinianGorensteinDegreeOneCertificate.hankelKernel_eq_parameterSpace_and_finrank_and_rank_of_factorization` | proved from the explicit quotient multiplication, socle, factorization, and Hilbert-dimension inputs |
 | Index-one inertia forces at most one complex-conjugate pair | `QuadraticForm.NonrealPairNegativeDirections.card_le_one_of_restrict` | proved once evaluation blocks supply independent negative directions |
 | The real reciprocal identity and its converse | `ReciprocalHyperplane.reciprocal_identity_of_radical`, `ReciprocalHyperplane.radical_of_reciprocal_identity` | proved |
 | The fully-real sign pattern has exactly one negative coefficient | `ReciprocalHyperplane.ncard_negative_eq_one_of_reciprocal_identity` | proved |
@@ -119,7 +120,7 @@ this supplement treats an interface assumption as a proof of the original hypoth
 
 ## Verification
 
-- Forty-eight source modules plus the axiom audit, totaling 6,274 Lean source lines.
+- Forty-eight source modules plus the axiom audit, totaling 6,333 Lean source lines.
 - No `sorry`, `admit`, custom `axiom`, `TODO`, `FIXME`, or `#check` in any extension source.
 - The declarations listed by `Audit/Axioms.lean` depend only on `propext`, `Classical.choice`, and
   `Quot.sound`.

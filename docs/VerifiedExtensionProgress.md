@@ -164,6 +164,10 @@ development state; the current integration outcome is recorded at the end.
     with it preserves the perfect degree-one multiplication pairing, and that nonzeroness of the
     actual pulled-back Hankel form suffices to derive radical dimension `m+1` and rank `c` without
     choosing a socle coordinate. Rebuilt the full library and expanded the axiom audit.
+53. Transported the quotient result back to the original ambient Hankel form. Proved that its
+    pointwise factorization through quotient multiplication is equality with the canonical
+    pullback, then identified its actual kernel with the parameter space and derived kernel
+    dimension `m+1` and rank `c`. Added both declarations to the axiom audit.
 
 ### Integration outcome
 

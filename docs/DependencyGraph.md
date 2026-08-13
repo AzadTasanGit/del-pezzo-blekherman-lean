@@ -25,6 +25,9 @@ one-dimensional socle + Gorenstein annihilator property
   + the specific induced socle functional is nonzero
   -> that functional is injective
   -> the actual scalar Hankel pairing is perfect
+  + pointwise factorization of the ambient Hankel form through quotient multiplication
+  -> ambient Hankel form equals the quotient pullback
+  -> its actual radical equals the parameter space
   -> dim W = m+1 and Hankel rank = c
 
 reduced real fiber of rank c+2

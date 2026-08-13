@@ -29,6 +29,20 @@ theorem socleFunctional_ne_zero_of_pullbackQuotient_ne_zero
   ext x y
   simp [hellBar, LinearMap.BilinForm.pullbackQuotient]
 
+/-- A pointwise factorization of an ambient Hankel form through multiplication on the
+degree-one quotient identifies it with the canonical pullback form. -/
+theorem hankelForm_eq_pullbackQuotient_of_factorization
+    {U : Type v} [AddCommGroup U] [Module K U]
+    (W : Submodule K U)
+    (mul11 : (U ⧸ W) →ₗ[K] (U ⧸ W) →ₗ[K] S)
+    (ellBar : S →ₗ[K] K)
+    (B : LinearMap.BilinForm K U)
+    (hfactor : ∀ x y, B x y = ellBar (mul11 (W.mkQ x) (W.mkQ y))) :
+    B = LinearMap.BilinForm.pullbackQuotient W (mul11.compr₂ ellBar) := by
+  ext x y
+  simpa only [LinearMap.BilinForm.pullbackQuotient_apply, LinearMap.compr₂_apply] using
+    hfactor x y
+
 variable [Module.Free K S]
 
 /-- A symmetric degree-one multiplication map has a nondegenerate socle pairing as soon as no
@@ -172,5 +186,48 @@ theorem parameterSpace_finrank_and_hankelRank_of_nonzeroHankel
     W mul11 hsymm hS hann ellBar
       (socleFunctional_ne_zero_of_pullbackQuotient_ne_zero W mul11 ellBar hHankel)
     hU hQ
+
+/-- Ambient-form version of the Artinian Gorenstein step in PDF Theorem 4.3.  If the original
+nonzero Hankel form factors through the degree-one quotient, the quotient has Hilbert dimension
+`c`, its degree-two socle is one-dimensional with the Gorenstein annihilator property, and the
+ambient degree-one space has dimension `m+c+1`, then the theorem identifies the *actual* Hankel
+radical with the parameter space and proves its dimension is `m+1` and its rank is `c`. -/
+theorem hankelKernel_eq_parameterSpace_and_finrank_and_rank_of_factorization
+    {U : Type v} [AddCommGroup U] [Module K U] [Module.Finite K U]
+    (W : Submodule K U)
+    (mul11 : (U ⧸ W) →ₗ[K] (U ⧸ W) →ₗ[K] S)
+    (hsymm : ∀ x y, mul11 x y = mul11 y x)
+    (hS : Module.finrank K S = 1)
+    (hann : ∀ x, (∀ y, mul11 x y = 0) → x = 0)
+    (ellBar : S →ₗ[K] K)
+    (B : LinearMap.BilinForm K U)
+    (hfactor : ∀ x y, B x y = ellBar (mul11 (W.mkQ x) (W.mkQ y)))
+    (hB : B ≠ 0)
+    {m c : ℕ}
+    (hU : Module.finrank K U = m + c + 1)
+    (hQ : Module.finrank K (U ⧸ W) = c) :
+    LinearMap.ker B = W ∧
+      Module.finrank K (LinearMap.ker B) = m + 1 ∧
+        LinearMap.BilinForm.finiteRank B = c := by
+  let P := LinearMap.BilinForm.pullbackQuotient W (mul11.compr₂ ellBar)
+  have hBP : B = P :=
+    hankelForm_eq_pullbackQuotient_of_factorization W mul11 ellBar B hfactor
+  have hP : P ≠ 0 := by
+    intro hzero
+    apply hB
+    rw [hBP, hzero]
+  have hellBar :=
+    socleFunctional_ne_zero_of_pullbackQuotient_ne_zero W mul11 ellBar hP
+  have hperfect :=
+    nondegenerate_soclePairing_of_nonzero_functional mul11 hsymm hS hann ellBar hellBar
+  have hkerP : LinearMap.ker P = W :=
+    LinearMap.BilinForm.ker_pullbackQuotient_eq W (mul11.compr₂ ellBar) hperfect
+  have hdims :=
+    parameterSpace_finrank_and_hankelRank_of_nonzeroHankel
+      W mul11 hsymm hS hann ellBar hP hU hQ
+  have hkerB : LinearMap.ker B = W := by
+    rw [hBP]
+    exact hkerP
+  exact ⟨hkerB, hkerB ▸ hdims.1, hBP ▸ hdims.2⟩
 
 end ArtinianGorensteinDegreeOneCertificate
