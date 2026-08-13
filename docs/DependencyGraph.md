@@ -22,8 +22,9 @@ graded evaluation + radical Proj functoriality
 
 one-dimensional socle + Gorenstein annihilator property
   -> perfect degree-one multiplication pairing
-  + W * R1 contained in the degree-two relation space J
-  + ell annihilates J
+  + J defined canonically as span(W * R1)
+  + W contained in the ambient Hankel radical
+  -> ell annihilates J
   -> ambient multiplication descends through R1/W in both arguments
   -> ell descends to the quotient socle R2/J
   -> the original ambient Hankel form factors through these constructed maps
@@ -134,7 +135,7 @@ proper subspace of the Hankel radical
 1. Derive the `(1,c,1)` homogeneous free-basis certificate, the required Hilbert dimensions, and
    the socle-annihilator property directly from the PDF's arithmetically Gorenstein,
    Cohen--Macaulay, Hilbert-series, and homogeneous-system-of-parameters hypotheses, including
-   the degree-two relation space and its Hilbert/socle properties. Once these are supplied, ambient
+   the canonical degree-two quotient's Hilbert/socle properties. Once these are supplied, ambient
    multiplication and the paper's functional now descend automatically, and the passage from
    the specific nonzero induced socle functional to its perfect Hankel pairing is checked.
 2. Identify the paper's concrete projective fiber evaluation maps with the checked abstract

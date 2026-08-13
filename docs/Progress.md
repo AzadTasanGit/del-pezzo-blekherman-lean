@@ -185,3 +185,7 @@
   `TensorProduct.lift mul`), nonzeroness of the original degree-two functional implies
   nonzeroness of its Hankel form. Thus the strongest Theorem 4.3 bridge no longer asks for a
   separate bilinear-form nonzeroness hypothesis.
+- Defined the degree-two relation space canonically as `span(W·R₁)`. From the single radical
+  containment `W ⊆ ker Q_ell`, Lean now proves that `ell` annihilates this relation space and
+  therefore descends to the quotient; the strongest endpoint no longer accepts a separately
+  chosen `J`, product-containment proof, or annihilation proof.

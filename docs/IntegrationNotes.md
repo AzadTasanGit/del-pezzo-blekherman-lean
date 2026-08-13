@@ -106,6 +106,9 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
 - if the linearized multiplication `R₁ ⊗ R₁ → R₂` is surjective, a nonzero functional on
   `R₂` cannot vanish on every product; hence its Hankel form is nonzero. The strongest endpoint
   now assumes the paper's original `ell ≠ 0` rather than nonzeroness of the bilinear form.
+- the degree-two relation space can be chosen canonically as `span(W·R₁)`; the product
+  containment is then tautological, while `W ⊆ ker Q_ell` proves `ell` annihilates the whole
+  span and therefore descends to the quotient socle.
 
 ## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`
 

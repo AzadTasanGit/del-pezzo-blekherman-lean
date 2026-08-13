@@ -178,6 +178,10 @@ development state; the current integration outcome is recorded at the end.
     that surjectivity of the linearized multiplication `R₁ ⊗ R₁ → R₂` makes composition
     with multiplication injective on degree-two functionals; consequently the PDF's original
     `ell ≠ 0` input supplies a nonzero Hankel form and the exact kernel/dimension/rank theorem.
+56. Removed the supplied degree-two relation space. Defined it canonically as the span of all
+    products `W·R₁`, proved product containment by construction, and proved that containment of
+    `W` in the ambient Hankel radical forces `ell` to annihilate this entire span. The resulting
+    endpoint constructs the quotient ideal piece and functional descent internally.
 
 ### Integration outcome
 
