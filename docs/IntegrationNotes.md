@@ -84,7 +84,7 @@ canonical `DelPezzoBlekherman/` hierarchy; the paths below are their current loc
 The same basis/discriminant certificate over `ℝ`, together with the paper's at-most-one-pair
 input, feeds directly into the fully-real/one-conjugate-pair closed-point dichotomy.
 
-## `Algebra/ArtinianGorenstein.lean` and `Algebra/SoclePairing.lean`
+## `Algebra/ArtinianGorenstein.lean`, `Algebra/SoclePairing.lean`, and `Algebra/QuotientMultiplication.lean`
 
 - a nondegenerate bilinear form on `V/W`, pulled back to `V`, has radical exactly `W` and rank
   `dim(V/W)`;
@@ -97,6 +97,12 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
 - a pointwise factorization identifies the original ambient Hankel form with the quotient
   pullback, proves its actual kernel equals the parameter space, and yields the PDF's
   `m+1` kernel dimension and rank `c` conclusion without choosing a socle coordinate.
+- ambient degree-one multiplication descends through `R₁/W` in both arguments whenever
+  products involving `W` lie in an explicit degree-two relation space `J`;
+- a degree-two functional annihilating `J` descends through `R₂/J`, and its composition with
+  the descended multiplication is proved to recover the original Hankel form on representatives;
+- the ambient-data endpoint constructs both descended maps internally and feeds them into the
+  exact-kernel/dimension/rank theorem.
 
 ## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`
 
@@ -367,7 +373,7 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
 
 ## Verification
 
-- Forced fresh compilation (explicit `-o` paths) succeeds for all forty-eight modules.
+- Compilation succeeds for all forty-nine modules through the root import graph.
 - Placeholder search finds no `sorry`, `admit`, custom `axiom`, `TODO`, `FIXME`, or `#check`.
 - `#print axioms` for the principal new declarations reports only `propext`,
   `Classical.choice`, and `Quot.sound`.

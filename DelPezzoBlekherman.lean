@@ -22,6 +22,7 @@ import DelPezzoBlekherman.Convexity.GramCone
 import DelPezzoBlekherman.Convexity.SOSLength
 import DelPezzoBlekherman.Convexity.FinalSeparation
 import DelPezzoBlekherman.Algebra.SoclePairing
+import DelPezzoBlekherman.Algebra.QuotientMultiplication
 import DelPezzoBlekherman.Geometry.Proj.Surjectivity
 import DelPezzoBlekherman.Geometry.RealProjective.HVectorPairBound
 import DelPezzoBlekherman.Geometry.RealProjective.HVectorRealCount

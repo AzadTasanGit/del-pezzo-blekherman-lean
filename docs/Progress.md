@@ -166,3 +166,18 @@
   kernel dimension/rank are `m+1`/`c`.
 - Added the new endpoint to the axiom audit, ran the full 3,717-job build, and confirmed the
   placeholder scan remains empty.
+
+## 2026-08-13: quotient multiplication and functional descent
+
+- Added `Algebra/QuotientMultiplication.lean` to construct multiplication on `R₁/W` from
+  ambient multiplication whose products with `W` land in an explicit degree-two relation
+  space `J`.
+- Constructed the functional on `R₂/J` from the original degree-two functional and its
+  annihilation of `J`, and proved that the two descended maps recover the original ambient
+  Hankel values on representatives.
+- Proved the ambient-data Theorem 4.3 endpoint: symmetry, quotient Hilbert dimensions, the
+  socle-annihilator property, and nonzeroness now imply the actual Hankel kernel is `W`, its
+  dimension is `m+1`, and its rank is `c`, without assuming quotient maps or factorization.
+- Added the module to the root import and axiom audit, ran the full 3,718-job build, and confirmed
+  the placeholder scan remains empty and the new declarations use only the standard audited
+  axioms.
