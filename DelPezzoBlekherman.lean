@@ -21,9 +21,22 @@ import DelPezzoBlekherman.Convexity.SumSquaresDual
 import DelPezzoBlekherman.Convexity.GramCone
 import DelPezzoBlekherman.Convexity.SOSLength
 import DelPezzoBlekherman.Convexity.FinalSeparation
+import DelPezzoBlekherman.Algebra.SoclePairing
+import DelPezzoBlekherman.Geometry.Proj.Surjectivity
+import DelPezzoBlekherman.Geometry.RealProjective.HVectorPairBound
+import DelPezzoBlekherman.Geometry.RealProjective.HVectorRealCount
+import DelPezzoBlekherman.Fiber.EvaluationHyperplane
+import DelPezzoBlekherman.Convexity.RankOneExtreme
+import DelPezzoBlekherman.Convexity.ConditionalSeparation
+import DelPezzoBlekherman.SOS.DualCone
+import DelPezzoBlekherman.SOS.EvaluationContinuity
+import DelPezzoBlekherman.SOS.FiberFamilyLength
+import DelPezzoBlekherman.SOS.SurjectiveLength
 
 /-!
 # A Del Pezzo--Blekherman separation theorem
 
 This is the root import for the machine-checked components of the formalization.
+The endpoint imports above also expose the fully verified extension developed after the initial
+project skeleton.
 -/
