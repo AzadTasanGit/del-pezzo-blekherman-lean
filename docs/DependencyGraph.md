@@ -22,6 +22,9 @@ graded evaluation + radical Proj functoriality
 
 one-dimensional socle + Gorenstein annihilator property
   -> perfect degree-one multiplication pairing
+  + the specific induced socle functional is nonzero
+  -> that functional is injective
+  -> the actual scalar Hankel pairing is perfect
   -> dim W = m+1 and Hankel rank = c
 
 reduced real fiber of rank c+2
@@ -120,7 +123,9 @@ proper subspace of the Hankel radical
 
 1. Derive the `(1,c,1)` homogeneous free-basis certificate, the required Hilbert dimensions, and
    the socle-annihilator property directly from the PDF's arithmetically Gorenstein,
-   Cohen--Macaulay, Hilbert-series, and homogeneous-system-of-parameters hypotheses.
+   Cohen--Macaulay, Hilbert-series, and homogeneous-system-of-parameters hypotheses. The passage
+   from the paper's specific nonzero induced socle functional to its perfect Hankel pairing is
+   now checked.
 2. Identify the paper's concrete projective fiber evaluation maps with the checked abstract
    degree-one hyperplane, degree-two multiplication, and normalized complex-block models.
 3. Prove the SOS cone itself is closed (the checked dual theorem already handles its closure) and

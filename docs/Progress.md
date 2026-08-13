@@ -153,3 +153,13 @@
   repository-level `README.md`.
 - Rebuilt all 71 theorem modules successfully, checked the separate axiom audit, and confirmed
   there are no proof placeholders or missing compiled modules.
+
+## 2026-08-13: induced-socle-functional rank bridge
+
+- Re-read PDF Proposition 2.2 and Theorem 4.3 and isolated the step applying the induced nonzero
+  functional on the one-dimensional degree-two socle.
+- Proved that this specific functional is injective, preserves nondegeneracy of the Gorenstein
+  multiplication pairing, and gives the actual pulled-back Hankel form radical dimension `m+1`
+  and rank `c` without choosing an auxiliary socle coordinate.
+- Added the new endpoint to the axiom audit, ran the full 3,717-job build, and confirmed the
+  placeholder scan remains empty.

@@ -159,6 +159,11 @@ development state; the current integration outcome is recorded at the end.
 51. Proved that continuity of the full finite-dimensional evaluation-functional map follows from
     continuity on the vectors of any finite basis. Compiled the new 48th module and reran the
     expanded axiom audit.
+52. Tightened the Artinian Gorenstein rank bridge to the exact functional used in PDF Theorem 4.3.
+    Proved every nonzero functional on the one-dimensional socle is injective, that composition
+    with it preserves the perfect degree-one multiplication pairing, and that nonzeroness of the
+    actual pulled-back Hankel form suffices to derive radical dimension `m+1` and rank `c` without
+    choosing a socle coordinate. Rebuilt the full library and expanded the axiom audit.
 
 ### Integration outcome
 
