@@ -42,6 +42,7 @@ These files were forced-fresh compiled with Lean `v4.33.0-rc2` and mathlib commi
 | The actual nonzero pulled-back Hankel form has radical dimension `m+1` and rank `c`, without choosing a socle coordinate | `ArtinianGorensteinDegreeOneCertificate.parameterSpace_finrank_and_hankelRank_of_nonzeroHankel` | proved from explicit Hilbert dimensions and the socle-annihilator input |
 | An ambient Hankel form factoring pointwise through quotient multiplication has actual kernel equal to the parameter space, kernel dimension `m+1`, and rank `c` | `ArtinianGorensteinDegreeOneCertificate.hankelForm_eq_pullbackQuotient_of_factorization`, `ArtinianGorensteinDegreeOneCertificate.hankelKernel_eq_parameterSpace_and_finrank_and_rank_of_factorization` | proved from the explicit quotient multiplication, socle, factorization, and Hilbert-dimension inputs |
 | Ambient multiplication and the degree-two functional descend through explicit relation spaces, recovering the original Hankel form and its exact kernel/dimension/rank | `ArtinianGorensteinDegreeOneCertificate.quotientMultiplication`, `ArtinianGorensteinDegreeOneCertificate.descendedSocleFunctional`, `ArtinianGorensteinDegreeOneCertificate.hankelKernel_eq_parameterSpace_and_finrank_and_rank_of_ambientMultiplication` | proved from `W * R₁ ⊆ J`, symmetry, `ell(J)=0`, quotient Hilbert dimensions, and the socle-annihilator input; the factorization is constructed internally |
+| A nonzero degree-two functional has nonzero Hankel form when degree two is spanned by products, yielding the strongest ambient Theorem 4.3 endpoint | `ArtinianGorensteinDegreeOneCertificate.hankelForm_ne_zero_of_tensorProduct_lift_surjective`, `ArtinianGorensteinDegreeOneCertificate.hankelKernel_eq_parameterSpace_and_finrank_and_rank_of_degreeTwoGenerated` | proved using surjectivity of `TensorProduct.lift mul`; no separate Hankel-nonzeroness hypothesis remains |
 | Index-one inertia forces at most one complex-conjugate pair | `QuadraticForm.NonrealPairNegativeDirections.card_le_one_of_restrict` | proved once evaluation blocks supply independent negative directions |
 | The real reciprocal identity and its converse | `ReciprocalHyperplane.reciprocal_identity_of_radical`, `ReciprocalHyperplane.radical_of_reciprocal_identity` | proved |
 | The fully-real sign pattern has exactly one negative coefficient | `ReciprocalHyperplane.ncard_negative_eq_one_of_reciprocal_identity` | proved |
@@ -111,7 +112,7 @@ this supplement treats an interface assumption as a proof of the original hypoth
 |---|---|---|
 | 1. SOS cone closedness and dual | dual proved, closedness pending | `SOSConeDual.nonnegative_on_sosCone_iff` and closure invariance are proved; prove the concrete cone is closed |
 | 2. Extreme-ray dichotomy | linear/convex ingredients proved, concrete dichotomy pending | kernel-face, rank-one evaluation extremality, compact-base extreme-ray selection are proved; classify the remaining concrete Hankel rays |
-| 3. `dim W_ell=m+1`, `rank Q_ell=c` | paper-faithful ambient-multiplication theorem proved conditionally | derive the degree-two relation space, quotient Hilbert dimensions, and socle-annihilator property from the PDF's AG/CM hypotheses; multiplication/functionals now descend automatically and the actual Hankel-form step is checked |
+| 3. `dim W_ell=m+1`, `rank Q_ell=c` | paper-faithful ambient-multiplication theorem proved conditionally | derive the degree-two relation space, quotient Hilbert dimensions, socle-annihilator property, and product-span input from the PDF's AG/CM hypotheses; multiplication/functionals descend automatically and `ell ≠ 0` now implies the actual Hankel form is nonzero |
 | 4. Finite kernel morphism of degree `c+2` | conditional finite, surjective, rank-`c+2` theorem proved | derive the `(1,c,1)` finite free certificate from the AG Hilbert series; all stated Proj consequences are proved from it |
 | 5. Reduced fibers and evaluation relations | substantial algebra proved | instantiate the abstract evaluation maps with the scheme fiber; relation uniqueness, nonzero-coefficient criterion, and degree-two isomorphism are proved |
 | 6. At most one conjugate pair | normalized block theorem and concrete-family adapter proved | identify the concrete fiber Hankel form with the normalized complex-block coefficients and discharge relation-kernel nonnegativity and block non-isotropy |
@@ -121,7 +122,7 @@ this supplement treats an interface assumption as a proof of the original hypoth
 
 ## Verification
 
-- Forty-nine source modules plus the axiom audit, totaling 6,492 Lean source lines.
+- Forty-nine source modules plus the axiom audit, totaling 6,540 Lean source lines.
 - No `sorry`, `admit`, custom `axiom`, `TODO`, `FIXME`, or `#check` in any extension source.
 - The declarations listed by `Audit/Axioms.lean` depend only on `propext`, `Classical.choice`, and
   `Quot.sound`.

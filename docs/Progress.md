@@ -181,3 +181,7 @@
 - Added the module to the root import and axiom audit, ran the full 3,718-job build, and confirmed
   the placeholder scan remains empty and the new declarations use only the standard audited
   axioms.
+- Strengthened the endpoint further: if degree two is spanned by products (surjectivity of
+  `TensorProduct.lift mul`), nonzeroness of the original degree-two functional implies
+  nonzeroness of its Hankel form. Thus the strongest Theorem 4.3 bridge no longer asks for a
+  separate bilinear-form nonzeroness hypothesis.

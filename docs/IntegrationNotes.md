@@ -103,6 +103,9 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
   the descended multiplication is proved to recover the original Hankel form on representatives;
 - the ambient-data endpoint constructs both descended maps internally and feeds them into the
   exact-kernel/dimension/rank theorem.
+- if the linearized multiplication `R₁ ⊗ R₁ → R₂` is surjective, a nonzero functional on
+  `R₂` cannot vanish on every product; hence its Hankel form is nonzero. The strongest endpoint
+  now assumes the paper's original `ell ≠ 0` rather than nonzeroness of the bilinear form.
 
 ## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`
 

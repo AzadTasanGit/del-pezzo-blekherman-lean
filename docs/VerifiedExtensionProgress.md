@@ -174,6 +174,10 @@ development state; the current integration outcome is recorded at the end.
     through `R₂/J`. Proved the representative factorization, descended symmetry, and an
     ambient-data endpoint identifying the original Hankel kernel with `W` and computing its
     dimension/rank as `m+1`/`c`.
+55. Removed the separate nonzero-Hankel hypothesis from the strongest ambient endpoint. Proved
+    that surjectivity of the linearized multiplication `R₁ ⊗ R₁ → R₂` makes composition
+    with multiplication injective on degree-two functionals; consequently the PDF's original
+    `ell ≠ 0` input supplies a nonzero Hankel form and the exact kernel/dimension/rank theorem.
 
 ### Integration outcome
 

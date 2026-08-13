@@ -27,6 +27,9 @@ one-dimensional socle + Gorenstein annihilator property
   -> ambient multiplication descends through R1/W in both arguments
   -> ell descends to the quotient socle R2/J
   -> the original ambient Hankel form factors through these constructed maps
+  + products of degree-one elements span R2
+  + ell is nonzero on R2
+  -> the original ambient Hankel form is nonzero
   + the specific induced socle functional is nonzero
   -> that functional is injective
   -> the actual scalar Hankel pairing is perfect

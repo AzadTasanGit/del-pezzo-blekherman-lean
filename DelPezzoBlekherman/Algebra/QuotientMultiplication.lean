@@ -1,5 +1,6 @@
 import DelPezzoBlekherman.Algebra.SoclePairing
 import Mathlib.LinearAlgebra.Quotient.Bilinear
+import Mathlib.LinearAlgebra.TensorProduct.Basic
 
 noncomputable section
 
@@ -113,6 +114,24 @@ theorem quotientMultiplication_symmetric
   obtain ⟨y, rfl⟩ := W.mkQ_surjective y
   simp only [quotientMultiplication_mk, hsymm]
 
+/-- If degree two is spanned by products of degree-one elements, then a nonzero degree-two
+functional gives a nonzero Hankel form.  Surjectivity of `TensorProduct.lift mul` is the precise
+linear statement that the products span. -/
+theorem hankelForm_ne_zero_of_tensorProduct_lift_surjective
+    (mul : U →ₗ[K] U →ₗ[K] Q)
+    (ell : Q →ₗ[K] K) (hell : ell ≠ 0)
+    (hmul : Function.Surjective (TensorProduct.lift mul)) :
+    mul.compr₂ ell ≠ 0 := by
+  intro hzero
+  apply hell
+  apply (LinearMap.cancel_right hmul).mp
+  rw [← TensorProduct.lift_compr₂]
+  simp only [LinearMap.zero_comp]
+  rw [hzero]
+  apply TensorProduct.ext'
+  intro x y
+  rfl
+
 variable [Module.Finite K U]
 
 /-- Ambient-data form of the Artinian Gorenstein step in PDF Theorem 4.3.  Here `W` is the
@@ -147,5 +166,32 @@ theorem hankelKernel_eq_parameterSpace_and_finrank_and_rank_of_ambientMultiplica
       (fun x y ↦ (descendedSocleFunctional_quotientMultiplication_mk
         W J mul hprod hright ell hJ x y).symm)
     hB hU hQ
+
+/-- Paper-facing strengthening of
+`hankelKernel_eq_parameterSpace_and_finrank_and_rank_of_ambientMultiplication`: nonzeroness is
+assumed only for the original degree-two functional.  Generation of degree two by products
+proves internally that its associated ambient Hankel form is nonzero. -/
+theorem hankelKernel_eq_parameterSpace_and_finrank_and_rank_of_degreeTwoGenerated
+    (W : Submodule K U) (J : Submodule K Q)
+    (mul : U →ₗ[K] U →ₗ[K] Q)
+    (hprod : ∀ w ∈ W, ∀ x, mul w x ∈ J)
+    (hsymm : ∀ x y, mul x y = mul y x)
+    (ell : Q →ₗ[K] K) (hell : ell ≠ 0)
+    (hmul : Function.Surjective (TensorProduct.lift mul))
+    (hJ : J ≤ LinearMap.ker ell)
+    (hS : Module.finrank K (Q ⧸ J) = 1)
+    (hann : ∀ x,
+      (∀ y, quotientMultiplication W J mul hprod
+        (fun w hw y ↦ hsymm y w ▸ hprod w hw y) x y = 0) → x = 0)
+    {m c : ℕ}
+    (hU : Module.finrank K U = m + c + 1)
+    (hQ : Module.finrank K (U ⧸ W) = c) :
+    LinearMap.ker (mul.compr₂ ell) = W ∧
+      Module.finrank K (LinearMap.ker (mul.compr₂ ell)) = m + 1 ∧
+        LinearMap.BilinForm.finiteRank (mul.compr₂ ell) = c :=
+  hankelKernel_eq_parameterSpace_and_finrank_and_rank_of_ambientMultiplication
+    W J mul hprod hsymm ell hJ hS hann
+      (hankelForm_ne_zero_of_tensorProduct_lift_surjective mul ell hell hmul)
+    hU hQ
 
 end ArtinianGorensteinDegreeOneCertificate
