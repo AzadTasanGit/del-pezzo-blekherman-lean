@@ -146,6 +146,37 @@ theorem projectiveAevalOfRadical_isFinite_surjective_of_standardGraded_hsop
     projectiveAevalOfRadical_surjective_of_toRingHom_finite_injective
       𝒞 g hg hbasepointFree hfinite hinjective⟩
 
+/-- A native homogeneous system of parameters gives not only a finite surjective projective
+morphism, but also a nonempty principal open on which the coordinate ring is free over the
+parameter polynomial ring.  Its localized rank is the basis-free generic rank; computing that
+rank as `c + 2` is the remaining Hilbert-multiplicity step. -/
+theorem projectiveAevalOfRadical_isFinite_surjective_genericallyFree_of_hsop
+    {K C I : Type u} [Field K] [CommRing C] [Algebra K C] [Finite I]
+    (𝒞 : ℕ → Submodule K C) [GradedRing 𝒞]
+    (g : I → C) (hg : ∀ i, g i ∈ 𝒞 1)
+    (hbasepointFree : (HomogeneousIdeal.irrelevant 𝒞).toIdeal ≤
+      (Ideal.span (Set.range g)).radical)
+    (hirrelevantFG : (HomogeneousIdeal.irrelevant 𝒞).toIdeal.FG)
+    (hcomponentFinite : ∀ n, Module.Finite K (𝒞 n))
+    (hstandard : ∀ n (x : C), x ∈ 𝒞 n →
+      x ∈ (HomogeneousIdeal.irrelevant 𝒞).toIdeal ^ n)
+    (halgebraicIndependent : AlgebraicIndependent K g) :
+    IsFinite (projectiveAevalOfRadical 𝒞 g hg hbasepointFree) ∧
+      Surjective (projectiveAevalOfRadical 𝒞 g hg hbasepointFree) ∧
+      (let f := MvPolynomial.standardGradedAevalHom 𝒞 g hg
+       letI := f.toRingHom.toAlgebra
+       ∃ r : MvPolynomial I K, r ≠ 0 ∧
+         Module.Free (Localization (.powers r)) (LocalizedModule.Away r C) ∧
+         Module.finrank (Localization (.powers r)) (LocalizedModule.Away r C) =
+           Module.finrank (MvPolynomial I K) C) := by
+  obtain ⟨hfinite, hsurjective⟩ :=
+    projectiveAevalOfRadical_isFinite_surjective_of_standardGraded_hsop
+      𝒞 g hg hbasepointFree hirrelevantFG hcomponentFinite hstandard halgebraicIndependent
+  obtain ⟨_, hfree⟩ :=
+    projectiveAevalOfRadical_isFinite_and_exists_nonzero_free_away_of_standardGraded
+      𝒞 g hg hbasepointFree hirrelevantFG hcomponentFinite hstandard
+  exact ⟨hfinite, hsurjective, hfree⟩
+
 /-- Over a domain coordinate ring, a nonempty finite free basis supplies injectivity as well as
 finiteness.  Hence the `(1,c,1)`-style basis certificate gives a finite surjective projective
 morphism of algebraic rank `c+2`. -/

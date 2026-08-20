@@ -100,6 +100,20 @@ signature.
   which adds algebraic independence of the parameters and concludes finite surjectivity without
   accepting `RingHom.Finite`, a polynomial-module basis, or an H-vector certificate.
 
+`DelPezzoBlekherman/Algebra/GenericFiber.lean` and `Geometry/Proj/KernelFiber.lean` additionally
+provide:
+
+- `Module.exists_nonzero_free_away_and_finrank_eq`, which proves that a finite module over a
+  Noetherian domain becomes free after inverting one nonzero element, with localized rank equal
+  to its basis-free generic `Module.finrank`;
+- `AlgebraicGeometry.Proj.projectiveAevalOfRadical_isFinite_and_exists_nonzero_free_away_of_standardGraded`,
+  which derives that nonempty principal-open free locus directly from the native finite-Proj
+  hypotheses, without accepting a global basis, `Module.Free`, `RingHom.Finite`, or a numerical
+  rank;
+- `AlgebraicGeometry.Proj.projectiveAevalOfRadical_isFinite_surjective_genericallyFree_of_hsop`,
+  which combines that generic-free locus with the certificate-free finite-surjective hsop
+  endpoint.
+
 The internal construction of old interfaces in a proof is permitted; exposing one in a final
 signature is not. The currently open algebra task is only the degree-`c+2` half of the old
 finite-Proj/degree bridge. It is specified precisely in the blocker log below. A global
@@ -166,6 +180,13 @@ reduction-exact-sequence package, `RingHom.Finite`, or the asserted finrank equa
    `H_C(t) = (1 + c t + t²)/(1-t)^(m+1)` into either finiteness over the chosen parameter
    polynomial ring or generic rank `c+2`. Assuming either fact directly would only rename the
    old certificate and was therefore rejected.
+5. The generic-rank route was then separated from the numerical multiplicity calculation.
+   Mathlib's `Module.FinitePresentation.exists_free_localizedModule_powers`, together with
+   `IsLocalization.finrank_eq` and `IsLocalizedModule.finrank_eq`, proves that the already finite
+   parameter extension is free of its generic rank after inverting one nonzero polynomial. This
+   route succeeds and is now exposed by the two declarations listed above. It does not by itself
+   compute that rank: generic freeness transports the generic rank to a dense principal open but
+   contains no Hilbert-numerator/multiplicity theorem.
 
 Those routes did not construct the polynomial-module finiteness directly from the operational
 Artinian reduction. The obstruction was mathematical infrastructure rather than a Lean
@@ -209,14 +230,26 @@ the free-basis certificate from the public finite-surjective endpoint.
    `1 + c + 1 = c + 2` (without requiring a globally supplied free basis).
 
 No suitable Hilbert-polynomial/multiplicity theorem was found in the imported Mathlib API.
-Moreover, the legacy conclusion `Module.finrank (MvPolynomial I K) C = c + 2` uses an instance
-of `Module.Free`; module finiteness alone cannot synthesize it. The next implementation must
-therefore do one of two honest things: prove projectivity/freeness from the regular-sequence or
-Cohen--Macaulay data (then apply the Hilbert numerator calculation), or formulate degree as the
-fraction-field generic rank and adapt the downstream fiber-rank results to that invariant. The
-literal Hilbert-series equation must be used to prove the value, never accepted as the target
-rank equality. Until this lemma exists, milestone 3 must not consume the old certificate through
-a differently named adapter.
+`Module.finrank (MvPolynomial I K) C` is already the basis-free generic rank for an arbitrary
+module; only the legacy proof through `Module.finrank_eq_card_basis` required `Module.Free`.
+Mathlib's `IsFractionRing.finrank_eq` identifies this invariant with the fraction-field fiber,
+and the new generic-freeness theorem realizes it as an actual free rank on a nonempty principal
+open. Thus global Quillen--Suslin/projectivity is not required to state or use the desired degree.
+
+The missing mathematical declaration is specifically a graded multiplicity theorem saying that
+the generic rank of a finite standard-graded hsop extension equals the length of its Artinian
+parameter reduction, together with the concrete regular-sequence quotient recurrence showing
+that this length is the Hilbert numerator at one. Current repository infrastructure only has the
+needed recurrence behind a supplied `SuccessiveDegreeOneReductionComponentExactSequences`
+package; Mathlib's regular-sequence API does not construct the degreewise quotient exact
+sequences (and its localization/permutability support is explicitly incomplete). Consequently
+neither the actual reduction length nor its equality with generic rank can presently be derived
+from `IsArithmeticallyGorenstein` and the literal Hilbert equation. The literal equation must be
+used to prove `c+2`, never replaced by the desired rank equality as an assumption. Until that
+lemma exists, milestone 3 must not consume the old certificate through a differently named
+adapter. The old global-basis discriminant/fiber declarations can later be localized over the
+new principal open, but doing so before the numerical rank theorem would not close another
+paper-level hypothesis.
 
 ## Milestone verification
 

@@ -16,6 +16,9 @@ degreewise finite standard grading
   -> a power of the irrelevant ideal lies in the parameter ideal
   -> finitely many lower homogeneous bases generate over the parameter polynomial ring
   -> finite graded ring map
+  -> finite module over the Noetherian parameter domain
+  -> free after inverting one nonzero parameter polynomial
+  -> localized free rank = basis-free generic Module.finrank
   + algebraically independent parameters
   -> finite surjective projective kernel morphism
 
@@ -190,8 +193,10 @@ proper subspace of the Hankel radical
    and algebraic independence of the hsop gives surjectivity, without a basis or supplied
    `RingHom.Finite`. The remaining algebraic bridge is only degree `c+2`: prove that the generic
    rank of this finite graded parameter extension equals the Hilbert numerator evaluated at one.
-   The legacy `Module.finrank` statement additionally requires proving projectivity/freeness;
-   otherwise downstream degree and fiber-rank results should be recast using fraction-field rank.
+   `Module.finrank` already denotes this basis-free generic rank, and generic freeness now gives
+   a nonempty principal open on which it is an actual free rank. What remains is the graded
+   multiplicity calculation, not global projectivity/freeness; downstream discriminant and
+   fiber-rank results can be localized to this principal open after the numerical value is proved.
 2. Identify the paper's concrete projective fiber evaluation maps with the checked abstract
    degree-one hyperplane, degree-two multiplication, and normalized complex-block models.
 3. Instantiate the already checked closed SOS-cone theorem for the coordinate ring using the
