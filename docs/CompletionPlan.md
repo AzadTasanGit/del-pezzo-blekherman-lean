@@ -73,7 +73,7 @@ signature.
 |---|---|---|---|---|
 | 1. Native algebraic boundary | Sol High | Complete the degree computation for the now-native finite surjective Proj morphism: prove that the parameter extension has generic rank `c+2` from the literal Hilbert numerator and regular hsop data, without a supplied free basis. | The rank and finite-surjective declarations expose none of the four algebra certificates listed above; the degree declaration must not expose one either. | Hankel rank and finite-surjective Proj endpoints complete; numerical degree is a recorded infrastructure blocker and is deferred until the graded quotient/multiplicity bridge is built |
 | 2. Concrete SOS and Hankel layer | Terra Medium | Instantiate `kernel_face_criterion` and the real/complex point-evaluation arguments for the concrete graded multiplication. | `theorem1_1_i`, the evaluation branch, the real-point dichotomy, and the rank-two complex-basepoint exclusion compile with no Gram-kernel or abstract-dichotomy input. | complete: the concrete part (i), real dichotomy, and paper's indefinite-form exclusion of nonreal rank-two evaluations compile |
-| 3. Kernel morphism and reduced fibers | Terra Medium; Sol High for a recorded blocker | Prove the projective evaluation adapter (real-line image iff real point; otherwise degree-one evaluation is onto `ℂ`), extract a regular hsop from the complex-basepoint-free kernel, connect it to `projectiveAevalOfRadical`, and finish rank `c+2` and the reduced-fiber data. | `theorem1_1_ii` and `theorem1_1_iii` compile without an H-vector/free-basis certificate or supplied fiber data. | active: complex linear-algebra exclusion and native kernel-rank adapter are complete; projective adapter and regular-parameter selection remain |
+| 3. Kernel morphism and reduced fibers | Terra Medium; Sol High for a recorded blocker | Instantiate the proved real-locus kernel correspondence for a native complex Proj point type, extract a regular hsop from the complex-basepoint-free kernel, connect it to `projectiveAevalOfRadical`, and finish rank `c+2` and the reduced-fiber data. | `theorem1_1_ii` and `theorem1_1_iii` compile without an H-vector/free-basis certificate or supplied fiber data. | active: complex linear-algebra exclusion, the real/nonreal projective dichotomy, their real-locus composition, and the native kernel-rank adapter are complete; native Proj-point instantiation and regular-parameter selection remain |
 | 4. Fiber classifications and topology | Terra Medium | Identify the concrete evaluation form with `ComplexBlockFamily`; prove relation-kernel nonnegativity and block non-isotropy; instantiate the pair bound and both reciprocal classifications. Prove ordinary evaluation continuity and identify the real coordinate-ring source with `X(ℝ)` compatibly with projective evaluation. | `theorem1_1_iv`, `theorem1_1_v`, and every premise required by the concrete SOS-length theorem compile without block or continuity assumptions. | queued |
 | 5. Final composition | Sol High review, Terra Medium integration | Add `theorem1_1_i` through `theorem1_1_vi`, compose them in `theorem1_1`, and reconcile every status document and audit entry. | All conditions in “Definition of done” hold. | queued |
 
@@ -108,6 +108,14 @@ signature.
 - `extreme_hankel_no_complex_basepoint_of_surjective_evaluation`, formalizing the paper's
   indefinite `Re(e(u)e(v))` argument and excluding any complex basepoint whose degree-one
   evaluation is onto `ℂ` as a real-linear map;
+- `isProjectivelyReal_or_surjective`, proving intrinsically that every nonzero complex
+  degree-one evaluation is either a real projective line or is onto `ℂ` over `ℝ`;
+- `extreme_hankel_no_nonreal_complex_basepoint`, which consequently excludes every nonreal
+  complex basepoint without accepting surjectivity as an assumption;
+- `theorem1_1_ii_complexDichotomy_of_realLocus`, which combines the concrete real-point
+  dichotomy with the nonreal exclusion. Its only remaining geometric adapter is the exact
+  bidirectional kernel correspondence between real points and projectively real complex
+  evaluations; it contains no complex-block or rank-two premise;
 - `theorem1_1_ii_kernelRank_of_arithmeticallyGorensteinParameters`, giving the dimension
   `m+1` and rank `c` conclusions once the regular parameters in the concrete kernel are selected,
   with no legacy algebra certificate in its public signature.

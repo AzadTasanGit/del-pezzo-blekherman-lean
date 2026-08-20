@@ -7,6 +7,7 @@ import DelPezzoBlekherman.Algebra.NativeGorenstein
 import DelPezzoBlekherman.Convexity.DualSlice
 import DelPezzoBlekherman.LinearAlgebra.RankOneEvaluation
 import DelPezzoBlekherman.SOS.ClosedCone
+import Mathlib.LinearAlgebra.Complex.FiniteDimensional
 import Mathlib.RingTheory.Spectrum.Prime.Topology
 
 /-!
@@ -472,6 +473,66 @@ theorem gradedHankelMap_complexRealPartEvaluation_apply
   change (e ((gradedDegreeOneMultiplication 𝒜 u v : 𝒜 2) : B)).re = _
   rw [gradedDegreeOneMultiplication_apply, map_mul]
 
+/-- A complex-valued real-linear evaluation is projectively real when its image is a single
+real line in `ℂ`.  Equivalently, after choosing a nonzero complex representative `a`, it is
+`a` times a real-valued functional.  This is the coordinate-free degree-one condition that a
+complex projective point is fixed by conjugation. -/
+def IsProjectivelyReal
+    {V : Type*} [AddCommGroup V] [Module ℝ V]
+    (f : V →ₗ[ℝ] ℂ) : Prop :=
+  ∃ a : ℂ, a ≠ 0 ∧ ∃ g : V →ₗ[ℝ] ℝ,
+    f = (LinearMap.toSpanSingleton ℝ ℂ a).comp g
+
+/-- The elementary real/nonreal projective dichotomy.  A nonzero real-linear map to `ℂ`
+either has one-dimensional real image, hence is projectively real, or has two-dimensional
+image and is surjective. -/
+theorem isProjectivelyReal_or_surjective
+    {V : Type*} [AddCommGroup V] [Module ℝ V]
+    (f : V →ₗ[ℝ] ℂ) (hf : f ≠ 0) :
+    IsProjectivelyReal f ∨ Function.Surjective f := by
+  by_cases hs : Function.Surjective f
+  · exact Or.inr hs
+  left
+  have hrange : LinearMap.range f ≠ ⊤ := by
+    intro htop
+    exact hs (LinearMap.range_eq_top.mp htop)
+  have hlt : Module.finrank ℝ (LinearMap.range f) < 2 := by
+    simpa [Complex.finrank_real_complex] using Submodule.finrank_lt hrange
+  have hex : ∃ u : V, f u ≠ 0 := by
+    by_contra hn
+    push Not at hn
+    apply hf
+    ext u
+    simpa using hn u
+  obtain ⟨u, hu⟩ := hex
+  have hpos : 0 < Module.finrank ℝ (LinearMap.range f) := by
+    rw [Module.finrank_pos_iff_exists_ne_zero]
+    refine ⟨⟨f u, ⟨u, rfl⟩⟩, ?_⟩
+    intro hzero
+    apply hu
+    exact Subtype.ext_iff.mp hzero
+  have hfin : Module.finrank ℝ (LinearMap.range f) = 1 := by omega
+  have hRange : LinearMap.range f = ℝ ∙ f u :=
+    eq_span_singleton_of_mem_of_finrank_eq_one hfin ⟨u, rfl⟩ hu
+  let g : V →ₗ[ℝ] ℝ :=
+    Complex.reCLM.toLinearMap.comp
+      ((Algebra.lmul ℝ ℂ (f u)⁻¹).comp f)
+  refine ⟨f u, hu, g, ?_⟩
+  ext v
+  have hv : f v ∈ ℝ ∙ f u := by
+    rw [← hRange]
+    exact ⟨v, rfl⟩
+  obtain ⟨c, hc⟩ := Submodule.mem_span_singleton.mp hv
+  change f v = ((f u)⁻¹ * f v).re • f u
+  conv_rhs => rw [← hc]
+  have hinv : (f u)⁻¹ * (c • f u) = (c : ℂ) := by
+    rw [Complex.real_smul]
+    calc
+      (f u)⁻¹ * ((c : ℂ) * f u) = (c : ℂ) * ((f u)⁻¹ * f u) := by ring
+      _ = c := by simp [hu]
+  rw [hinv]
+  simpa using hc.symm
+
 /-- The nonreal-point exclusion in Lemma 4.1.  If complex evaluation on degree one has
 real rank two (equivalently, is onto `ℂ`), it cannot vanish on the radical of an extreme
 positive-semidefinite Hankel form.  The proof is the paper's indefinite-form argument:
@@ -538,6 +599,85 @@ theorem extreme_hankel_no_complex_basepoint_of_surjective_evaluation
     exact LinearMap.congr_fun (LinearMap.congr_fun ha v) v
   have haPos : 0 < a := by nlinarith
   nlinarith
+
+/-- Paper-facing nonreal-point form of the complex basepoint exclusion.  Surjectivity is no
+longer an input: it follows from the intrinsic assertion that the nonzero degree-one
+evaluation is not projectively real. -/
+theorem extreme_hankel_no_nonreal_complex_basepoint
+    {B : Type*} [NormedCommRing B] [NormedAlgebra ℝ B]
+    (𝒜 : ℕ → Submodule ℝ B) [SetLike.GradedMonoid 𝒜]
+    [Module.Finite ℝ (𝒜 1)] [Module.Finite ℝ (𝒜 2)]
+    (hgenerated : DegreeTwoGeneratedByDegreeOne 𝒜)
+    (ell : (𝒜 2) →L[ℝ] ℝ)
+    (hell : SpansExtremeRay
+      (dualConeSet
+        (SOSConeDual.sosCone (fun u ↦ gradedDegreeOneMultiplication 𝒜 u u) :
+          Set (𝒜 2))) ell)
+    (e : B →ₐ[ℝ] ℂ)
+    (he : gradedComplexEvaluation 𝒜 e 1 ≠ 0)
+    (heNonreal : ¬ IsProjectivelyReal (gradedComplexEvaluation 𝒜 e 1)) :
+    ¬ LinearMap.ker (gradedHankelMap 𝒜 ell.toLinearMap) ≤
+      LinearMap.ker (gradedComplexEvaluation 𝒜 e 1) := by
+  obtain hreal | hsurj :=
+    isProjectivelyReal_or_surjective (gradedComplexEvaluation 𝒜 e 1) he
+  · exact False.elim (heNonreal hreal)
+  · exact extreme_hankel_no_complex_basepoint_of_surjective_evaluation
+      𝒜 hgenerated ell hell e hsurj
+
+/-- The real/complex form of the exclusive dichotomy in Theorem 1.1(ii).  Once the
+projectively real complex evaluations are identified with the kernels of the supplied real
+evaluations, the basepoint-free branch has no complex projective basepoints: real ones are
+excluded by the real dichotomy, and nonreal ones by the indefinite-form argument above. -/
+theorem theorem1_1_ii_complexDichotomy_of_realLocus
+    {B Y Z : Type*} [NormedCommRing B] [NormedAlgebra ℝ B]
+    (𝒜 : ℕ → Submodule ℝ B) [SetLike.GradedMonoid 𝒜]
+    [Module.Finite ℝ (𝒜 1)] [Module.Finite ℝ (𝒜 2)]
+    (hgenerated : DegreeTwoGeneratedByDegreeOne 𝒜)
+    (realEval : Y → B →ₐ[ℝ] ℝ)
+    (complexEval : Z → B →ₐ[ℝ] ℂ)
+    (hrealEval₁ : ∀ x, gradedEvaluation 𝒜 (realEval x) 1 ≠ 0)
+    (hcomplexEval₁ : ∀ z, gradedComplexEvaluation 𝒜 (complexEval z) 1 ≠ 0)
+    (hrealLocus : ∀ z,
+      IsProjectivelyReal (gradedComplexEvaluation 𝒜 (complexEval z) 1) →
+        ∃ x, LinearMap.ker (gradedComplexEvaluation 𝒜 (complexEval z) 1) =
+          LinearMap.ker (gradedEvaluation 𝒜 (realEval x) 1).toLinearMap)
+    (hcomplexifies : ∀ x, ∃ z,
+      LinearMap.ker (gradedComplexEvaluation 𝒜 (complexEval z) 1) =
+        LinearMap.ker (gradedEvaluation 𝒜 (realEval x) 1).toLinearMap)
+    (ell : (𝒜 2) →L[ℝ] ℝ)
+    (hell : SpansExtremeRay
+      (dualConeSet
+        (SOSConeDual.sosCone (fun u ↦ gradedDegreeOneMultiplication 𝒜 u u) :
+          Set (𝒜 2))) ell) :
+    Xor
+      (∃ x, ∃ b : ℝ, 0 < b ∧ ell = b • gradedEvaluation 𝒜 (realEval x) 2)
+      (∀ z, ¬ LinearMap.ker (gradedHankelMap 𝒜 ell.toLinearMap) ≤
+        LinearMap.ker (gradedComplexEvaluation 𝒜 (complexEval z) 1)) := by
+  rcases theorem1_1_ii_dichotomy 𝒜 hgenerated realEval hrealEval₁ ell hell with
+    heval | hfree
+  · refine Or.inl ⟨heval.1, ?_⟩
+    intro hcomplexFree
+    apply heval.2
+    intro x
+    obtain ⟨z, hz⟩ := hcomplexifies x
+    intro hbase
+    apply hcomplexFree z
+    intro w hw
+    have hreal := hbase hw
+    rw [← hz] at hreal
+    exact hreal
+  · refine Or.inr ⟨?_, hfree.2⟩
+    intro z hz
+    by_cases hreal :
+        IsProjectivelyReal (gradedComplexEvaluation 𝒜 (complexEval z) 1)
+    · obtain ⟨x, hx⟩ := hrealLocus z hreal
+      apply hfree.1 x
+      intro w hw
+      have hzw := hz hw
+      rw [hx] at hzw
+      exact hzw
+    · exact (extreme_hankel_no_nonreal_complex_basepoint
+        𝒜 hgenerated ell hell (complexEval z) (hcomplexEval₁ z) hreal) hz
 
 /-- The dimension-and-rank assertion in the basepoint-free branch of Theorem 1.1(ii), once the
 regular degree-one parameters in the actual Hankel kernel have been chosen.  This is the
