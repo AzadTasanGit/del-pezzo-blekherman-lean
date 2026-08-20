@@ -26,7 +26,7 @@ commutative coordinate algebra + degree-one submodule R1
   -> surjective tensor multiplication onto R1 * R1
   -> surjective symmetric-square multiplication
 
-internal multiplicative grading + surjective R1 tensor R1 -> R2
+internal multiplicative grading + surjective Sym²(R1) -> R2
   -> canonical graded multiplication R1 x R1 -> R2
   -> R1 * R1 = R2
   -> surjective standard-graded multiplication Sym²(R1) -> R2

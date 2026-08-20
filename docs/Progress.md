@@ -223,7 +223,7 @@
   original functional on `Q`; no abstract multiplication map remains in this endpoint.
 - Closed the remaining standard-graded product-equality bridge. For internal homogeneous
   components `𝒜`, the predicate `DegreeTwoGeneratedByDegreeOne 𝒜` states the paper's
-  surjectivity of `R₁ ⊗ R₁ → R₂`; Lean derives `R₁ * R₁ = R₂` and a direct graded Theorem 4.3
+  literal surjectivity of `Sym²(R₁) → R₂`; Lean derives `R₁ * R₁ = R₂` and a direct Theorem 4.3
   endpoint using `ell : R₂ → K`.
 - Proved the zero-annihilator Gorenstein certificate equivalent to the intrinsic perfect-pairing
   certificate using symmetry of quotient multiplication. The strongest pointwise and graded

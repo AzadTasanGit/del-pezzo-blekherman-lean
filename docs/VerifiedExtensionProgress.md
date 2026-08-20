@@ -220,8 +220,9 @@ development state; the current integration outcome is recorded at the end.
     hypothesis.
 65. Discharged that product equality from the paper's standard-graded degree-two generation.
     For an internal multiplicative grading, constructed `R₁ × R₁ → R₂`, defined the precise
-    generation predicate as surjectivity of its tensor lift, proved `R₁ * R₁ = R₂`, and obtained
-    a direct pointwise-parameter kernel/rank endpoint for the original functional on `R₂`.
+    generation predicate as the paper's surjectivity of `Sym²(R₁) → R₂`, proved
+    `R₁ * R₁ = R₂` through the equivalent tensor map, and obtained a direct pointwise-parameter
+    kernel/rank endpoint for the original functional on `R₂`.
 66. Removed an avoidable strengthening from that endpoint. Proved that the canonical quotient
     multiplication's symmetry turns the Gorenstein zero-annihilator certificate into the
     intrinsic perfect-pairing certificate, added the pointwise Gorenstein endpoint, and made the
