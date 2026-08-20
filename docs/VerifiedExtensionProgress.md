@@ -222,6 +222,10 @@ development state; the current integration outcome is recorded at the end.
     For an internal multiplicative grading, constructed `R₁ × R₁ → R₂`, defined the precise
     generation predicate as surjectivity of its tensor lift, proved `R₁ * R₁ = R₂`, and obtained
     a direct pointwise-parameter kernel/rank endpoint for the original functional on `R₂`.
+66. Removed an avoidable strengthening from that endpoint. Proved that the canonical quotient
+    multiplication's symmetry turns the Gorenstein zero-annihilator certificate into the
+    intrinsic perfect-pairing certificate, added the pointwise Gorenstein endpoint, and made the
+    internal-graded endpoint consume this weaker certificate directly.
 
 ### Integration outcome
 

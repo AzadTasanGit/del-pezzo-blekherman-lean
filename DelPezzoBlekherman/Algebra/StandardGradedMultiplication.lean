@@ -238,7 +238,7 @@ theorem hankelKernel_eq_parameterSpan_and_rank_of_degreeTwoGeneratedByDegreeOne
     (hparameters : LinearIndependent K parameters)
     (hparametersKernel : ∀ i,
       parameters i ∈ LinearMap.ker ((gradedDegreeOneMultiplication 𝒜).compr₂ ell))
-    (hAG : ParameterProductPerfectPairingCertificate
+    (hAG : ParameterProductGorensteinCertificate
       (Submodule.span K (Set.range parameters))
       (gradedDegreeOneMultiplication 𝒜)
       (gradedDegreeOneMultiplication_symmetric 𝒜))
@@ -247,7 +247,7 @@ theorem hankelKernel_eq_parameterSpan_and_rank_of_degreeTwoGeneratedByDegreeOne
         Submodule.span K (Set.range parameters) ∧
       LinearMap.BilinForm.finiteRank
         ((gradedDegreeOneMultiplication 𝒜).compr₂ ell) = c :=
-  hankelKernel_eq_parameterSpan_and_rank_of_parameters_mem_hankelKernel
+  hankelKernel_eq_parameterSpan_and_rank_of_gorensteinCertificate
     (gradedDegreeOneMultiplication 𝒜)
     (gradedDegreeOneMultiplication_symmetric 𝒜) ell hell
     (symmetricSquare_gradedDegreeOneMultiplication_surjective 𝒜 hgenerated)

@@ -305,6 +305,23 @@ structure ParameterProductPerfectPairingCertificate
   socleFinrankOne : Module.finrank K (Q ⧸ parameterProductSubmodule W mul) = 1
   perfect : (parameterProductQuotientMultiplication W mul hsymm).Nondegenerate
 
+/-- The Gorenstein annihilator formulation already implies the intrinsic perfect-pairing
+formulation: symmetry turns the supplied left nondegeneracy into right nondegeneracy. -/
+theorem ParameterProductGorensteinCertificate.toPerfectPairingCertificate
+    {W : Submodule K U} {mul : U →ₗ[K] U →ₗ[K] Q}
+    {hsymm : ∀ x y, mul x y = mul y x}
+    (h : ParameterProductGorensteinCertificate W mul hsymm) :
+    ParameterProductPerfectPairingCertificate W mul hsymm where
+  socleFinrankOne := h.socleFinrankOne
+  perfect := by
+    constructor
+    · exact h.socleAnnihilator
+    · intro y hy
+      apply h.socleAnnihilator y
+      intro x
+      rw [parameterProductQuotientMultiplication_symmetric W mul hsymm]
+      exact hy x
+
 /-- Choosing the canonical coordinate on the one-dimensional socle turns the intrinsic
 socle-valued perfect pairing into a nondegenerate scalar pairing. -/
 theorem ParameterProductPerfectPairingCertificate.scalarPairing_nondegenerate
@@ -517,9 +534,31 @@ theorem hankelKernel_eq_parameterSpace_and_rank_of_linearIndependentParameters
   rw [hW, finrank_span_eq_card hparameters]
   simp
 
-/-- Fully pointwise parameter-sequence endpoint for PDF Theorem 4.3.  Each chosen parameter is
-assumed to lie in the ambient Hankel kernel, exactly as in the paper; Lean proves that their
-entire span lies in the kernel before applying the canonical quotient argument. -/
+/-- Fully pointwise parameter-sequence endpoint in the zero-annihilator Gorenstein formulation.
+Each chosen parameter is assumed to lie in the ambient Hankel kernel, exactly as in the paper;
+Lean proves span containment and derives its dimension from linear independence. -/
+theorem hankelKernel_eq_parameterSpan_and_rank_of_gorensteinCertificate
+    (mul : U →ₗ[K] U →ₗ[K] Q)
+    (hsymm : ∀ x y, mul x y = mul y x)
+    (ell : Q →ₗ[K] K) (hell : ell ≠ 0)
+    (hmul : Function.Surjective (symmetricSquareMultiplication mul hsymm))
+    {m c : ℕ}
+    (parameters : Fin (m + 1) → U)
+    (hparameters : LinearIndependent K parameters)
+    (hparametersKernel : ∀ i, parameters i ∈ LinearMap.ker (mul.compr₂ ell))
+    (hAG : ParameterProductGorensteinCertificate
+      (Submodule.span K (Set.range parameters)) mul hsymm)
+    (hU : Module.finrank K U = m + c + 1) :
+    LinearMap.ker (mul.compr₂ ell) = Submodule.span K (Set.range parameters) ∧
+      LinearMap.BilinForm.finiteRank (mul.compr₂ ell) = c := by
+  apply hankelKernel_eq_parameterSpace_and_rank_of_gorensteinCertificate
+    (Submodule.span K (Set.range parameters)) mul hsymm ell hell hmul
+      (Submodule.span_le.mpr (Set.range_subset_iff.mpr hparametersKernel)) hAG hU
+  rw [finrank_span_eq_card hparameters]
+  simp
+
+/-- Fully pointwise parameter-sequence endpoint for PDF Theorem 4.3 in intrinsic perfect-pairing
+form.  The perfect certificate is converted to the equivalent zero-annihilator formulation. -/
 theorem hankelKernel_eq_parameterSpan_and_rank_of_parameters_mem_hankelKernel
     (mul : U →ₗ[K] U →ₗ[K] Q)
     (hsymm : ∀ x y, mul x y = mul y x)
@@ -533,10 +572,9 @@ theorem hankelKernel_eq_parameterSpan_and_rank_of_parameters_mem_hankelKernel
       (Submodule.span K (Set.range parameters)) mul hsymm)
     (hU : Module.finrank K U = m + c + 1) :
     LinearMap.ker (mul.compr₂ ell) = Submodule.span K (Set.range parameters) ∧
-      LinearMap.BilinForm.finiteRank (mul.compr₂ ell) = c := by
-  apply hankelKernel_eq_parameterSpace_and_rank_of_linearIndependentParameters
-    (Submodule.span K (Set.range parameters)) mul hsymm ell hell hmul
-      (Submodule.span_le.mpr (Set.range_subset_iff.mpr hparametersKernel)) hAG
-      parameters hparameters rfl hU
+      LinearMap.BilinForm.finiteRank (mul.compr₂ ell) = c :=
+  hankelKernel_eq_parameterSpan_and_rank_of_gorensteinCertificate
+    mul hsymm ell hell hmul parameters hparameters hparametersKernel
+      hAG.toGorensteinCertificate hU
 
 end ArtinianGorensteinDegreeOneCertificate

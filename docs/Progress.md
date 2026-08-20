@@ -225,3 +225,6 @@
   components `𝒜`, the predicate `DegreeTwoGeneratedByDegreeOne 𝒜` states the paper's
   surjectivity of `R₁ ⊗ R₁ → R₂`; Lean derives `R₁ * R₁ = R₂` and a direct graded Theorem 4.3
   endpoint using `ell : R₂ → K`.
+- Proved the zero-annihilator Gorenstein certificate equivalent to the intrinsic perfect-pairing
+  certificate using symmetry of quotient multiplication. The strongest pointwise and graded
+  rank endpoints now accept the weaker one-dimensional-socle/zero-annihilator data directly.
