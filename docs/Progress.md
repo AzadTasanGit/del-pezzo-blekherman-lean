@@ -244,3 +244,7 @@
   componentwise Hilbert-series identity supplied by quotienting by the chosen `(m+1)`-term
   linear regular sequence. Lean now converts this identity to the full `(1,c,1,0,...)`
   reduction certificate and applies the strongest Theorem 4.3 endpoint automatically.
+- Replaced that global numerical input by the local finite-difference relation attached to each
+  degree-one nonzerodivisor. Proved one step multiplies the Hilbert series by `1-t`, proved the
+  `(m+1)`-step iteration, connected the first and last Hilbert functions to the ambient ring and
+  Artinian reduction, and added the corresponding direct Theorem 4.3 endpoint.

@@ -29,6 +29,59 @@ def hilbertDegreeOne (m c : ℕ) : ℕ := m + 1 + c
 def hilbertDegreeTwo (m c : ℕ) : ℕ :=
   (m + 2) * (m + 1) / 2 + c * (m + 1) + 1
 
+/-- Formal power series attached to an abstract natural-valued Hilbert function. -/
+noncomputable def hilbertFunctionSeries (h : ℕ → ℕ) : PowerSeries ℤ :=
+  PowerSeries.mk fun d ↦ (h d : ℤ)
+
+@[simp]
+theorem coeff_hilbertFunctionSeries (h : ℕ → ℕ) (d : ℕ) :
+    coeff d (hilbertFunctionSeries h) = h d :=
+  by simp [hilbertFunctionSeries]
+
+/-- The component-dimension recurrence arising from the short exact sequence for quotienting
+by one degree-one nonzerodivisor: the quotient agrees in degree zero and, in degree `d+1`, its
+dimension plus the preceding ambient dimension equals the ambient dimension in degree `d+1`. -/
+structure DegreeOneReductionFinrankRelation (h reduced : ℕ → ℕ) : Prop where
+  zero : reduced 0 = h 0
+  succ : ∀ d, reduced (d + 1) + h d = h (d + 1)
+
+/-- One degree-one reduction multiplies the Hilbert series by `1-X`. -/
+theorem DegreeOneReductionFinrankRelation.hilbertFunctionSeries_eq_mul_one_sub_X
+    {h reduced : ℕ → ℕ} (hr : DegreeOneReductionFinrankRelation h reduced) :
+    hilbertFunctionSeries reduced = hilbertFunctionSeries h * (1 - X) := by
+  ext d
+  cases d with
+  | zero =>
+      rw [mul_sub, mul_one, map_sub, coeff_hilbertFunctionSeries, coeff_zero_mul_X]
+      simp only [coeff_hilbertFunctionSeries, sub_zero]
+      exact_mod_cast hr.zero
+  | succ d =>
+      rw [mul_sub, mul_one, map_sub]
+      simp only [coeff_hilbertFunctionSeries]
+      rw [show (X : PowerSeries ℤ) = X ^ 1 by simp, coeff_mul_X_pow]
+      rw [coeff_hilbertFunctionSeries]
+      have hd := hr.succ d
+      omega
+
+/-- A chain of the component-dimension recurrences produced by successively quotienting by
+degree-one nonzerodivisors. -/
+structure SuccessiveLinearReductionFinrankRelations
+    (h : ℕ → ℕ → ℕ) (n : ℕ) : Prop where
+  step : ∀ i, i < n → DegreeOneReductionFinrankRelation (h i) (h (i + 1))
+
+/-- Iterating `n` degree-one reductions multiplies the initial Hilbert series by `(1-X)^n`. -/
+theorem SuccessiveLinearReductionFinrankRelations.hilbertFunctionSeries_eq_mul_pow
+    {h : ℕ → ℕ → ℕ} {n : ℕ}
+    (hr : SuccessiveLinearReductionFinrankRelations h n) :
+    hilbertFunctionSeries (h n) = hilbertFunctionSeries (h 0) * (1 - X) ^ n := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+      rw [(hr.step n (by omega)).hilbertFunctionSeries_eq_mul_one_sub_X]
+      have hprefix : SuccessiveLinearReductionFinrankRelations h n :=
+        ⟨fun i hi ↦ hr.step i (by omega)⟩
+      rw [ih hprefix, pow_succ, mul_assoc]
+
 /-- The exact formal power series
 `(1 + c t + t²) / (1 - t)^(m+1)` from PDF equation (1), with integer coefficients. -/
 noncomputable def delPezzoHilbertSeries (m c : ℕ) : PowerSeries ℤ :=
@@ -114,10 +167,11 @@ theorem coeff_two_delPezzoHilbertSeries (m c : ℕ) :
 
 section GradedComponents
 
-universe u v
+universe u v w
 
-variable {K : Type u} {A : Type v}
+variable {K : Type u} {A : Type v} {B : Type w}
 variable [Field K] [AddCommGroup A] [Module K A]
+variable [AddCommGroup B] [Module K B]
 
 /-- A concrete bridge from a family of homogeneous components to equation (1): the integer
 coefficient of the PDF's formal Hilbert series equals the finrank of every component.  This
@@ -143,6 +197,40 @@ structure ArtinianReductionDenominatorRelation
   finrank_eq_coeff : ∀ d,
     (Module.finrank K (𝒜 d) : ℤ) =
       coeff d (delPezzoHilbertSeries m c * (1 - X) ^ (m + 1))
+
+/-- Component-dimension data for the successive quotients by the chosen linear parameters.
+The intermediate carriers need not be identified: only their Hilbert functions and the exact
+one-step recurrences are retained. -/
+structure SuccessiveLinearReductionComponentsRelation
+    (𝒜 : ℕ → Submodule K A) (ℬ : ℕ → Submodule K B) (n : ℕ) where
+  hilbertFunctions : ℕ → ℕ → ℕ
+  initial : ∀ d, hilbertFunctions 0 d = Module.finrank K (𝒜 d)
+  final : ∀ d, hilbertFunctions n d = Module.finrank K (ℬ d)
+  reductions : SuccessiveLinearReductionFinrankRelations hilbertFunctions n
+
+/-- Successive one-step finrank recurrences, starting from equation (1), construct the exact
+denominator relation for the final reduction. -/
+theorem SuccessiveLinearReductionComponentsRelation.toArtinianReductionDenominatorRelation
+    {𝒜 : ℕ → Submodule K A} {ℬ : ℕ → Submodule K B} {m c : ℕ}
+    (h : SuccessiveLinearReductionComponentsRelation 𝒜 ℬ (m + 1))
+    (hHilbert : DelPezzoHilbertSeriesCertificate 𝒜 m c) :
+    ArtinianReductionDenominatorRelation ℬ m c := by
+  have hinitial : hilbertFunctionSeries (h.hilbertFunctions 0) =
+      delPezzoHilbertSeries m c := by
+    ext d
+    rw [coeff_hilbertFunctionSeries, ← hHilbert.finrank_eq_coeff d]
+    exact_mod_cast h.initial d
+  have hseries := h.reductions.hilbertFunctionSeries_eq_mul_pow
+  refine ⟨fun d ↦ ?_⟩
+  calc
+    (Module.finrank K (ℬ d) : ℤ) =
+        coeff d (hilbertFunctionSeries (h.hilbertFunctions (m + 1))) := by
+          rw [coeff_hilbertFunctionSeries]
+          exact_mod_cast (h.final d).symm
+    _ = coeff d (hilbertFunctionSeries (h.hilbertFunctions 0) * (1 - X) ^ (m + 1)) :=
+      congrArg (coeff d) hseries
+    _ = coeff d (delPezzoHilbertSeries m c * (1 - X) ^ (m + 1)) := by
+      rw [hinitial]
 
 /-- The regular-sequence denominator relation and the checked cancellation identity construct
 the Artinian reduction's `(1,c,1)` Hilbert-series certificate. -/

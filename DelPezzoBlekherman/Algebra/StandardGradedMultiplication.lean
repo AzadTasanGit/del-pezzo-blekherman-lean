@@ -355,4 +355,39 @@ theorem hankelKernel_eq_parameterSpan_and_rank_of_artinianReductionDenominatorRe
     𝒜 hgenerated ell hell parameters hparameters hparametersKernel hHilbert ℬ
     hReductionDenominator.toHilbertSeriesCertificate eSocle hann
 
+/-- Successive-reduction form of the internal-graded Theorem 4.3 endpoint.  Instead of the
+global denominator identity, the caller supplies the one-step component-dimension recurrence
+for each of the `(m+1)` linear parameters. Lean iterates these recurrences, derives the exact
+denominator relation and `(1,c,1)` Hilbert function, and applies the Artinian Gorenstein rank
+argument. -/
+theorem hankelKernel_eq_parameterSpan_and_rank_of_successiveLinearReductions
+    (𝒜 : ℕ → Submodule K A) [SetLike.GradedMonoid 𝒜]
+    (hgenerated : DegreeTwoGeneratedByDegreeOne 𝒜)
+    (ell : 𝒜 2 →ₗ[K] K) (hell : ell ≠ 0)
+    {m c : ℕ}
+    (parameters : Fin (m + 1) → 𝒜 1)
+    (hparameters : LinearIndependent K parameters)
+    (hparametersKernel : ∀ i,
+      parameters i ∈ LinearMap.ker ((gradedDegreeOneMultiplication 𝒜).compr₂ ell))
+    (hHilbert : DelPezzoBlekherman.DelPezzoHilbertSeriesCertificate 𝒜 m c)
+    {B : Type z} [AddCommGroup B] [Module K B]
+    (ℬ : ℕ → Submodule K B)
+    (hReductions :
+      DelPezzoBlekherman.SuccessiveLinearReductionComponentsRelation 𝒜 ℬ (m + 1))
+    (eSocle : ℬ 2 ≃ₗ[K]
+      (𝒜 2 ⧸ parameterProductSubmodule
+        (Submodule.span K (Set.range parameters)) (gradedDegreeOneMultiplication 𝒜)))
+    (hann : ∀ x,
+      (∀ y, parameterProductQuotientMultiplication
+        (Submodule.span K (Set.range parameters))
+        (gradedDegreeOneMultiplication 𝒜)
+        (gradedDegreeOneMultiplication_symmetric 𝒜) x y = 0) → x = 0) :
+    LinearMap.ker ((gradedDegreeOneMultiplication 𝒜).compr₂ ell) =
+        Submodule.span K (Set.range parameters) ∧
+      @LinearMap.BilinForm.finiteRank K (𝒜 1) _ _ _ hHilbert.moduleFinite_one
+        ((gradedDegreeOneMultiplication 𝒜).compr₂ ell) = c :=
+  hankelKernel_eq_parameterSpan_and_rank_of_artinianReductionDenominatorRelation
+    𝒜 hgenerated ell hell parameters hparameters hparametersKernel hHilbert ℬ
+    (hReductions.toArtinianReductionDenominatorRelation hHilbert) eSocle hann
+
 end ArtinianGorensteinDegreeOneCertificate

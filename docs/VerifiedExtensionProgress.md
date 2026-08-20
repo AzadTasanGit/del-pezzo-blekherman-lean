@@ -240,6 +240,10 @@ development state; the current integration outcome is recorded at the end.
     Its conversion theorem proves the full Artinian reduction certificate from the exact
     denominator-product coefficient identity, and the new strongest graded endpoint consumes
     this relation directly rather than asking independently for its `(1,c,1)` consequence.
+70. Decomposed the denominator identity into the local recurrence supplied by each degree-one
+    nonzerodivisor. Proved a single recurrence multiplies the Hilbert series by `1-t`, iterated
+    a chain of `(m+1)` recurrences, tied its endpoints to the ambient and Artinian component
+    finranks, and made the strongest graded rank endpoint consume this successive-reduction data.
 
 ### Integration outcome
 

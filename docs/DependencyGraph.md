@@ -43,6 +43,12 @@ equation (1) * (1-t)^(m+1)
   + linear equivalence with the canonical quotient socle
   -> one-dimensional canonical quotient socle
 
+one degree-one nonzerodivisor short exact sequence
+  -> quotient_d+1 + ambient_d = ambient_d+1
+  -> quotient Hilbert series = ambient Hilbert series * (1-t)
+  -> iterate over the (m+1) linear parameters
+  -> Artinian-reduction denominator relation
+
 one-dimensional socle + perfect Gorenstein multiplication pairing
   -> zero degree-one annihilator
   + J defined canonically as span(W * R1)
@@ -162,15 +168,16 @@ proper subspace of the Hankel radical
 
 ## Remaining upstream bridges
 
-1. Construct the equation-(1) component Hilbert-series certificate and the exact denominator
-   relation for quotienting by the chosen linear regular sequence, together with the
+1. Construct the equation-(1) component Hilbert-series certificate and prove the checked
+   component-finrank recurrence for each successive quotient by the chosen linear regular
+   sequence, together with the
    reduction-to-canonical-quotient socle equivalence, the socle-annihilator property, and the
    stronger `(1,c,1)` homogeneous free-basis certificate directly from the PDF's arithmetically
    Gorenstein, Cohen--Macaulay, Hilbert-series, regular-sequence, and homogeneous-system-of-
-   parameters hypotheses. The denominator relation now constructs the Artinian component
-   certificate using the checked cancellation and full numerator Hilbert function; once the
-   equivalence and annihilator input are supplied, the one-dimensional quotient socle
-   certificate, ambient descent, and perfect-Hankel conclusion are automatic.
+   parameters hypotheses. Iteration of those local recurrences, the denominator relation, the
+   Artinian component certificate, and the full numerator Hilbert function are checked; once the
+   equivalence and annihilator input are supplied, the one-dimensional quotient socle certificate,
+   ambient descent, and perfect-Hankel conclusion are automatic.
 2. Identify the paper's concrete projective fiber evaluation maps with the checked abstract
    degree-one hyperplane, degree-two multiplication, and normalized complex-block models.
 3. Prove the SOS cone itself is closed (the checked dual theorem already handles its closure) and

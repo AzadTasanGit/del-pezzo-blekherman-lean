@@ -86,7 +86,7 @@ axiomatized silently.
 The project therefore proves the independent finite-dimensional theorems directly,
 packages the perfect-pairing conclusion needed from the Gorenstein reduction as a
 transparent algebraic interface. The Artinian numerator and its `(1,c,1,0,...)` component
-dimensions are now checked locally; the remaining numerical input is the exact denominator
-relation produced by the actual regular sequence. Deriving that relation, the socle equivalence,
-and the annihilator property from the PDF's ring-theoretic hypotheses remains a named bridge
+dimensions are now checked locally, as are the iteration and formal-series consequences of the
+one-step finrank recurrence. Deriving that recurrence from multiplication by each actual regular
+parameter, together with the socle equivalence and annihilator property, remains a named bridge
 task. No theorem currently marked proved assumes an unexplained custom axiom.
