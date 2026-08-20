@@ -213,6 +213,11 @@ development state; the current integration outcome is recorded at the end.
     surjective `Submodule.mulMap'`, proved symmetry from commutativity, and therefore obtained
     symmetric-square surjectivity automatically. The resulting ring-theoretic Theorem 4.3
     endpoint no longer assumes symmetry or degree-two generation separately.
+64. Transported canonical product multiplication to the paper's named degree-two piece. From
+    `U * U = Q`, constructed `U × U → Q`, proved the symmetric-square map onto `Q`, and obtained
+    an exact-kernel/rank endpoint using the original functional `ell : Q → K`. The remaining
+    standard-graded bridge is now the explicit equality itself, not an abstract surjectivity
+    hypothesis.
 
 ### Integration outcome
 

@@ -218,3 +218,6 @@
   `U × U → U * U` is proved symmetric and symmetric-square-surjective using mathlib's
   surjective submodule tensor multiplication, then instantiated in the pointwise parameter
   kernel/rank theorem.
+- Added transport to a named degree-two graded piece. Given `U * U = Q`, Lean constructs
+  `U × U → Q`, proves its symmetric-square map surjective, and states the rank theorem for the
+  original functional on `Q`; no abstract multiplication map remains in this endpoint.

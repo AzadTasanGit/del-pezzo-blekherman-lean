@@ -131,6 +131,8 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
   valued in `U * U`; mathlib's `Submodule.mulMap'_surjective` proves the tensor map is onto that
   product submodule, and commutativity proves symmetry. The symmetric-square generation input
   and both structural multiplication hypotheses are therefore discharged internally.
+- an explicit equality `U * U = Q` transports this multiplication to a named degree-two piece
+  `Q`; the resulting endpoint accepts the paper's original functional `ell : Q → K` directly.
 
 ## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`
 

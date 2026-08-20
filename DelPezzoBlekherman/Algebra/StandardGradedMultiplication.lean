@@ -66,6 +66,44 @@ theorem symmetricSquare_submoduleProductMultiplication_surjective (U : Submodule
     (submoduleProductMultiplication U) (submoduleProductMultiplication_symmetric U)
     (tensorProduct_lift_submoduleProductMultiplication_surjective U)
 
+/-- Canonical multiplication transported from `U * U` to a named degree-two submodule `Q`
+identified with that product submodule. -/
+def submoduleMultiplicationToDegreeTwo
+    (U Q : Submodule K A) (hQ : U * U = Q) : U →ₗ[K] U →ₗ[K] Q :=
+  (submoduleProductMultiplication U).compr₂ (LinearEquiv.ofEq (U * U) Q hQ).toLinearMap
+
+@[simp]
+theorem submoduleMultiplicationToDegreeTwo_apply
+    (U Q : Submodule K A) (hQ : U * U = Q) (x y : U) :
+    ((submoduleMultiplicationToDegreeTwo U Q hQ x y : Q) : A) = (x : A) * (y : A) := by
+  subst Q
+  simp [submoduleMultiplicationToDegreeTwo]
+
+/-- Transport to a named degree-two piece preserves symmetry. -/
+theorem submoduleMultiplicationToDegreeTwo_symmetric
+    (U Q : Submodule K A) (hQ : U * U = Q) :
+    ∀ x y, submoduleMultiplicationToDegreeTwo U Q hQ x y =
+      submoduleMultiplicationToDegreeTwo U Q hQ y x := by
+  intro x y
+  apply Subtype.ext
+  simp only [submoduleMultiplicationToDegreeTwo_apply]
+  exact mul_comm _ _
+
+/-- If the named degree-two piece is the product of degree one with itself, its symmetric-square
+multiplication is surjective. -/
+theorem symmetricSquare_submoduleMultiplicationToDegreeTwo_surjective
+    (U Q : Submodule K A) (hQ : U * U = Q) :
+    Function.Surjective (symmetricSquareMultiplication
+      (submoduleMultiplicationToDegreeTwo U Q hQ)
+      (submoduleMultiplicationToDegreeTwo_symmetric U Q hQ)) := by
+  apply (symmetricSquareMultiplication_surjective_iff_tensorProduct_lift_surjective
+    (submoduleMultiplicationToDegreeTwo U Q hQ)
+    (submoduleMultiplicationToDegreeTwo_symmetric U Q hQ)).2
+  rw [submoduleMultiplicationToDegreeTwo, TensorProduct.lift_compr₂,
+    tensorProduct_lift_submoduleProductMultiplication]
+  exact (LinearEquiv.ofEq (U * U) Q hQ).surjective.comp
+    (Submodule.mulMap'_surjective U U)
+
 /-- Ring-theoretic endpoint for the rank calculation in PDF Theorem 4.3.  For the canonical
 multiplication `U × U → U * U` in a commutative algebra, symmetry and degree-two generation
 are discharged internally; the remaining algebraic input is exactly the perfect pairing on the
@@ -89,6 +127,33 @@ theorem hankelKernel_eq_parameterSpan_and_rank_of_submoduleProductMultiplication
   hankelKernel_eq_parameterSpan_and_rank_of_parameters_mem_hankelKernel
     (submoduleProductMultiplication U) (submoduleProductMultiplication_symmetric U)
     ell hell (symmetricSquare_submoduleProductMultiplication_surjective U)
+    parameters hparameters hparametersKernel hAG hU
+
+/-- Degree-piece form of the ring-theoretic Theorem 4.3 endpoint.  A supplied identification
+`U * U = Q` turns the canonical product span into the named degree-two piece, so the original
+functional `ell : Q → K` is used without any abstract multiplication or generation hypothesis. -/
+theorem hankelKernel_eq_parameterSpan_and_rank_of_degreeTwo_eq_product
+    (U Q : Submodule K A) (hQ : U * U = Q)
+    [Module.Finite K U]
+    (ell : Q →ₗ[K] K) (hell : ell ≠ 0)
+    {m c : ℕ}
+    (parameters : Fin (m + 1) → U)
+    (hparameters : LinearIndependent K parameters)
+    (hparametersKernel : ∀ i,
+      parameters i ∈ LinearMap.ker ((submoduleMultiplicationToDegreeTwo U Q hQ).compr₂ ell))
+    (hAG : ParameterProductPerfectPairingCertificate
+      (Submodule.span K (Set.range parameters))
+      (submoduleMultiplicationToDegreeTwo U Q hQ)
+      (submoduleMultiplicationToDegreeTwo_symmetric U Q hQ))
+    (hU : Module.finrank K U = m + c + 1) :
+    LinearMap.ker ((submoduleMultiplicationToDegreeTwo U Q hQ).compr₂ ell) =
+        Submodule.span K (Set.range parameters) ∧
+      LinearMap.BilinForm.finiteRank
+        ((submoduleMultiplicationToDegreeTwo U Q hQ).compr₂ ell) = c :=
+  hankelKernel_eq_parameterSpan_and_rank_of_parameters_mem_hankelKernel
+    (submoduleMultiplicationToDegreeTwo U Q hQ)
+    (submoduleMultiplicationToDegreeTwo_symmetric U Q hQ) ell hell
+    (symmetricSquare_submoduleMultiplicationToDegreeTwo_surjective U Q hQ)
     parameters hparameters hparametersKernel hAG hU
 
 end ArtinianGorensteinDegreeOneCertificate
