@@ -192,9 +192,14 @@ development state; the current integration outcome is recorded at the end.
     Theorem 4.3 endpoint directly from `ParameterProductPerfectPairingCertificate`.
 59. Matched the paper's standard-graded degree-two generation statement literally. Constructed
     the symmetric square as the tensor square modulo swap relations, proved that symmetric
-    multiplication descends to `Sym²(U) → Q`, and proved that surjectivity of this map implies
+    multiplication descends to `Sym²(U) → Q`, and proved that its surjectivity is equivalent to
     surjectivity of the tensor lift. The strongest Theorem 4.3 chain now consumes the
-    symmetric-square hypothesis appearing in the PDF.
+    symmetric-square hypothesis appearing in the PDF without changing mathematical strength.
+60. Removed the auxiliary socle-coordinate choice from the remaining perfect-pairing interface.
+    `ParameterProductPerfectPairingCertificate.perfect` now states nondegeneracy of the
+    socle-valued multiplication directly. Proved that any canonical coordinate on its
+    one-dimensional target preserves nondegeneracy, while intrinsic perfectness directly gives
+    the annihilator certificate used by the ambient rank theorem.
 
 ### Integration outcome
 

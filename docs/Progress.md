@@ -203,3 +203,7 @@
   not yet expose their universal property, constructed `SymmetricSquare` as the tensor square
   modulo swap relations, descended every symmetric multiplication through it, and proved that
   surjectivity of `Sym²(U) → Q` supplies the tensor-product spanning lemma used internally.
+- Made `ParameterProductPerfectPairingCertificate` intrinsic: its perfectness field is now the
+  nondegeneracy of the socle-valued multiplication itself, exactly as in Proposition 2.2, with
+  no chosen coordinate. Proved separately that the canonical coordinate on the one-dimensional
+  socle yields the earlier nondegenerate scalar pairing.

@@ -106,7 +106,8 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
 - the tensor square modulo swap relations gives a local `SymmetricSquare`, and every symmetric
   multiplication descends canonically to `Sym²(R₁) → R₂`;
 - if this paper-facing symmetric-square multiplication is surjective, then the tensor-linearized
-  multiplication is surjective, so a nonzero functional on `R₂` cannot vanish on every product.
+  multiplication is surjective (and conversely), so a nonzero functional on `R₂` cannot vanish
+  on every product.
   The strongest endpoint now uses exactly the PDF's `Sym²(R₁) → R₂` generation statement
   and the original `ell ≠ 0`, rather than a separate Hankel-nonzeroness hypothesis.
 - the degree-two relation space can be chosen canonically as `span(W·R₁)`; the product
@@ -118,8 +119,9 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
   outputs: the canonical quotient socle has dimension one and its degree-one multiplication
   has zero annihilator.
 - `ParameterProductPerfectPairingCertificate` states the Proposition 2.2 output in the PDF's
-  own form: a one-dimensional socle whose scalar degree-one multiplication pairing is perfect.
-  Perfectness proves the annihilator property internally and feeds the same ambient endpoint.
+  own intrinsic form: a one-dimensional socle whose socle-valued degree-one multiplication is
+  nondegenerate. Perfectness proves the annihilator property internally; choosing the canonical
+  socle coordinate is separately proved to produce a nondegenerate scalar pairing.
 
 ## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`
 

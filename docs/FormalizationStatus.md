@@ -101,10 +101,11 @@ Current global count: **0 `sorry`, 0 `admit`, 0 custom `axiom` declarations**.
   dimension `m+1` now derives the degree-one quotient dimension `c`; the remaining
   Proposition 2.2 interface consists exactly of the canonical quotient's one-dimensional
   degree-two socle and its annihilator property).
-- `ParameterProductPerfectPairingCertificate.toGorensteinCertificate` and
+- `ParameterProductPerfectPairingCertificate.scalarPairing_nondegenerate`,
+  `ParameterProductPerfectPairingCertificate.toGorensteinCertificate`, and
   `hankelKernel_eq_parameterSpace_and_rank_of_perfectPairingCertificate` (the perfect scalar
-  Gorenstein pairing itself now derives the zero-annihilator property and feeds the strongest
-  ambient kernel/rank endpoint).
+  pairing is derived from the intrinsic socle-valued perfect Gorenstein multiplication; the
+  latter directly gives the zero-annihilator property and feeds the strongest endpoint).
 - The degree-one/degree-two coefficient formulas, quadratic-deficiency polynomial
   identity, numerator-at-one degree calculation, and `a`-invariant arithmetic from
   Proposition 2.1 (`Algebra.HilbertArithmetic`).

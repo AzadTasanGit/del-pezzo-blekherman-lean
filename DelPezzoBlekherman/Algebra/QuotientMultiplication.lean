@@ -149,6 +149,14 @@ def symmetricSquareMultiplication
     (symmetricSquareRelations_le_ker_tensorProduct_lift mul hsymm)
 
 @[simp]
+theorem symmetricSquareMultiplication_mk
+    (mul : U →ₗ[K] U →ₗ[K] Q)
+    (hsymm : ∀ x y, mul x y = mul y x) (t : TensorProduct K U U) :
+    symmetricSquareMultiplication mul hsymm
+        ((symmetricSquareRelations (K := K) (U := U)).mkQ t) = TensorProduct.lift mul t := by
+  rfl
+
+@[simp]
 theorem symmetricSquareMultiplication_mk_tmul
     (mul : U →ₗ[K] U →ₗ[K] Q)
     (hsymm : ∀ x y, mul x y = mul y x) (x y : U) :
@@ -168,6 +176,27 @@ theorem tensorProduct_lift_surjective_of_symmetricSquareMultiplication_surjectiv
   obtain ⟨t, rfl⟩ :=
     (symmetricSquareRelations (K := K) (U := U)).mkQ_surjective z
   exact ⟨t, hz⟩
+
+/-- Conversely, tensor-product generation makes the descended symmetric-square multiplication
+surjective. -/
+theorem symmetricSquareMultiplication_surjective_of_tensorProduct_lift_surjective
+    (mul : U →ₗ[K] U →ₗ[K] Q)
+    (hsymm : ∀ x y, mul x y = mul y x)
+    (hmul : Function.Surjective (TensorProduct.lift mul)) :
+    Function.Surjective (symmetricSquareMultiplication mul hsymm) := by
+  intro q
+  obtain ⟨t, ht⟩ := hmul q
+  exact ⟨(symmetricSquareRelations (K := K) (U := U)).mkQ t, ht⟩
+
+/-- For symmetric multiplication, generation through the PDF's `Sym²(U)` map is equivalent to
+generation through the tensor-linearized multiplication map. -/
+theorem symmetricSquareMultiplication_surjective_iff_tensorProduct_lift_surjective
+    (mul : U →ₗ[K] U →ₗ[K] Q)
+    (hsymm : ∀ x y, mul x y = mul y x) :
+    Function.Surjective (symmetricSquareMultiplication mul hsymm) ↔
+      Function.Surjective (TensorProduct.lift mul) :=
+  ⟨tensorProduct_lift_surjective_of_symmetricSquareMultiplication_surjective mul hsymm,
+    symmetricSquareMultiplication_surjective_of_tensorProduct_lift_surjective mul hsymm⟩
 
 /-- If degree two is spanned by products of degree-one elements, then a nonzero degree-two
 functional gives a nonzero Hankel form.  Surjectivity of `TensorProduct.lift mul` is the precise
@@ -267,16 +296,34 @@ structure ParameterProductGorensteinCertificate
   socleAnnihilator : ∀ x,
     (∀ y, parameterProductQuotientMultiplication W mul hsymm x y = 0) → x = 0
 
-/-- The perfect-pairing form of the Artinian Gorenstein quotient data appearing in the PDF.
-It uses the canonical quotient multiplication and the coordinate on the one-dimensional socle
-chosen by `socleEquivOfFinrankEqOne`. -/
+/-- The intrinsic perfect-pairing form of the Artinian Gorenstein quotient data appearing in the
+PDF.  The multiplication takes values directly in the one-dimensional degree-two socle, without
+choosing a coordinate on that socle. -/
 structure ParameterProductPerfectPairingCertificate
     (W : Submodule K U) (mul : U →ₗ[K] U →ₗ[K] Q)
     (hsymm : ∀ x y, mul x y = mul y x) : Prop where
   socleFinrankOne : Module.finrank K (Q ⧸ parameterProductSubmodule W mul) = 1
-  perfect :
-    (parameterProductQuotientMultiplication W mul hsymm).compr₂
-      (socleEquivOfFinrankEqOne socleFinrankOne).toLinearMap |>.Nondegenerate
+  perfect : (parameterProductQuotientMultiplication W mul hsymm).Nondegenerate
+
+/-- Choosing the canonical coordinate on the one-dimensional socle turns the intrinsic
+socle-valued perfect pairing into a nondegenerate scalar pairing. -/
+theorem ParameterProductPerfectPairingCertificate.scalarPairing_nondegenerate
+    {W : Submodule K U} {mul : U →ₗ[K] U →ₗ[K] Q}
+    {hsymm : ∀ x y, mul x y = mul y x}
+    (h : ParameterProductPerfectPairingCertificate W mul hsymm) :
+    ((parameterProductQuotientMultiplication W mul hsymm).compr₂
+      (socleEquivOfFinrankEqOne h.socleFinrankOne).toLinearMap).Nondegenerate := by
+  constructor
+  · intro x hx
+    apply h.perfect.1 x
+    intro y
+    apply (socleEquivOfFinrankEqOne h.socleFinrankOne).injective
+    exact (hx y).trans (map_zero _).symm
+  · intro y hy
+    apply h.perfect.2 y
+    intro x
+    apply (socleEquivOfFinrankEqOne h.socleFinrankOne).injective
+    exact (hy x).trans (map_zero _).symm
 
 /-- A perfect scalar Gorenstein pairing has zero degree-one annihilator, so it supplies the
 annihilator-form certificate consumed by the ambient rank theorem. -/
@@ -286,11 +333,7 @@ theorem ParameterProductPerfectPairingCertificate.toGorensteinCertificate
     (h : ParameterProductPerfectPairingCertificate W mul hsymm) :
     ParameterProductGorensteinCertificate W mul hsymm where
   socleFinrankOne := h.socleFinrankOne
-  socleAnnihilator := by
-    intro x hx
-    apply h.perfect.1 x
-    intro y
-    simp only [LinearMap.compr₂_apply, hx y, map_zero]
+  socleAnnihilator := h.perfect.1
 
 variable [Module.Finite K U]
 
