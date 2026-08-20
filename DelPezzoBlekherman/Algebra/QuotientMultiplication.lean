@@ -517,4 +517,26 @@ theorem hankelKernel_eq_parameterSpace_and_rank_of_linearIndependentParameters
   rw [hW, finrank_span_eq_card hparameters]
   simp
 
+/-- Fully pointwise parameter-sequence endpoint for PDF Theorem 4.3.  Each chosen parameter is
+assumed to lie in the ambient Hankel kernel, exactly as in the paper; Lean proves that their
+entire span lies in the kernel before applying the canonical quotient argument. -/
+theorem hankelKernel_eq_parameterSpan_and_rank_of_parameters_mem_hankelKernel
+    (mul : U →ₗ[K] U →ₗ[K] Q)
+    (hsymm : ∀ x y, mul x y = mul y x)
+    (ell : Q →ₗ[K] K) (hell : ell ≠ 0)
+    (hmul : Function.Surjective (symmetricSquareMultiplication mul hsymm))
+    {m c : ℕ}
+    (parameters : Fin (m + 1) → U)
+    (hparameters : LinearIndependent K parameters)
+    (hparametersKernel : ∀ i, parameters i ∈ LinearMap.ker (mul.compr₂ ell))
+    (hAG : ParameterProductPerfectPairingCertificate
+      (Submodule.span K (Set.range parameters)) mul hsymm)
+    (hU : Module.finrank K U = m + c + 1) :
+    LinearMap.ker (mul.compr₂ ell) = Submodule.span K (Set.range parameters) ∧
+      LinearMap.BilinForm.finiteRank (mul.compr₂ ell) = c := by
+  apply hankelKernel_eq_parameterSpace_and_rank_of_linearIndependentParameters
+    (Submodule.span K (Set.range parameters)) mul hsymm ell hell hmul
+      (Submodule.span_le.mpr (Set.range_subset_iff.mpr hparametersKernel)) hAG
+      parameters hparameters rfl hU
+
 end ArtinianGorensteinDegreeOneCertificate

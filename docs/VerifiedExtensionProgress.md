@@ -204,6 +204,10 @@ development state; the current integration outcome is recorded at the end.
     the actual data chosen in Theorem 4.3: a linearly independent family indexed by
     `Fin (m+1)` whose range spans `W`. Lean derives `dim W=m+1` from this family and completes
     the same exact-kernel/rank calculation.
+62. Matched the paper's parameter selection pointwise: the strongest endpoint now assumes only
+    `parameters i ∈ ker Q_ell` for every index. Lean proves the span inclusion, builds the
+    canonical quotient from that span, and concludes that the full Hankel kernel equals the
+    parameter span and has rank `c`.
 
 ### Integration outcome
 

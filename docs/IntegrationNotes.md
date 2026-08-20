@@ -125,6 +125,8 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
 - an explicit linearly independent `Fin (m+1)` parameter family spanning `W` now derives
   `dim W=m+1` and feeds the final kernel/rank endpoint, matching the parameter choice made in
   Theorem 4.3.
+- the strongest endpoint only assumes each chosen parameter lies in `ker Q_ell`; span
+  containment is proved internally, matching the pointwise choice `fᵢ ∈ W_ell` in the paper.
 
 ## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`
 

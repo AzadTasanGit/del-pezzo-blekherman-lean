@@ -23,7 +23,8 @@ graded evaluation + radical Proj functoriality
 one-dimensional socle + perfect Gorenstein multiplication pairing
   -> zero degree-one annihilator
   + J defined canonically as span(W * R1)
-  + W contained in the ambient Hankel radical
+  + each chosen parameter lies in the ambient Hankel radical
+  -> their span W is contained in the ambient Hankel radical
   -> ell annihilates J
   -> ambient multiplication descends through R1/W in both arguments
   -> ell descends to the quotient socle R2/J

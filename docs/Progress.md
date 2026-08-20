@@ -210,3 +210,6 @@
 - Added the explicit parameter-sequence endpoint: a linearly independent `Fin (m+1)` family
   spanning the parameter space now proves `dim W=m+1` internally and yields the same exact
   ambient Hankel kernel and rank `c` conclusion.
+- Refined that endpoint to the paper's pointwise input. It now accepts proofs that each selected
+  parameter belongs to the ambient Hankel kernel and proves internally that their entire span
+  is contained there before identifying the span with the full kernel.
