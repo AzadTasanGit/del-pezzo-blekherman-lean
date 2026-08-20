@@ -162,13 +162,15 @@ proper subspace of the Hankel radical
 
 ## Remaining upstream bridges
 
-1. Construct the equation-(1) and Artinian-reduction component Hilbert-series certificates,
-   the reduction-to-canonical-quotient socle equivalence, the socle-annihilator property, and the
+1. Construct the equation-(1) component Hilbert-series certificate and the exact denominator
+   relation for quotienting by the chosen linear regular sequence, together with the
+   reduction-to-canonical-quotient socle equivalence, the socle-annihilator property, and the
    stronger `(1,c,1)` homogeneous free-basis certificate directly from the PDF's arithmetically
    Gorenstein, Cohen--Macaulay, Hilbert-series, regular-sequence, and homogeneous-system-of-
-   parameters hypotheses. Exact cancellation to the numerator and its full Hilbert function are
-   checked; once the equivalence and annihilator input are supplied, the one-dimensional quotient
-   socle certificate, ambient descent, and perfect-Hankel conclusion are now automatic.
+   parameters hypotheses. The denominator relation now constructs the Artinian component
+   certificate using the checked cancellation and full numerator Hilbert function; once the
+   equivalence and annihilator input are supplied, the one-dimensional quotient socle
+   certificate, ambient descent, and perfect-Hankel conclusion are automatic.
 2. Identify the paper's concrete projective fiber evaluation maps with the checked abstract
    degree-one hyperplane, degree-two multiplication, and normalized complex-block models.
 3. Prove the SOS cone itself is closed (the checked dual theorem already handles its closure) and

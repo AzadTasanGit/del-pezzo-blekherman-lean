@@ -240,3 +240,7 @@
   with the canonical parameter-product quotient socle. The new strongest internal-graded
   Theorem 4.3 endpoint constructs the quotient Gorenstein certificate from this reduction data
   and the remaining zero-annihilator property.
+- Narrowed the reduction input further to `ArtinianReductionDenominatorRelation`, the exact
+  componentwise Hilbert-series identity supplied by quotienting by the chosen `(m+1)`-term
+  linear regular sequence. Lean now converts this identity to the full `(1,c,1,0,...)`
+  reduction certificate and applies the strongest Theorem 4.3 endpoint automatically.

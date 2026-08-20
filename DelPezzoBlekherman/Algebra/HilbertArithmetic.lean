@@ -134,6 +134,26 @@ structure ArtinianReductionHilbertSeriesCertificate
   finrank_eq_coeff : ∀ d,
     (Module.finrank K (𝒜 d) : ℤ) = coeff d (delPezzoHilbertNumerator c)
 
+/-- The exact Hilbert-series relation supplied by quotienting by an `(m+1)`-term linear
+regular sequence in Proposition 2.2.  This structure deliberately records only the numerical
+consequence: constructing it from an actual regular sequence is the remaining commutative-
+algebra bridge. -/
+structure ArtinianReductionDenominatorRelation
+    (𝒜 : ℕ → Submodule K A) (m c : ℕ) : Prop where
+  finrank_eq_coeff : ∀ d,
+    (Module.finrank K (𝒜 d) : ℤ) =
+      coeff d (delPezzoHilbertSeries m c * (1 - X) ^ (m + 1))
+
+/-- The regular-sequence denominator relation and the checked cancellation identity construct
+the Artinian reduction's `(1,c,1)` Hilbert-series certificate. -/
+theorem ArtinianReductionDenominatorRelation.toHilbertSeriesCertificate
+    {𝒜 : ℕ → Submodule K A} {m c : ℕ}
+    (h : ArtinianReductionDenominatorRelation 𝒜 m c) :
+    ArtinianReductionHilbertSeriesCertificate 𝒜 c where
+  finrank_eq_coeff d := by
+    rw [← delPezzoHilbertSeries_mul_one_sub_pow m c]
+    exact h.finrank_eq_coeff d
+
 /-- Equation (1) forces the degree-zero component to have dimension one. -/
 theorem DelPezzoHilbertSeriesCertificate.finrank_zero
     {𝒜 : ℕ → Submodule K A} {m c : ℕ}

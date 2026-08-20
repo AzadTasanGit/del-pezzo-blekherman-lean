@@ -153,6 +153,10 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
   `ParameterProductGorensteinCertificate`; the strongest graded Theorem 4.3 endpoint now performs
   this construction internally and retains only the zero-annihilator property as a separate
   Gorenstein input.
+- `ArtinianReductionDenominatorRelation` records precisely the numerical identity produced by
+  quotienting by the `(m+1)` linear parameters. Its conversion theorem uses exact cancellation
+  to construct `ArtinianReductionHilbertSeriesCertificate`, so the strongest endpoint no longer
+  asks for that downstream certificate independently.
 
 ## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`
 
@@ -432,8 +436,9 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
 
 - derive finiteness, flat rank `c + 2`, and the appropriate homogeneous module structure from
   the arithmetically Gorenstein/Hilbert-series hypotheses;
-- derive the checked equation-(1) and Artinian-reduction Hilbert certificates, the identification
-  of the reduction's degree-two component with the canonical quotient socle, the
+- derive the checked equation-(1) Hilbert certificate and `ArtinianReductionDenominatorRelation`
+  from the actual regular sequence, the identification of the reduction's degree-two component
+  with the canonical quotient socle, the
   socle-annihilator property, and the finite free polynomial-module basis from the PDF's
   arithmetically Gorenstein/Cohen--Macaulay regular-sequence hypotheses; cancellation to
   `(1,c,1)` and all later kernel/rank reasoning are already automatic;

@@ -236,6 +236,10 @@ development state; the current integration outcome is recorded at the end.
     component-finrank consequences. Transported the degree-two value through an explicit socle
     equivalence to construct the canonical quotient's one-dimensional-socle certificate, and
     added a direct graded Theorem 4.3 endpoint requiring only the remaining zero-annihilator fact.
+69. Isolated the regular-sequence numerical bridge as `ArtinianReductionDenominatorRelation`.
+    Its conversion theorem proves the full Artinian reduction certificate from the exact
+    denominator-product coefficient identity, and the new strongest graded endpoint consumes
+    this relation directly rather than asking independently for its `(1,c,1)` consequence.
 
 ### Integration outcome
 
