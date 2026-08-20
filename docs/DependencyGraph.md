@@ -123,7 +123,11 @@ degree-two generation
   + concrete graded Hankel embedding
   + extreme dual functional
   -> extreme PSD Hankel form
-  -> exclusively a positive point evaluation or a basepoint-free Hankel kernel
+  -> exclusively a positive real point evaluation or no real evaluation basepoint
+  + a complex evaluation surjective over R
+  -> its real-part Hankel form is indefinite
+  -> kernel-face proportionality contradicts positive semidefiniteness
+  -> no rank-two complex evaluation basepoint
 
 proper-cone separation + compact strictly positive dual base
   -> negative extreme-ray separator
@@ -211,10 +215,12 @@ proper subspace of the Hankel radical
    fiber-rank results can be localized to this principal open after the numerical value is proved.
 2. Identify the paper's concrete projective fiber evaluation maps with the checked abstract
    degree-one hyperplane, degree-two multiplication, and normalized complex-block models.
-3. Extract a regular homogeneous parameter sequence from the concrete basepoint-free Hankel
-   kernel, then apply the checked native Gorenstein theorem to obtain kernel dimension `m+1` and
-   Hankel rank `c`. The concrete evaluation/basepoint-free extreme-ray dichotomy itself is now
-   proved.
+3. Prove that a nonreal projective point gives a real-rank-two (hence surjective) complex
+   degree-one evaluation, while a rank-one image comes from a real projective point. The
+   rank-two exclusion is now proved by the paper's indefinite-form argument. Then extract a
+   regular homogeneous parameter sequence from the resulting complex-basepoint-free Hankel
+   kernel and apply the checked native Gorenstein theorem to obtain kernel dimension `m+1` and
+   Hankel rank `c`.
 4. Supply ordinary evaluation continuity and identify real algebra points of the coordinate ring
    with `X(ℝ)` compatibly with projective evaluation. The rational-fiber-point algebraic lift,
    its exact generator coordinates, and recovery of the target direction are now checked.

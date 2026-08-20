@@ -72,8 +72,8 @@ signature.
 | Milestone | Owner | Exact next boundary | Acceptance condition | State |
 |---|---|---|---|---|
 | 1. Native algebraic boundary | Sol High | Complete the degree computation for the now-native finite surjective Proj morphism: prove that the parameter extension has generic rank `c+2` from the literal Hilbert numerator and regular hsop data, without a supplied free basis. | The rank and finite-surjective declarations expose none of the four algebra certificates listed above; the degree declaration must not expose one either. | Hankel rank and finite-surjective Proj endpoints complete; numerical degree is a recorded infrastructure blocker and is deferred until the graded quotient/multiplicity bridge is built |
-| 2. Concrete SOS and Hankel layer | Terra Medium | Instantiate `kernel_face_criterion` and `extreme_psd_evaluation_xor_basepointFree` for the concrete graded multiplication and evaluations. | `theorem1_1_i` and the evaluation branch and exclusive dichotomy of `theorem1_1_ii` compile with no Gram-kernel or abstract-dichotomy input. | complete: `theorem1_1_i`, `theorem1_1_ii_pointEvaluation`, and `theorem1_1_ii_dichotomy` compile for the concrete graded multiplication and evaluation maps |
-| 3. Kernel morphism and reduced fibers | Terra Medium; Sol High for a recorded blocker | Connect the concrete basepoint-free kernel to `AlgebraicGeometry.Proj.projectiveAevalOfRadical`; prove finite surjectivity and rank `c+2`, instantiate the discriminant open locus, evaluation hyperplane, nonzero relation coefficients, and degree-two evaluation equivalence. | `theorem1_1_iii` compiles without an H-vector/free-basis certificate or supplied fiber data. | queued |
+| 2. Concrete SOS and Hankel layer | Terra Medium | Instantiate `kernel_face_criterion` and the real/complex point-evaluation arguments for the concrete graded multiplication. | `theorem1_1_i`, the evaluation branch, the real-point dichotomy, and the rank-two complex-basepoint exclusion compile with no Gram-kernel or abstract-dichotomy input. | complete: the concrete part (i), real dichotomy, and paper's indefinite-form exclusion of nonreal rank-two evaluations compile |
+| 3. Kernel morphism and reduced fibers | Terra Medium; Sol High for a recorded blocker | Prove the projective evaluation adapter (real-line image iff real point; otherwise degree-one evaluation is onto `ℂ`), extract a regular hsop from the complex-basepoint-free kernel, connect it to `projectiveAevalOfRadical`, and finish rank `c+2` and the reduced-fiber data. | `theorem1_1_ii` and `theorem1_1_iii` compile without an H-vector/free-basis certificate or supplied fiber data. | active: complex linear-algebra exclusion and native kernel-rank adapter are complete; projective adapter and regular-parameter selection remain |
 | 4. Fiber classifications and topology | Terra Medium | Identify the concrete evaluation form with `ComplexBlockFamily`; prove relation-kernel nonnegativity and block non-isotropy; instantiate the pair bound and both reciprocal classifications. Prove ordinary evaluation continuity and identify the real coordinate-ring source with `X(ℝ)` compatibly with projective evaluation. | `theorem1_1_iv`, `theorem1_1_v`, and every premise required by the concrete SOS-length theorem compile without block or continuity assumptions. | queued |
 | 5. Final composition | Sol High review, Terra Medium integration | Add `theorem1_1_i` through `theorem1_1_vi`, compose them in `theorem1_1`, and reconcile every status document and audit entry. | All conditions in “Definition of done” hold. | queued |
 
@@ -102,8 +102,15 @@ signature.
 - `theorem1_1_ii_pointEvaluation`, proving directly that every nonzero real point evaluation
   spans an extreme ray of the concrete dual SOS cone;
 - `theorem1_1_ii_dichotomy`, proving that every concrete extreme dual ray is exclusively either
-  a positive point evaluation or has basepoint-free actual Hankel kernel. It consumes no supplied
-  Gram-kernel or abstract extreme-ray-dichotomy hypothesis.
+  a positive real point evaluation or its actual Hankel kernel has no common zero among the
+  supplied real evaluations. It consumes no supplied Gram-kernel or abstract
+  extreme-ray-dichotomy hypothesis;
+- `extreme_hankel_no_complex_basepoint_of_surjective_evaluation`, formalizing the paper's
+  indefinite `Re(e(u)e(v))` argument and excluding any complex basepoint whose degree-one
+  evaluation is onto `ℂ` as a real-linear map;
+- `theorem1_1_ii_kernelRank_of_arithmeticallyGorensteinParameters`, giving the dimension
+  `m+1` and rank `c` conclusions once the regular parameters in the concrete kernel are selected,
+  with no legacy algebra certificate in its public signature.
 
 `DelPezzoBlekherman/Geometry/Proj/Finite.lean` and `Geometry/Proj/Surjectivity.lean` now provide:
 

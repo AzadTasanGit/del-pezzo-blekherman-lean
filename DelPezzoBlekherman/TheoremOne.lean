@@ -431,4 +431,144 @@ theorem theorem1_1_ii_dichotomy
       _ = b • rankOneBilin (ev₁ x) := by
             rw [gradedHankelMap_gradedEvaluation_eq_rankOne]
 
+/-- Restriction of a complex point evaluation to a homogeneous component, regarded as a
+real-linear map. -/
+def gradedComplexEvaluation
+    {B : Type*} [CommRing B] [Algebra ℝ B]
+    (𝒜 : ℕ → Submodule ℝ B) (e : B →ₐ[ℝ] ℂ) (d : ℕ) :
+    𝒜 d →ₗ[ℝ] ℂ :=
+  e.toLinearMap.comp (𝒜 d).subtype
+
+@[simp]
+theorem gradedComplexEvaluation_apply
+    {B : Type*} [CommRing B] [Algebra ℝ B]
+    (𝒜 : ℕ → Submodule ℝ B) (e : B →ₐ[ℝ] ℂ) (d : ℕ) (q : 𝒜 d) :
+    gradedComplexEvaluation 𝒜 e d q = e q := by
+  rfl
+
+/-- The real part of a complex point evaluation on a homogeneous component. -/
+def gradedComplexRealPartEvaluation
+    {B : Type*} [CommRing B] [Algebra ℝ B]
+    (𝒜 : ℕ → Submodule ℝ B) (e : B →ₐ[ℝ] ℂ) (d : ℕ) :
+    𝒜 d →ₗ[ℝ] ℝ :=
+  Complex.reCLM.toLinearMap.comp (gradedComplexEvaluation 𝒜 e d)
+
+@[simp]
+theorem gradedComplexRealPartEvaluation_apply
+    {B : Type*} [CommRing B] [Algebra ℝ B]
+    (𝒜 : ℕ → Submodule ℝ B) (e : B →ₐ[ℝ] ℂ) (d : ℕ) (q : 𝒜 d) :
+    gradedComplexRealPartEvaluation 𝒜 e d q = (e q).re := by
+  rfl
+
+/-- The Hankel form obtained from the real part of a complex point evaluation is the form
+`(u,v) ↦ Re(e(u)e(v))` used in the proof of Lemma 4.1. -/
+@[simp]
+theorem gradedHankelMap_complexRealPartEvaluation_apply
+    {B : Type*} [CommRing B] [Algebra ℝ B]
+    (𝒜 : ℕ → Submodule ℝ B) [SetLike.GradedMonoid 𝒜]
+    (e : B →ₐ[ℝ] ℂ) (u v : 𝒜 1) :
+    gradedHankelMap 𝒜 (gradedComplexRealPartEvaluation 𝒜 e 2) u v =
+      (e u * e v).re := by
+  change (e ((gradedDegreeOneMultiplication 𝒜 u v : 𝒜 2) : B)).re = _
+  rw [gradedDegreeOneMultiplication_apply, map_mul]
+
+/-- The nonreal-point exclusion in Lemma 4.1.  If complex evaluation on degree one has
+real rank two (equivalently, is onto `ℂ`), it cannot vanish on the radical of an extreme
+positive-semidefinite Hankel form.  The proof is the paper's indefinite-form argument:
+`Re(e(u)e(v))` takes the diagonal values `1` and `-1`, whereas the kernel-face criterion
+would force it to be proportional to the positive-semidefinite extreme form. -/
+theorem extreme_hankel_no_complex_basepoint_of_surjective_evaluation
+    {B : Type*} [NormedCommRing B] [NormedAlgebra ℝ B]
+    (𝒜 : ℕ → Submodule ℝ B) [SetLike.GradedMonoid 𝒜]
+    [Module.Finite ℝ (𝒜 1)] [Module.Finite ℝ (𝒜 2)]
+    (hgenerated : DegreeTwoGeneratedByDegreeOne 𝒜)
+    (ell : (𝒜 2) →L[ℝ] ℝ)
+    (hell : SpansExtremeRay
+      (dualConeSet
+        (SOSConeDual.sosCone (fun u ↦ gradedDegreeOneMultiplication 𝒜 u u) :
+          Set (𝒜 2))) ell)
+    (e : B →ₐ[ℝ] ℂ)
+    (heSurj : Function.Surjective (gradedComplexEvaluation 𝒜 e 1)) :
+    ¬ LinearMap.ker (gradedHankelMap 𝒜 ell.toLinearMap) ≤
+      LinearMap.ker (gradedComplexEvaluation 𝒜 e 1) := by
+  let H := gradedHankelSubmodule 𝒜
+  let Q := gradedHankelMap 𝒜 ell.toLinearMap
+  let f := gradedComplexEvaluation 𝒜 e 1
+  let rho := gradedComplexRealPartEvaluation 𝒜 e 2
+  let P := gradedHankelMap 𝒜 rho
+  have hQext : SpansExtremeRay (psdIn H) Q :=
+    gradedHankel_extreme_of_functional_extreme 𝒜 hgenerated ell hell
+  intro hbase
+  have hPH : P ∈ H := ⟨rho, rfl⟩
+  have hkerQP : LinearMap.ker Q ≤ LinearMap.ker P := by
+    intro w hw
+    have hfw : f w = 0 := LinearMap.mem_ker.mp (hbase hw)
+    apply LinearMap.mem_ker.mpr
+    ext v
+    dsimp [P, rho]
+    change (e ((gradedDegreeOneMultiplication 𝒜 w v : 𝒜 2) : B)).re = 0
+    rw [gradedDegreeOneMultiplication_apply, map_mul]
+    have hew : e w = 0 := by simpa [f, gradedComplexEvaluation] using hfw
+    simp [hew]
+  obtain ⟨a, ha⟩ := kernel_face_unique_of_extreme
+    H (gradedHankelSubmodule_isSymm 𝒜) Q hQext P hPH hkerQP
+  obtain ⟨u, hu⟩ := heSurj 1
+  obtain ⟨v, hv⟩ := heSurj Complex.I
+  have hPu : P u u = 1 := by
+    dsimp [P, rho]
+    change (e ((gradedDegreeOneMultiplication 𝒜 u u : 𝒜 2) : B)).re = 1
+    rw [gradedDegreeOneMultiplication_apply, map_mul]
+    have heu : e u = 1 := by simpa [f, gradedComplexEvaluation] using hu
+    rw [heu]
+    norm_num
+  have hPv : P v v = -1 := by
+    dsimp [P, rho]
+    change (e ((gradedDegreeOneMultiplication 𝒜 v v : 𝒜 2) : B)).re = -1
+    rw [gradedDegreeOneMultiplication_apply, map_mul]
+    have hev : e v = Complex.I := by simpa [f, gradedComplexEvaluation] using hv
+    rw [hev]
+    norm_num
+  have hQu : 0 ≤ Q u u := hQext.1.2.isNonneg.nonneg u
+  have hQv : 0 ≤ Q v v := hQext.1.2.isNonneg.nonneg v
+  have hEqU : 1 = a * Q u u := by
+    rw [← hPu]
+    exact LinearMap.congr_fun (LinearMap.congr_fun ha u) u
+  have hEqV : -1 = a * Q v v := by
+    rw [← hPv]
+    exact LinearMap.congr_fun (LinearMap.congr_fun ha v) v
+  have haPos : 0 < a := by nlinarith
+  nlinarith
+
+/-- The dimension-and-rank assertion in the basepoint-free branch of Theorem 1.1(ii), once the
+regular degree-one parameters in the actual Hankel kernel have been chosen.  This is the
+continuous-functional adapter to the native arithmetically Gorenstein rank theorem; no legacy
+Hilbert, reduction, parameter-product, or free-module certificate occurs in its signature. -/
+theorem theorem1_1_ii_kernelRank_of_arithmeticallyGorensteinParameters
+    {B : Type*} [NormedCommRing B] [NormedAlgebra ℝ B]
+    (𝒜 : ℕ → Submodule ℝ B) [SetLike.GradedMonoid 𝒜]
+    [Module.Finite ℝ (𝒜 1)] [Module.Finite ℝ (𝒜 2)]
+    (hgenerated : DegreeTwoGeneratedByDegreeOne 𝒜)
+    {m c : ℕ}
+    (ell : (𝒜 2) →L[ℝ] ℝ) (hell : ell ≠ 0)
+    (parameters : Fin (m + 1) → 𝒜 1)
+    (hparameters : LinearIndependent ℝ parameters)
+    (hparametersKernel : ∀ i,
+      parameters i ∈ LinearMap.ker (gradedHankelMap 𝒜 ell.toLinearMap))
+    (hHilbert : ∀ d,
+      (Module.finrank ℝ (𝒜 d) : ℤ) =
+        PowerSeries.coeff d (delPezzoHilbertSeries m c))
+    (hAG : IsArithmeticallyGorenstein 𝒜 parameters) :
+    LinearMap.ker (gradedHankelMap 𝒜 ell.toLinearMap) =
+        Submodule.span ℝ (Set.range parameters) ∧
+      Module.finrank ℝ
+          (LinearMap.ker (gradedHankelMap 𝒜 ell.toLinearMap)) = m + 1 ∧
+      (gradedHankelMap 𝒜 ell.toLinearMap).finiteRank = c := by
+  exact hankelKernel_eq_parameterSpan_and_rank_of_arithmeticallyGorenstein
+    𝒜 hgenerated ell.toLinearMap (by
+      intro hellLinear
+      apply hell
+      apply ContinuousLinearMap.coe_injective
+      exact hellLinear)
+    parameters hparameters hparametersKernel hHilbert hAG
+
 end DelPezzoBlekherman

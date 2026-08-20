@@ -46,8 +46,11 @@ It derives degree-one separation from genuine Zariski density in the spectrum of
 coordinate ring; the coordinate basis and Gram map stay internal, so no Gram representation,
 Gram-kernel, or supplied closedness assumption appears in its public interface. The
 concrete point-evaluation branch and exclusive evaluation/basepoint-free-kernel dichotomy of
-Theorem 1.1(ii) are also proved without a supplied Gram-kernel or abstract dichotomy. Extracting
-regular parameters from that kernel, the Hilbert-numerator proof of degree `c+2`, and the
-remaining geometric conclusions still remain.
+Theorem 1.1(ii) are also proved without a supplied Gram-kernel or abstract dichotomy. The
+paper's indefinite-form argument now excludes every complex basepoint whose degree-one
+evaluation has real rank two, and the native Gorenstein theorem supplies the kernel dimension
+and Hankel rank once regular parameters have been selected. Identifying real versus nonreal
+projective evaluations, extracting those regular parameters, proving degree `c+2` from the
+Hilbert numerator, and the remaining geometric conclusions still remain.
 See `docs/CompletionPlan.md` for the authoritative critical path and
 `docs/FormalizationStatus.md` for the detailed inventory.
