@@ -165,7 +165,8 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
   `1-t` at each stage and directly constructs both `ArtinianReductionDenominatorRelation` and
   the final `(1,c,1)` Hilbert-series certificate. The direct strongest graded endpoint consumes
   this varying-carrier chain after an explicit degreewise linear equivalence identifies its
-  initial carrier with the ambient algebra; this transport is necessary because a concrete
+  initial carrier with the ambient algebra. The same transport now directly constructs both the
+  denominator relation and the final `(1,c,1)` certificate; it is necessary because a concrete
   quotient model can carry a module instance distinct from the algebra-induced one.
 
 ## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`

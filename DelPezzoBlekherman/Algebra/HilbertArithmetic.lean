@@ -378,6 +378,38 @@ theorem
     ArtinianReductionHilbertSeriesCertificate (𝒞 ⟨m + 1, by omega⟩) c :=
   h.toArtinianReductionDenominatorRelation hHilbert |>.toHilbertSeriesCertificate
 
+namespace SuccessiveDegreeOneReductionComponentExactSequences
+
+/-- A degreewise identification of the initial carrier with an ambient graded module transports
+an exact-sequence chain to the denominator relation for its final quotient. -/
+theorem toArtinianReductionDenominatorRelationOfInitialEquiv
+    {K : Type u} {m c : ℕ} {C : Fin (m + 2) → Type v} {D : Type w}
+    [Field K] [∀ i, AddCommGroup (C i)] [∀ i, Module K (C i)]
+    [AddCommGroup D] [Module K D]
+    {𝒞 : ∀ i, ℕ → Submodule K (C i)} (𝒜 : ℕ → Submodule K D)
+    (h : SuccessiveDegreeOneReductionComponentExactSequences K (m + 1) C 𝒞)
+    (eInitial : ∀ d, 𝒞 0 d ≃ₗ[K] 𝒜 d)
+    (hHilbert : DelPezzoHilbertSeriesCertificate 𝒜 m c) :
+    ArtinianReductionDenominatorRelation (𝒞 ⟨m + 1, by omega⟩) m c :=
+  (h.toComponentsRelationOfInitialEquiv 𝒜 eInitial).toArtinianReductionDenominatorRelation
+    hHilbert
+
+/-- Consequently, the transported exact-sequence chain constructs the final Artinian
+`(1,c,1)` Hilbert-series certificate directly from the ambient equation-(1) certificate. -/
+theorem toArtinianReductionHilbertSeriesCertificateOfInitialEquiv
+    {K : Type u} {m c : ℕ} {C : Fin (m + 2) → Type v} {D : Type w}
+    [Field K] [∀ i, AddCommGroup (C i)] [∀ i, Module K (C i)]
+    [AddCommGroup D] [Module K D]
+    {𝒞 : ∀ i, ℕ → Submodule K (C i)} (𝒜 : ℕ → Submodule K D)
+    (h : SuccessiveDegreeOneReductionComponentExactSequences K (m + 1) C 𝒞)
+    (eInitial : ∀ d, 𝒞 0 d ≃ₗ[K] 𝒜 d)
+    (hHilbert : DelPezzoHilbertSeriesCertificate 𝒜 m c) :
+    ArtinianReductionHilbertSeriesCertificate (𝒞 ⟨m + 1, by omega⟩) c :=
+  ArtinianReductionDenominatorRelation.toHilbertSeriesCertificate
+    (h.toArtinianReductionDenominatorRelationOfInitialEquiv 𝒜 eInitial hHilbert)
+
+end SuccessiveDegreeOneReductionComponentExactSequences
+
 /-- Equation (1) forces the degree-zero component to have dimension one. -/
 theorem DelPezzoHilbertSeriesCertificate.finrank_zero
     {𝒜 : ℕ → Submodule K A} {m c : ℕ}

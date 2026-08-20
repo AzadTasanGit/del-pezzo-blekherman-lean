@@ -262,6 +262,11 @@
   consumes the varying-carrier chain directly. An explicit degreewise initial equivalence
   transports the chain to the ambient algebra without assuming incompatible module instances
   are definitionally equal.
+- Added the corresponding transported Hilbert consequences:
+  `toArtinianReductionDenominatorRelationOfInitialEquiv` and
+  `toArtinianReductionHilbertSeriesCertificateOfInitialEquiv` construct the quotient's
+  denominator identity and full Artinian Hilbert certificate from that same ambient
+  identification.
 - Composed that indexed exact-sequence bridge with the checked formal-series cancellation:
   `toArtinianReductionHilbertSeriesCertificate` now turns the actual chain and ambient
   equation-(1) certificate directly into the final Artinian `(1,c,1)` Hilbert certificate.

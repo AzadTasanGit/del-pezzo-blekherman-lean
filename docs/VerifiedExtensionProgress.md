@@ -257,6 +257,9 @@ development state; the current integration outcome is recorded at the end.
     transports its initial component by an explicit degreewise linear equivalence, avoiding any
     unsound assumption that a concrete quotient model's module instance is definitionally the
     ambient algebra's canonical one.
+74. Exposed the same initial-component transport for the complete regular-reduction Hilbert
+    calculation: it now directly produces both `ArtinianReductionDenominatorRelation` and the
+    final `(1,c,1)` Artinian certificate from the ambient equation-(1) certificate.
 73. Composed the indexed exact-sequence bridge with recurrence iteration and formal-series
     cancellation. It now constructs the final Artinian `(1,c,1)` Hilbert-series certificate
     directly from the ambient equation-(1) certificate.
