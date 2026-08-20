@@ -128,6 +128,17 @@ theorem finrank_parameterSpace_eq_add_one [Module.Finite K V]
   have hdim := W.finrank_quotient_add_finrank
   omega
 
+/-- Conversely, if the ambient degree-one space has dimension `m+c+1` and the chosen
+parameter space has dimension `m+1`, then its degree-one quotient has dimension `c`.  This is
+the direction used after choosing the homogeneous parameters in PDF Theorem 4.3. -/
+theorem finrank_quotient_eq_of_parameterSpace_finrank [Module.Finite K V]
+    (W : Submodule K V) {m c : ℕ}
+    (hV : Module.finrank K V = m + c + 1)
+    (hW : Module.finrank K W = m + 1) :
+    Module.finrank K (V ⧸ W) = c := by
+  have hdim := W.finrank_quotient_add_finrank
+  omega
+
 /-- The precise dimension/rank conclusion used in Theorem 4.3: perfect Artinian Gorenstein
 degree-one pairing plus the two Hilbert-function dimensions forces `dim W = m+1` and Hankel
 rank `c`. -/

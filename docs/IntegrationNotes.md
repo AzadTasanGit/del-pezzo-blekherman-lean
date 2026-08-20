@@ -103,12 +103,23 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
   the descended multiplication is proved to recover the original Hankel form on representatives;
 - the ambient-data endpoint constructs both descended maps internally and feeds them into the
   exact-kernel/dimension/rank theorem.
-- if the linearized multiplication `R₁ ⊗ R₁ → R₂` is surjective, a nonzero functional on
-  `R₂` cannot vanish on every product; hence its Hankel form is nonzero. The strongest endpoint
-  now assumes the paper's original `ell ≠ 0` rather than nonzeroness of the bilinear form.
+- the tensor square modulo swap relations gives a local `SymmetricSquare`, and every symmetric
+  multiplication descends canonically to `Sym²(R₁) → R₂`;
+- if this paper-facing symmetric-square multiplication is surjective, then the tensor-linearized
+  multiplication is surjective, so a nonzero functional on `R₂` cannot vanish on every product.
+  The strongest endpoint now uses exactly the PDF's `Sym²(R₁) → R₂` generation statement
+  and the original `ell ≠ 0`, rather than a separate Hankel-nonzeroness hypothesis.
 - the degree-two relation space can be chosen canonically as `span(W·R₁)`; the product
   containment is then tautological, while `W ⊆ ker Q_ell` proves `ell` annihilates the whole
   span and therefore descends to the quotient socle.
+- the known dimension `dim W=m+1` of the chosen homogeneous parameter span, together with
+  `dim R₁=m+c+1`, derives `dim(R₁/W)=c`; it is no longer a separate quotient assumption;
+- `ParameterProductGorensteinCertificate` isolates exactly the remaining Proposition 2.2
+  outputs: the canonical quotient socle has dimension one and its degree-one multiplication
+  has zero annihilator.
+- `ParameterProductPerfectPairingCertificate` states the Proposition 2.2 output in the PDF's
+  own form: a one-dimensional socle whose scalar degree-one multiplication pairing is perfect.
+  Perfectness proves the annihilator property internally and feeds the same ambient endpoint.
 
 ## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`
 

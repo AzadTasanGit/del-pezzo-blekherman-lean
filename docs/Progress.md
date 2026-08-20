@@ -189,3 +189,17 @@
   containment `W ⊆ ker Q_ell`, Lean now proves that `ell` annihilates this relation space and
   therefore descends to the quotient; the strongest endpoint no longer accepts a separately
   chosen `J`, product-containment proof, or annihilation proof.
+- Reoriented the Hilbert-dimension input to match the PDF's parameter choice: the known
+  `m+1` dimension of the parameter span now derives the quotient degree-one dimension `c`.
+  Added `ParameterProductGorensteinCertificate` to package exactly the canonical quotient's
+  one-dimensional socle and annihilator property, and connected it to the ambient kernel/rank
+  theorem.
+- Added the perfect-pairing form of the remaining Proposition 2.2 interface. Lean now derives
+  the quotient's zero-annihilator property directly from its one-dimensional perfect
+  Gorenstein multiplication pairing and feeds that result into the strongest Theorem 4.3
+  kernel/rank endpoint.
+- Replaced the strongest endpoint's tensor-product generation interface with the PDF's actual
+  symmetric-square multiplication map. Since current mathlib defines symmetric powers but does
+  not yet expose their universal property, constructed `SymmetricSquare` as the tensor square
+  modulo swap relations, descended every symmetric multiplication through it, and proved that
+  surjectivity of `Sym²(U) → Q` supplies the tensor-product spanning lemma used internally.

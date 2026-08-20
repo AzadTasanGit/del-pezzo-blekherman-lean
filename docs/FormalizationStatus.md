@@ -31,7 +31,7 @@ theorems wait on the geometric bridge.
 | Proposition 3.1 (closed SOS cone and dual) | `finiteSumCone_closed_fullDimensional_dual_of_separating_evaluations` and supporting Gram results | closedness, convexity, nonempty interior, and exact dual identity proved from Gram compatibility, degree-two spanning, and separation by real evaluations | instantiating those interfaces from the homogeneous coordinate ring and Zariski-dense real locus remains | none; interface hypotheses are explicit |
 | Lemma 3.2 (kernel-face criterion) | `kernel_face_criterion` and supporting declarations in `LinearAlgebra.KernelFace` / `LinearAlgebra.DiagonalDomination` | proved | stated for a finite-dimensional normed real space and a subspace consisting of symmetric forms, equivalent to the paper's finite-dimensional setting | none |
 | Corollary 3.3 / Lemma 4.1 (evaluation rays and dichotomy) | `rankOne_spansExtremeRay`, `extreme_psd_evaluation_xor_basepointFree` | abstract evaluation extremality and the exclusive “positive evaluation ray xor basepoint-free radical” dichotomy proved | identifying the geometric Hankel subspace and its point-evaluation family remains | none |
-| Lemmas 4.1--4.2 and Theorem 4.3 | `extreme_psd_evaluation_or_basepointFree`, `kernel_dimension_and_rank_from_perfect_quotient`, `hankelKernel_eq_parameterSpace_and_finrank_and_rank_of_parameterProductSubmodule` | compiling with dependency | the degree-two relation space is now constructed canonically as `span(W·R₁)`; radical containment makes the original functional descend, and degree-two generation makes its Hankel form nonzero. The actual kernel, kernel dimension, and rank are then computed. Constructing the basepoint-free parameter sequence and deriving the quotient Hilbert/socle properties from the PDF's AG/CM hypotheses remains | none; additional hypotheses are explicit |
+| Lemmas 4.1--4.2 and Theorem 4.3 | `extreme_psd_evaluation_or_basepointFree`, `kernel_dimension_and_rank_from_perfect_quotient`, `hankelKernel_eq_parameterSpace_and_rank_of_perfectPairingCertificate` | compiling with dependency | the degree-two relation space is canonical, radical containment descends the functional, surjectivity of the PDF's `Sym²(R₁) → R₂` multiplication gives Hankel nonzeroness, and parameter dimensions give quotient dimension `c`. The remaining quotient input is the one-dimensional perfect multiplication pairing in `ParameterProductPerfectPairingCertificate`, matching Proposition 2.2. Constructing the parameter sequence and deriving this certificate from the PDF's AG/CM hypotheses remains | none; additional hypotheses are explicit |
 | Proposition 5.1 | `vanishes_on_ker_iff_eq_smul`, `exists_projective_evaluation_omitting_hyperplane`, `interior_mvPolynomial_zeroSet_eq_empty`, `dense_compl_of_subset_mvPolynomial_zeroSet`, `surjective_of_dense_fiber_pair_bounds` plus planned geometric bridge | common-zero/projective-fiber linear algebra, construction of the omitted algebraic projective point, density of real principal opens/proper algebraic complements, continuous compact-image reduction, and the dense-reduced-locus perturbation logic proved | construction of the scheme morphism, its finiteness and degree, topological realization/continuity of the real projectivized evaluation map, and production of a nonzero equation cutting out the nonreduced-fiber locus remain | none |
 | Proposition 5.2 (reduced-section evaluation) | `injective_finrank_eq_sub_one_has_hyperplane_range`, `evaluationLinearEquivOfInjective`, `relation_coefficients_ne_zero_of_radical_line` in `Fiber.EvaluationAlgebra` | finite-dimensional consequences proved | saturation, reduced-point evaluation injectivity, and Gorenstein pairing derivation remain | none |
 | Proposition 5.3 | explanatory remark | no formal statement required | Cayley--Bacharach interpretation only | none |
@@ -83,16 +83,28 @@ Current global count: **0 `sorry`, 0 `admit`, 0 custom `axiom` declarations**.
   in `W * R₁` landing in the explicit degree-two relation space `J`, together with
   `ell(J)=0`, construct the quotient multiplication and induced functional rather than
   assuming them; the ambient Hankel kernel and rank conclusions then follow).
-- `hankelForm_ne_zero_of_tensorProduct_lift_surjective` and
+- `symmetricSquareMultiplication`,
+  `tensorProduct_lift_surjective_of_symmetricSquareMultiplication_surjective`,
+  `hankelForm_ne_zero_of_symmetricSquareMultiplication_surjective`, and
   `hankelKernel_eq_parameterSpace_and_finrank_and_rank_of_degreeTwoGenerated` (surjectivity
-  of the linearized multiplication `R₁ ⊗ R₁ → R₂` turns the paper's assumption `ell ≠ 0`
-  into nonzeroness of the associated Hankel form, eliminating that separate input from the
-  ambient endpoint).
+  of the PDF's multiplication `Sym²(R₁) → R₂` implies surjectivity of the tensor-linearized
+  map and turns the paper's assumption `ell ≠ 0` into nonzeroness of the associated Hankel
+  form, eliminating that separate input from the ambient endpoint).
 - `parameterProductSubmodule`, `parameterProductSubmodule_le_ker_functional`, and
   `hankelKernel_eq_parameterSpace_and_finrank_and_rank_of_parameterProductSubmodule` (the
   degree-two part of the ideal generated by `W` is the canonical span of `W·R₁`; containment
   of `W` in the Hankel radical proves `ell` annihilates this span, eliminating the supplied
   relation space and its annihilation hypothesis).
+- `finrank_quotient_eq_of_parameterSpace_finrank`,
+  `ParameterProductGorensteinCertificate`, and
+  `hankelKernel_eq_parameterSpace_and_rank_of_gorensteinCertificate` (the parameter-space
+  dimension `m+1` now derives the degree-one quotient dimension `c`; the remaining
+  Proposition 2.2 interface consists exactly of the canonical quotient's one-dimensional
+  degree-two socle and its annihilator property).
+- `ParameterProductPerfectPairingCertificate.toGorensteinCertificate` and
+  `hankelKernel_eq_parameterSpace_and_rank_of_perfectPairingCertificate` (the perfect scalar
+  Gorenstein pairing itself now derives the zero-annihilator property and feeds the strongest
+  ambient kernel/rank endpoint).
 - The degree-one/degree-two coefficient formulas, quadratic-deficiency polynomial
   identity, numerator-at-one degree calculation, and `a`-invariant arithmetic from
   Proposition 2.1 (`Algebra.HilbertArithmetic`).

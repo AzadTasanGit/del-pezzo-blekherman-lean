@@ -182,6 +182,19 @@ development state; the current integration outcome is recorded at the end.
     products `W·R₁`, proved product containment by construction, and proved that containment of
     `W` in the ambient Hankel radical forces `ell` to annihilate this entire span. The resulting
     endpoint constructs the quotient ideal piece and functional descent internally.
+57. Matched the parameter-sequence dimension flow in Theorem 4.3: `dim W=m+1` and
+    `dim R₁=m+c+1` now derive `dim(R₁/W)=c`. Named the canonical quotient multiplication and
+    packaged the remaining Proposition 2.2 consequences into
+    `ParameterProductGorensteinCertificate`, yielding a cleaner exact-kernel/rank endpoint.
+58. Restated the remaining Artinian Gorenstein interface in the PDF's perfect-pairing form.
+    Proved that the one-dimensional perfect scalar multiplication pairing has zero degree-one
+    annihilator, converted it to the prior certificate, and obtained a strongest ambient
+    Theorem 4.3 endpoint directly from `ParameterProductPerfectPairingCertificate`.
+59. Matched the paper's standard-graded degree-two generation statement literally. Constructed
+    the symmetric square as the tensor square modulo swap relations, proved that symmetric
+    multiplication descends to `Sym²(U) → Q`, and proved that surjectivity of this map implies
+    surjectivity of the tensor lift. The strongest Theorem 4.3 chain now consumes the
+    symmetric-square hypothesis appearing in the PDF.
 
 ### Integration outcome
 
