@@ -36,6 +36,7 @@ import DelPezzoBlekherman.SOS.ClosedCone
 import DelPezzoBlekherman.SOS.EvaluationContinuity
 import DelPezzoBlekherman.SOS.FiberFamilyLength
 import DelPezzoBlekherman.SOS.SurjectiveLength
+import DelPezzoBlekherman.TheoremOne
 
 /-!
 # A Del Pezzo--Blekherman separation theorem

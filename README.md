@@ -40,11 +40,11 @@ algebra boundary now states the regular Artinian reduction and perfect socle mul
 directly and proves the paper's Hankel kernel/rank conclusion from that predicate and the literal
 Hilbert equation. A basepoint-free homogeneous system of parameters now gives a finite
 surjective Proj morphism from explicit standard-graded hypotheses, without a supplied module
-basis or finiteness certificate. SOS-cone closedness now follows directly from multiplicative
-point evaluations that separate degree one; the coordinate basis and Gram map are constructed
-inside the proof, so no Gram representation or Gram-kernel hypothesis appears in its public
-interface. A graded-algebra adapter now constructs its multiplication and evaluation maps
-directly. The Hilbert-numerator proof of degree `c+2`, the density-to-separation bridge for the
-paper's coordinate ring, and the final geometric instantiations remain.
+basis or finiteness certificate. `DelPezzoBlekherman.theorem1_1_i` now proves the paper's concrete
+SOS cone is closed and identifies its dual with the positive-semidefinite Hankel functionals.
+It derives degree-one separation from genuine Zariski density in the spectrum of the reduced
+coordinate ring; the coordinate basis and Gram map stay internal, so no Gram representation,
+Gram-kernel, or supplied closedness assumption appears in its public interface. The
+Hilbert-numerator proof of degree `c+2` and the remaining five geometric parts remain.
 See `docs/CompletionPlan.md` for the authoritative critical path and
 `docs/FormalizationStatus.md` for the detailed inventory.

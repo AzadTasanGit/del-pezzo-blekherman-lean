@@ -7,6 +7,7 @@ import DelPezzoBlekherman.Algebra.SoclePairing
 import DelPezzoBlekherman.Algebra.QuotientMultiplication
 import DelPezzoBlekherman.Algebra.StandardGradedMultiplication
 import DelPezzoBlekherman.Algebra.NativeGorenstein
+import DelPezzoBlekherman.TheoremOne
 import DelPezzoBlekherman.Fiber.RealInertia
 import DelPezzoBlekherman.Fiber.RealCount
 import DelPezzoBlekherman.Fiber.RealFamily
@@ -292,3 +293,7 @@ import DelPezzoBlekherman.Convexity.ConditionalSeparation
 #print axioms PSDRangeOneExtreme.rankOne_extreme_decomposition
 #print axioms ConditionalSeparation.exists_normalized_extreme_separator
 #print axioms ConditionalSeparation.exists_basepointFree_extreme_separator
+#print axioms DelPezzoBlekherman.eq_zero_of_vanishes_on_zariskiDense_realEvaluations
+#print axioms DelPezzoBlekherman.gradedDegreeOneEvaluations_separate_of_zariskiDense
+#print axioms DelPezzoBlekherman.dualCone_gradedSOSCone_eq_psdHankel
+#print axioms DelPezzoBlekherman.theorem1_1_i

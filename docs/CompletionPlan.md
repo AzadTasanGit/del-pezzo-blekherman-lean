@@ -72,7 +72,7 @@ signature.
 | Milestone | Owner | Exact next boundary | Acceptance condition | State |
 |---|---|---|---|---|
 | 1. Native algebraic boundary | Sol High | Complete the degree computation for the now-native finite surjective Proj morphism: prove that the parameter extension has generic rank `c+2` from the literal Hilbert numerator and regular hsop data, without a supplied free basis. | The rank and finite-surjective declarations expose none of the four algebra certificates listed above; the degree declaration must not expose one either. | Hankel rank and finite-surjective Proj endpoints complete; numerical degree is a recorded infrastructure blocker and is deferred until the graded quotient/multiplicity bridge is built |
-| 2. Concrete SOS and Hankel layer | Terra Medium | Derive degree-one separation for the paper's coordinate ring from its real-density hypothesis and apply the new graded-algebra closedness adapter; then instantiate `kernel_face_criterion` and `extreme_psd_evaluation_xor_basepointFree`. | `theorem1_1_i` and the evaluation branch and exclusive dichotomy of `theorem1_1_ii` compile with no Gram-kernel or abstract-dichotomy input. | active: abstract closedness and graded multiplication/evaluation adapter complete; density-to-separation and paper-level instantiation are next |
+| 2. Concrete SOS and Hankel layer | Terra Medium | Instantiate `kernel_face_criterion` and `extreme_psd_evaluation_xor_basepointFree` for the concrete graded multiplication and evaluations. | `theorem1_1_i` and the evaluation branch and exclusive dichotomy of `theorem1_1_ii` compile with no Gram-kernel or abstract-dichotomy input. | active: `theorem1_1_i` complete from literal Hilbert dimensions and genuine Zariski density; part (ii) is next |
 | 3. Kernel morphism and reduced fibers | Terra Medium; Sol High for a recorded blocker | Connect the concrete basepoint-free kernel to `AlgebraicGeometry.Proj.projectiveAevalOfRadical`; prove finite surjectivity and rank `c+2`, instantiate the discriminant open locus, evaluation hyperplane, nonzero relation coefficients, and degree-two evaluation equivalence. | `theorem1_1_iii` compiles without an H-vector/free-basis certificate or supplied fiber data. | queued |
 | 4. Fiber classifications and topology | Terra Medium | Identify the concrete evaluation form with `ComplexBlockFamily`; prove relation-kernel nonnegativity and block non-isotropy; instantiate the pair bound and both reciprocal classifications. Prove ordinary evaluation continuity and identify the real coordinate-ring source with `X(ℝ)` compatibly with projective evaluation. | `theorem1_1_iv`, `theorem1_1_v`, and every premise required by the concrete SOS-length theorem compile without block or continuity assumptions. | queued |
 | 5. Final composition | Sol High review, Terra Medium integration | Add `theorem1_1_i` through `theorem1_1_vi`, compose them in `theorem1_1`, and reconcile every status document and audit entry. | All conditions in “Definition of done” hold. | queued |
@@ -89,6 +89,16 @@ signature.
 - `hankelKernel_eq_parameterSpan_and_rank_of_arithmeticallyGorenstein`, which concludes the
   actual Hankel kernel equality and rank `c` without any project-specific algebra certificate in
   its signature.
+
+`DelPezzoBlekherman/TheoremOne.lean` now provides the first paper-facing endpoint:
+
+- `eq_zero_of_vanishes_on_zariskiDense_realEvaluations`, which derives separation of coordinate
+  functions from actual density of the real evaluation primes in `PrimeSpectrum` and reducedness;
+- `dualCone_gradedSOSCone_eq_psdHankel`, which identifies the concrete continuous dual cone with
+  positive-semidefinite Hankel forms for the actual degree-one multiplication;
+- `theorem1_1_i`, proving both assertions of Theorem 1.1(i) from the literal Hilbert-component
+  dimensions and genuine Zariski density. Its signature contains neither a Gram-kernel condition
+  nor an assumed closedness/separation certificate.
 
 `DelPezzoBlekherman/Geometry/Proj/Finite.lean` and `Geometry/Proj/Surjectivity.lean` now provide:
 

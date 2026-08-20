@@ -205,17 +205,12 @@ proper subspace of the Hankel radical
    fiber-rank results can be localized to this principal open after the numerical value is proved.
 2. Identify the paper's concrete projective fiber evaluation maps with the checked abstract
    degree-one hyperplane, degree-two multiplication, and normalized complex-block models.
-3. Derive degree-one separation for the paper's coordinate ring from Zariski density and apply
-   `SOSConeDual.gradedSOSCone_isClosed_of_separating_evaluations`. That adapter already constructs
-   the graded multiplication and evaluation maps; the underlying theorem constructs the
-   coordinate Gram map and proves its kernel condition internally. Also instantiate the compact
-   strictly positive base for the concrete Hankel dual cone.
-4. Prove the full extreme-ray dichotomy inside the concrete Hankel subspace, using the checked PSD
+3. Prove the full extreme-ray dichotomy inside the concrete Hankel subspace, using the checked PSD
    kernel-face and rank-one evaluation extremality results.
-5. Supply ordinary evaluation continuity and identify real algebra points of the coordinate ring
+4. Supply ordinary evaluation continuity and identify real algebra points of the coordinate ring
    with `X(ℝ)` compatibly with projective evaluation. The rational-fiber-point algebraic lift,
    its exact generator coordinates, and recovery of the target direction are now checked.
-6. Identify the concrete fiber Hankel form with the normalized complex-block model and prove its
+5. Identify the concrete fiber Hankel form with the normalized complex-block model and prove its
    relation-kernel nonnegativity and block non-isotropy. The family-level at-most-one-pair
    conclusion is then automatic.
 Once these bridges are supplied, the checked arrows above compose to the separation and SOS-length
