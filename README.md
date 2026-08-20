@@ -49,8 +49,11 @@ concrete point-evaluation branch and exclusive evaluation/basepoint-free-kernel 
 Theorem 1.1(ii) are also proved without a supplied Gram-kernel or abstract dichotomy. The
 paper's indefinite-form argument now excludes every complex basepoint whose degree-one
 evaluation has real rank two, and the native Gorenstein theorem supplies the kernel dimension
-and Hankel rank once regular parameters have been selected. Identifying real versus nonreal
-projective evaluations, extracting those regular parameters, proving degree `c+2` from the
-Hilbert numerator, and the remaining geometric conclusions still remain.
+and Hankel rank once regular parameters have been selected. The actual successive regular
+quotients now derive the Artinian Hilbert function `(1,c,1)` and total length `c+2` directly from
+the literal Hilbert series. A basis-free origin-fiber theorem consequently proves generic degree
+`c+2` under flatness, with no H-vector or free-basis certificate. Identifying the native Proj
+points, extracting the regular parameters, deriving the standard CM-over-hsop flatness theorem,
+and completing the reduced-fiber and topological conclusions still remain.
 See `docs/CompletionPlan.md` for the authoritative critical path and
 `docs/FormalizationStatus.md` for the detailed inventory.

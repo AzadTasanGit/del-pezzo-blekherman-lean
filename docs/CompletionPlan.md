@@ -71,9 +71,9 @@ signature.
 
 | Milestone | Owner | Exact next boundary | Acceptance condition | State |
 |---|---|---|---|---|
-| 1. Native algebraic boundary | Sol High | Complete the degree computation for the now-native finite surjective Proj morphism: prove that the parameter extension has generic rank `c+2` from the literal Hilbert numerator and regular hsop data, without a supplied free basis. | The rank and finite-surjective declarations expose none of the four algebra certificates listed above; the degree declaration must not expose one either. | Hankel rank and finite-surjective Proj endpoints complete; numerical degree is a recorded infrastructure blocker and is deferred until the graded quotient/multiplicity bridge is built |
+| 1. Native algebraic boundary | Sol High | Prove that the finite parameter extension is flat from the paper's Cohen--Macaulay/regular-hsop hypotheses. | The finite-surjective and degree-`c+2` declarations expose none of the four algebra certificates listed above and flatness is derived rather than assumed. | Actual regular quotient Hilbert function and total dimension `c+2` are complete; basis-free generic rank `c+2` is complete under the single remaining native flatness input |
 | 2. Concrete SOS and Hankel layer | Terra Medium | Instantiate `kernel_face_criterion` and the real/complex point-evaluation arguments for the concrete graded multiplication. | `theorem1_1_i`, the evaluation branch, the real-point dichotomy, and the rank-two complex-basepoint exclusion compile with no Gram-kernel or abstract-dichotomy input. | complete: the concrete part (i), real dichotomy, and paper's indefinite-form exclusion of nonreal rank-two evaluations compile |
-| 3. Kernel morphism and reduced fibers | Terra Medium; Sol High for a recorded blocker | Instantiate the proved real-locus kernel correspondence for a native complex Proj point type, extract a regular hsop from the complex-basepoint-free kernel, connect it to `projectiveAevalOfRadical`, and finish rank `c+2` and the reduced-fiber data. | `theorem1_1_ii` and `theorem1_1_iii` compile without an H-vector/free-basis certificate or supplied fiber data. | active: complex linear-algebra exclusion, the real/nonreal projective dichotomy, their real-locus composition, and the native kernel-rank adapter are complete; native Proj-point instantiation and regular-parameter selection remain |
+| 3. Kernel morphism and reduced fibers | Terra Medium; Sol High for a recorded blocker | Instantiate the proved real-locus kernel correspondence for a native complex Proj point type, extract a regular hsop from the complex-basepoint-free kernel, derive flatness, connect it to `projectiveAevalOfRadical`, and construct the reduced-fiber data. | `theorem1_1_ii` and `theorem1_1_iii` compile without an H-vector/free-basis certificate, assumed flatness, or supplied fiber data. | active: complex linear-algebra exclusion, the real/nonreal projective dichotomy, native kernel rank, actual reduction length, and basis-free generic degree are complete; native Proj-point instantiation, regular-parameter selection, flatness, and reduced-fiber specialization remain |
 | 4. Fiber classifications and topology | Terra Medium | Identify the concrete evaluation form with `ComplexBlockFamily`; prove relation-kernel nonnegativity and block non-isotropy; instantiate the pair bound and both reciprocal classifications. Prove ordinary evaluation continuity and identify the real coordinate-ring source with `X(ℝ)` compatibly with projective evaluation. | `theorem1_1_iv`, `theorem1_1_v`, and every premise required by the concrete SOS-length theorem compile without block or continuity assumptions. | queued |
 | 5. Final composition | Sol High review, Terra Medium integration | Add `theorem1_1_i` through `theorem1_1_vi`, compose them in `theorem1_1`, and reconcile every status document and audit entry. | All conditions in “Definition of done” hold. | queued |
 
@@ -95,6 +95,13 @@ signature.
 - `idealQuotientComponentMapOfLE`, the canonical degreewise map after enlarging the ideal,
   together with its surjectivity and the proof that it composes to zero after multiplication by
   an element of the enlarged ideal;
+- the reverse kernel-to-range inclusion and the resulting concrete short exact sequence for
+  adjoining one regular degree-one parameter;
+- `degreeOneParameterPrefix_finrankRelations`, which iterates those actual quotient sequences;
+- `degreeOneParameterIdeal_finrank_eq_delPezzoHilbertNumerator`, which derives the literal
+  Artinian Hilbert function `(1,c,1,0,...)` from the paper's Hilbert equation; and
+- `degreeOneParameterIdeal_quotient_finrank`, which proves that the actual full parameter
+  quotient has total dimension `c+2`;
 - `IsArithmeticallyGorenstein`, the regular, Artinian, one-dimensional-socle and perfect-pairing
   predicate described above;
 - `moduleFinite_degreeOne_of_delPezzoHilbertSeries`, which consumes the literal equation rather
@@ -143,8 +150,13 @@ signature.
   which adds algebraic independence of the parameters and concludes finite surjectivity without
   accepting `RingHom.Finite`, a polynomial-module basis, or an H-vector certificate.
 
-`DelPezzoBlekherman/Algebra/GenericFiber.lean` and `Geometry/Proj/KernelFiber.lean` additionally
-provide:
+`DelPezzoBlekherman/Algebra/NativeParameterRank.lean`, `Algebra/GenericFiber.lean`, and
+`Geometry/Proj/KernelFiber.lean` additionally provide:
+
+- `genericRank_eq_degreeOneParameterIdeal_quotient_of_flat`, which identifies the basis-free
+  generic rank with the actual parameter-origin fiber for a finite flat extension;
+- `genericRank_eq_add_two_of_flat`, which combines this with the literal Hilbert calculation to
+  prove generic rank `c+2`, without a chosen module basis or project-specific certificate;
 
 - `Module.exists_nonzero_free_away_and_finrank_eq`, which proves that a finite module over a
   Noetherian domain becomes free after inverting one nonzero element, with localized rank equal
@@ -158,11 +170,10 @@ provide:
   endpoint.
 
 The internal construction of old interfaces in a proof is permitted; exposing one in a final
-signature is not. The currently open algebra task is only the degree-`c+2` half of the old
-finite-Proj/degree bridge. It is specified precisely in the blocker log below. A global
-polynomial-module basis may be introduced only if it is proved internally from the native
-hypotheses and used immediately to prove the degree; finiteness and surjectivity no longer need
-such a basis.
+signature is not. The numerical degree half of the old finite-Proj bridge is now complete under
+flatness. The remaining algebra task is the standard Cohen--Macaulay implication that a finite
+coordinate ring over its polynomial hsop subring is flat. A global polynomial-module basis is
+not needed for the degree, finiteness, or surjectivity.
 
 ## Task handoff format
 
@@ -232,11 +243,10 @@ reduction-exact-sequence package, `RingHom.Finite`, or the asserted finrank equa
    contains no Hilbert-numerator/multiplicity theorem.
 6. The flat-origin-fiber route was tested using Mathlib's
    `Ideal.finrank_fiber_eq_finrank`. Under `Module.Flat`, `Module.Finite`, and a domain base this
-   identifies the generic rank with the finrank of the parameter-origin fiber. The native
-   hypotheses do not currently derive `Module.Flat`; more importantly, even adding flatness as
-   honest Cohen--Macaulay data would still leave the same missing theorem identifying that fiber
-   degree by degree with the regular Artinian reduction and proving its total length is
-   `1 + c + 1` from the literal Hilbert series.
+   identifies the generic rank with the finrank of the parameter-origin fiber. This route is now
+   implemented: the fiber is identified with the actual parameter quotient and the new concrete
+   quotient recurrence proves its total length is `1 + c + 1`. Deriving `Module.Flat` is the
+   remaining step.
 7. A materially different local projective-dimension route was tested: localize the parameter
    ring at its homogeneous maximal ideal and use
    `ModuleCat.projectiveDimension_quotient_eq_add_length_of_isWeaklyRegular` successively along
@@ -292,52 +302,39 @@ it or a basis as input. Algebraic independence is then exactly the hsop input ne
 existing finite-plus-injective surjectivity theorem. This removes supplied `RingHom.Finite` and
 the free-basis certificate from the public finite-surjective endpoint.
 
-The concrete reduction infrastructure has also begun in
-`Algebra/NativeGorenstein.lean`: the degree-one parameter ideal is now proved homogeneous; its
-degree-`d` intersection with the actual homogeneous component is defined; and the quotient of
-that component is proved canonically equivalent to its range in the additive quotient by the
-ideal. Homogeneous multiplication now descends to these quotients, and regularity on the full
-ring quotient proves its degreewise injectivity. Enlarging the ideal also gives the canonical
-surjective right-hand map, and its composite with multiplication is proved zero. This constructs
-both maps, injectivity, surjectivity, and the complex condition of the missing exact sequence
-without a certificate. The remaining local step is the reverse kernel-to-range inclusion after
-adjoining the next parameter; the global numerical degree `c+2` is therefore still open.
+**Resolution of the numerical blocker.** The missing concrete quotient development is now
+implemented in `Algebra/NativeGorenstein.lean`. Lean proves the reverse kernel-to-range
+inclusion, obtains the one-step finrank recurrence for the actual successive parameter ideals,
+iterates it, derives the quotient Hilbert function `(1,c,1,0,...)` from the literal Hilbert
+series, and proves
+`degreeOneParameterIdeal_quotient_finrank : finrank K (C / (parameters)) = c+2`.
 
-**Remaining exact blocker.** One reusable theorem remains, not a new certificate structure:
+`Algebra/NativeParameterRank.lean` then implements the successful origin-fiber route. It proves
+that the kernel of constant coefficient is the polynomial irrelevant ideal, identifies its map
+with the actual parameter ideal, uses `Ideal.finrank_fiber_eq_finrank`, and concludes
+`genericRank_eq_add_two_of_flat`. This computes the basis-free generic rank as `c+2`; no global
+free basis, H-vector certificate, exact-sequence certificate, or asserted rank is accepted.
 
-1. `finrank_parameterAeval_eq_numeratorAtOne`: for this finite graded parameter extension, the
-   regular-reduction coefficient recurrence and literal Hilbert equation prove generic rank
-   `1 + c + 1 = c + 2` (without requiring a globally supplied free basis).
+**Remaining exact blocker: flatness.** The only extra algebraic hypothesis in the new generic
+rank theorem is
 
-No suitable Hilbert-polynomial/multiplicity theorem was found in the imported Mathlib API.
-`Module.finrank (MvPolynomial I K) C` is already the basis-free generic rank for an arbitrary
-module; only the legacy proof through `Module.finrank_eq_card_basis` required `Module.Free`.
-Mathlib's `IsFractionRing.finrank_eq` identifies this invariant with the fraction-field fiber,
-and the new generic-freeness theorem realizes it as an actual free rank on a nonempty principal
-open. Thus global Quillen--Suslin/projectivity is not required to state or use the desired degree.
+```lean
+let f := degreeOneParameterAevalHom 𝒞 parameters
+letI := f.toRingHom.toAlgebra
+Module.Flat (MvPolynomial (Fin (m + 1)) K) C
+```
 
-The missing mathematical declaration is specifically a graded multiplicity theorem saying that
-the generic rank of a finite standard-graded hsop extension equals the length of its Artinian
-parameter reduction, together with the concrete regular-sequence quotient recurrence showing
-that this length is the Hilbert numerator at one. Current repository infrastructure only has the
-needed recurrence behind a supplied `SuccessiveDegreeOneReductionComponentExactSequences`
-package; Mathlib's regular-sequence API does not construct the degreewise quotient exact
-sequences (and its localization/permutability support is explicitly incomplete). Consequently
-neither the actual reduction length nor its equality with generic rank can presently be derived
-from `IsArithmeticallyGorenstein` and the literal Hilbert equation. The literal equation must be
-used to prove `c+2`, never replaced by the desired rank equality as an assumption. Until that
-lemma exists, milestone 3 must not consume the old certificate through a differently named
-adapter. The old global-basis discriminant/fiber declarations can later be localized over the
-new principal open, but doing so before the numerical rank theorem would not close another
-paper-level hypothesis.
+For the paper's Cohen--Macaulay coordinate ring and regular homogeneous system of parameters,
+this is the standard maximal-Cohen--Macaulay-over-a-regular-ring implication. It has not yet been
+derived in the current Mathlib API. This assumption is mathematically native, but it must be
+eliminated before the final public `theorem1_1_iii` signature. The next algebra task is therefore
+a focused theorem deriving this flatness (or an equivalent local freeness/projectivity result)
+from the paper-level CM/AG and regular-hsop setup. The unmerged CM PR provides definitions and
+regular-sequence quotient results but, as previously audited, not this finite hsop flatness
+theorem itself.
 
-**Scheduling decision after two failed routes.** This blocker is now sufficiently isolated to
-permit independent progress on milestone 2. The selected task was the concrete SOS cone: construct
-the coordinate Gram map internally from degree-one multiplication and prove closedness from
-point-evaluation compatibility and the paper's Zariski-density/separation hypothesis. No Gram
-map, Gram-kernel criterion, or numerical degree assumption may appear in that public theorem.
-The numerical degree task returns to the serial stream only with a dedicated implementation of
-the actual graded parameter quotient and its Hilbert/multiplicity theorem.
+The concrete SOS cone task was completed while this algebraic route was being isolated: no Gram
+map, Gram-kernel criterion, or numerical degree assumption appears in its public theorem.
 
 That abstract boundary is now implemented as
 `SOSConeDual.sosCone_isClosed_of_separating_multiplicative_evaluations`. Its only substantive

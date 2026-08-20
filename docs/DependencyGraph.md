@@ -22,6 +22,15 @@ degreewise finite standard grading
   + algebraically independent parameters
   -> finite surjective projective kernel morphism
 
+literal Hilbert equation
+  + actual regular degree-one parameter sequence
+  -> concrete successive quotient short exact sequences
+  -> Artinian parameter-quotient Hilbert function (1,c,1,0,...)
+  -> total parameter-quotient dimension c+2
+  + finite flat parameter extension
+  -> origin-fiber dimension = basis-free generic Module.finrank
+  -> generic degree c+2
+
 (1,c,1) homogeneous free-basis certificate
   -> module rank c+2
   -> injective polynomial-to-coordinate-ring map
@@ -207,12 +216,12 @@ proper subspace of the Hankel radical
    This public arrow exposes none of the older Hilbert, exact-sequence, or parameter-product
    certificates. The native basepoint-free standard-grading theorem now constructs finiteness,
    and algebraic independence of the hsop gives surjectivity, without a basis or supplied
-   `RingHom.Finite`. The remaining algebraic bridge is only degree `c+2`: prove that the generic
-   rank of this finite graded parameter extension equals the Hilbert numerator evaluated at one.
-   `Module.finrank` already denotes this basis-free generic rank, and generic freeness now gives
-   a nonempty principal open on which it is an actual free rank. What remains is the graded
-   multiplicity calculation, not global projectivity/freeness; downstream discriminant and
-   fiber-rank results can be localized to this principal open after the numerical value is proved.
+   `RingHom.Finite`. The actual regular parameter quotient and its successive degreewise exact
+   sequences are now constructed, its Hilbert function is proved to be `(1,c,1)`, and its total
+   dimension is `c+2`. The origin-fiber theorem identifies this with the basis-free generic rank
+   under `Module.Flat`, so the numerical degree is checked without a basis. The remaining
+   algebraic bridge is precisely to derive flatness of the finite parameter extension from the
+   paper's Cohen--Macaulay/arithmetically Gorenstein and regular-hsop hypotheses.
 2. Identify the paper's concrete projective fiber evaluation maps with the checked abstract
    degree-one hyperplane, degree-two multiplication, and normalized complex-block models.
 3. Prove that a nonreal projective point gives a real-rank-two (hence surjective) complex
