@@ -390,4 +390,40 @@ theorem hankelKernel_eq_parameterSpan_and_rank_of_successiveLinearReductions
     𝒜 hgenerated ell hell parameters hparameters hparametersKernel hHilbert ℬ
     (hReductions.toArtinianReductionDenominatorRelation hHilbert) eSocle hann
 
+/-- Exact-sequence form of the internal-graded Theorem 4.3 endpoint.  The homogeneous
+components of successive quotient modules may have distinct carriers.  A degreewise equivalence
+at the initial stage transports their exact-sequence chain to the ambient graded algebra, so it
+directly supplies the successive-reduction data consumed by the rank argument. -/
+theorem hankelKernel_eq_parameterSpan_and_rank_of_successiveDegreeOneReductionExactSequences
+    (𝒜 : ℕ → Submodule K A) [SetLike.GradedMonoid 𝒜]
+    (hgenerated : DegreeTwoGeneratedByDegreeOne 𝒜)
+    (ell : 𝒜 2 →ₗ[K] K) (hell : ell ≠ 0)
+    {m c : ℕ} {C : Fin (m + 2) → Type v}
+    [∀ i, AddCommGroup (C i)] [∀ i, Module K (C i)]
+    (𝒞 : ∀ i, ℕ → Submodule K (C i))
+    (eInitial : ∀ d, 𝒞 0 d ≃ₗ[K] 𝒜 d)
+    (parameters : Fin (m + 1) → 𝒜 1)
+    (hparameters : LinearIndependent K parameters)
+    (hparametersKernel : ∀ i,
+      parameters i ∈ LinearMap.ker ((gradedDegreeOneMultiplication 𝒜).compr₂ ell))
+    (hHilbert : DelPezzoBlekherman.DelPezzoHilbertSeriesCertificate 𝒜 m c)
+    (hReductions : DelPezzoBlekherman.SuccessiveDegreeOneReductionComponentExactSequences
+      K (m + 1) C 𝒞)
+    (eSocle : 𝒞 ⟨m + 1, by omega⟩ 2 ≃ₗ[K]
+      (𝒜 2 ⧸ parameterProductSubmodule
+        (Submodule.span K (Set.range parameters)) (gradedDegreeOneMultiplication 𝒜)))
+    (hann : ∀ x,
+      (∀ y, parameterProductQuotientMultiplication
+        (Submodule.span K (Set.range parameters))
+        (gradedDegreeOneMultiplication 𝒜)
+        (gradedDegreeOneMultiplication_symmetric 𝒜) x y = 0) → x = 0) :
+    LinearMap.ker ((gradedDegreeOneMultiplication 𝒜).compr₂ ell) =
+        Submodule.span K (Set.range parameters) ∧
+      @LinearMap.BilinForm.finiteRank K (𝒜 1) _ _ _ hHilbert.moduleFinite_one
+        ((gradedDegreeOneMultiplication 𝒜).compr₂ ell) = c :=
+  hankelKernel_eq_parameterSpan_and_rank_of_successiveLinearReductions
+    𝒜 hgenerated ell hell parameters hparameters hparametersKernel hHilbert
+    (𝒞 ⟨m + 1, by omega⟩)
+    (hReductions.toComponentsRelationOfInitialEquiv 𝒜 eInitial) eSocle hann
+
 end ArtinianGorensteinDegreeOneCertificate

@@ -257,6 +257,11 @@
   sequences, with a different quotient carrier permitted at every step, now constructs the
   complete successive-reduction component relation automatically. The regular-sequence bridge
   is therefore reduced to supplying the concrete exact sequences themselves.
+- Closed this exact-sequence route into the strongest graded rank endpoint:
+  `hankelKernel_eq_parameterSpan_and_rank_of_successiveDegreeOneReductionExactSequences`
+  consumes the varying-carrier chain directly. An explicit degreewise initial equivalence
+  transports the chain to the ambient algebra without assuming incompatible module instances
+  are definitionally equal.
 - Composed that indexed exact-sequence bridge with the checked formal-series cancellation:
   `toArtinianReductionHilbertSeriesCertificate` now turns the actual chain and ambient
   equation-(1) certificate directly into the final Artinian `(1,c,1)` Hilbert certificate.

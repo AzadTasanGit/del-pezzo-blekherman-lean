@@ -252,6 +252,11 @@ development state; the current integration outcome is recorded at the end.
     degreewise exact sequences, permitting a different carrier for every quotient module, now
     derives the full `SuccessiveLinearReductionComponentsRelation` consumed by the strongest
     graded rank endpoint.
+73. Closed the varying-carrier exact-sequence interface into the direct strongest rank theorem:
+    `hankelKernel_eq_parameterSpan_and_rank_of_successiveDegreeOneReductionExactSequences`
+    transports its initial component by an explicit degreewise linear equivalence, avoiding any
+    unsound assumption that a concrete quotient model's module instance is definitionally the
+    ambient algebra's canonical one.
 73. Composed the indexed exact-sequence bridge with recurrence iteration and formal-series
     cancellation. It now constructs the final Artinian `(1,c,1)` Hilbert-series certificate
     directly from the ambient equation-(1) certificate.

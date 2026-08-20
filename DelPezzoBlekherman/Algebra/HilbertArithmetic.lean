@@ -300,6 +300,27 @@ noncomputable def SuccessiveDegreeOneReductionComponentExactSequences.toComponen
     rw [hindex]
   reductions := h.toFinrankRelations
 
+/-- A degreewise linear equivalence from the initial carrier of an exact-sequence chain to a
+chosen ambient graded module transports the chain to that module.  This keeps quotient carriers
+independent while allowing the initial component to use an algebra's canonical module instance. -/
+noncomputable def
+    SuccessiveDegreeOneReductionComponentExactSequences.toComponentsRelationOfInitialEquiv
+    {K : Type u} {n : ℕ} {C : Fin (n + 1) → Type v} {D : Type w}
+    [Field K] [∀ i, AddCommGroup (C i)] [∀ i, Module K (C i)]
+    [AddCommGroup D] [Module K D]
+    {𝒞 : ∀ i, ℕ → Submodule K (C i)} (𝒜 : ℕ → Submodule K D)
+    (h : SuccessiveDegreeOneReductionComponentExactSequences K n C 𝒞)
+    (eInitial : ∀ d, 𝒞 0 d ≃ₗ[K] 𝒜 d) :
+    SuccessiveLinearReductionComponentsRelation 𝒜 (𝒞 ⟨n, by omega⟩) n where
+  hilbertFunctions := h.toComponentsRelation.hilbertFunctions
+  initial d := by
+    calc
+      h.toComponentsRelation.hilbertFunctions 0 d = Module.finrank K (𝒞 0 d) :=
+        h.toComponentsRelation.initial d
+      _ = Module.finrank K (𝒜 d) := (eInitial d).finrank_eq
+  final d := h.toComponentsRelation.final d
+  reductions := h.toComponentsRelation.reductions
+
 /-- Successive one-step finrank recurrences, starting from equation (1), construct the exact
 denominator relation for the final reduction. -/
 theorem SuccessiveLinearReductionComponentsRelation.toArtinianReductionDenominatorRelation
@@ -347,7 +368,8 @@ theorem SuccessiveDegreeOneReductionComponentExactSequences.toArtinianReductionD
 
 /-- Consequently, an indexed family of degree-one reduction exact sequences constructs the
 `(1,c,1)` Hilbert-series certificate of the final Artinian reduction. -/
-theorem SuccessiveDegreeOneReductionComponentExactSequences.toArtinianReductionHilbertSeriesCertificate
+theorem
+    SuccessiveDegreeOneReductionComponentExactSequences.toArtinianReductionHilbertSeriesCertificate
     {K : Type u} {m c : ℕ} {C : Fin (m + 2) → Type v}
     [Field K] [∀ i, AddCommGroup (C i)] [∀ i, Module K (C i)]
     {𝒞 : ∀ i, ℕ → Submodule K (C i)}
