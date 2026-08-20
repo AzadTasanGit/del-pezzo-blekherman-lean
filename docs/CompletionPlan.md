@@ -71,8 +71,8 @@ signature.
 
 | Milestone | Owner | Exact next boundary | Acceptance condition | State |
 |---|---|---|---|---|
-| 1. Native algebraic boundary | Sol High | Complete the degree computation for the now-native finite surjective Proj morphism: prove that the parameter extension has generic rank `c+2` from the literal Hilbert numerator and regular hsop data, without a supplied free basis. | The rank and finite-surjective declarations expose none of the four algebra certificates listed above; the degree declaration must not expose one either. | Hankel rank and finite-surjective Proj endpoints complete; degree `c+2` blocked on one graded multiplicity/generic-rank theorem |
-| 2. Concrete SOS and Hankel layer | Terra Medium | Define the square map, multiplication/Hankel embedding, dual cone, and point evaluations for `𝒜 1` and `𝒜 2`. Prove closedness from the compact normalized-square argument and Zariski density, then instantiate `kernel_face_criterion` and `extreme_psd_evaluation_xor_basepointFree`. | `theorem1_1_i` and the evaluation branch and exclusive dichotomy of `theorem1_1_ii` compile with no Gram-kernel or abstract-dichotomy input. | queued after milestone 1 degree decision |
+| 1. Native algebraic boundary | Sol High | Complete the degree computation for the now-native finite surjective Proj morphism: prove that the parameter extension has generic rank `c+2` from the literal Hilbert numerator and regular hsop data, without a supplied free basis. | The rank and finite-surjective declarations expose none of the four algebra certificates listed above; the degree declaration must not expose one either. | Hankel rank and finite-surjective Proj endpoints complete; numerical degree is a recorded infrastructure blocker and is deferred until the graded quotient/multiplicity bridge is built |
+| 2. Concrete SOS and Hankel layer | Terra Medium | Derive degree-one separation for the paper's coordinate ring from its real-density hypothesis and apply the new graded-algebra closedness adapter; then instantiate `kernel_face_criterion` and `extreme_psd_evaluation_xor_basepointFree`. | `theorem1_1_i` and the evaluation branch and exclusive dichotomy of `theorem1_1_ii` compile with no Gram-kernel or abstract-dichotomy input. | active: abstract closedness and graded multiplication/evaluation adapter complete; density-to-separation and paper-level instantiation are next |
 | 3. Kernel morphism and reduced fibers | Terra Medium; Sol High for a recorded blocker | Connect the concrete basepoint-free kernel to `AlgebraicGeometry.Proj.projectiveAevalOfRadical`; prove finite surjectivity and rank `c+2`, instantiate the discriminant open locus, evaluation hyperplane, nonzero relation coefficients, and degree-two evaluation equivalence. | `theorem1_1_iii` compiles without an H-vector/free-basis certificate or supplied fiber data. | queued |
 | 4. Fiber classifications and topology | Terra Medium | Identify the concrete evaluation form with `ComplexBlockFamily`; prove relation-kernel nonnegativity and block non-isotropy; instantiate the pair bound and both reciprocal classifications. Prove ordinary evaluation continuity and identify the real coordinate-ring source with `X(ℝ)` compatibly with projective evaluation. | `theorem1_1_iv`, `theorem1_1_v`, and every premise required by the concrete SOS-length theorem compile without block or continuity assumptions. | queued |
 | 5. Final composition | Sol High review, Terra Medium integration | Add `theorem1_1_i` through `theorem1_1_vi`, compose them in `theorem1_1`, and reconcile every status document and audit entry. | All conditions in “Definition of done” hold. | queued |
@@ -187,6 +187,22 @@ reduction-exact-sequence package, `RingHom.Finite`, or the asserted finrank equa
    route succeeds and is now exposed by the two declarations listed above. It does not by itself
    compute that rank: generic freeness transports the generic rank to a dense principal open but
    contains no Hilbert-numerator/multiplicity theorem.
+6. The flat-origin-fiber route was tested using Mathlib's
+   `Ideal.finrank_fiber_eq_finrank`. Under `Module.Flat`, `Module.Finite`, and a domain base this
+   identifies the generic rank with the finrank of the parameter-origin fiber. The native
+   hypotheses do not currently derive `Module.Flat`; more importantly, even adding flatness as
+   honest Cohen--Macaulay data would still leave the same missing theorem identifying that fiber
+   degree by degree with the regular Artinian reduction and proving its total length is
+   `1 + c + 1` from the literal Hilbert series.
+7. A materially different local projective-dimension route was tested: localize the parameter
+   ring at its homogeneous maximal ideal and use
+   `ModuleCat.projectiveDimension_quotient_eq_add_length_of_isWeaklyRegular` successively along
+   the regular parameters, followed by Auslander--Buchsbaum/miracle flatness. The available API
+   does not supply the required projective-dimension calculation for the resulting finite
+   residue-field module, and this route again needs the absent concrete degreewise quotient and
+   Hilbert-length identification. An asymptotic Hilbert-leading-coefficient proof was also
+   surveyed; the imported API has no graded finite-module Hilbert polynomial or multiplicity
+   theorem from which to recover the generic rank.
 
 Those routes did not construct the polynomial-module finiteness directly from the operational
 Artinian reduction. The obstruction was mathematical infrastructure rather than a Lean
@@ -250,6 +266,24 @@ lemma exists, milestone 3 must not consume the old certificate through a differe
 adapter. The old global-basis discriminant/fiber declarations can later be localized over the
 new principal open, but doing so before the numerical rank theorem would not close another
 paper-level hypothesis.
+
+**Scheduling decision after two failed routes.** This blocker is now sufficiently isolated to
+permit independent progress on milestone 2. The selected task was the concrete SOS cone: construct
+the coordinate Gram map internally from degree-one multiplication and prove closedness from
+point-evaluation compatibility and the paper's Zariski-density/separation hypothesis. No Gram
+map, Gram-kernel criterion, or numerical degree assumption may appear in that public theorem.
+The numerical degree task returns to the serial stream only with a dedicated implementation of
+the actual graded parameter quotient and its Hilbert/multiplicity theorem.
+
+That abstract boundary is now implemented as
+`SOSConeDual.sosCone_isClosed_of_separating_multiplicative_evaluations`. Its only substantive
+inputs are degree-one/degree-two multiplication, compatible point evaluations, and separation
+of degree one. The proof constructs its finite coordinate basis and Gram map internally and
+derives the required kernel condition from separation. The remaining milestone-2 closedness
+task is therefore the density-to-separation proof for the paper's coordinate ring: the generic
+graded-algebra adapter `SOSConeDual.gradedSOSCone_isClosed_of_separating_evaluations` already
+constructs the multiplication and evaluation maps, and exposes only separation. No further
+Gram certificate is needed.
 
 ## Milestone verification
 

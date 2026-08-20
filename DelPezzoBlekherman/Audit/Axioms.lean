@@ -283,6 +283,8 @@ import DelPezzoBlekherman.Convexity.ConditionalSeparation
 #print axioms SOSConeDual.nonnegative_on_closure_sosCone_iff
 #print axioms SOSConeDual.sosCone_eq_finiteSumCone
 #print axioms SOSConeDual.sosCone_isClosed_of_gram
+#print axioms SOSConeDual.sosCone_isClosed_of_separating_multiplicative_evaluations
+#print axioms SOSConeDual.gradedSOSCone_isClosed_of_separating_evaluations
 #print axioms ExtremeRayBase.isExtremeRay_of_extremePoint_base
 #print axioms ExtremeRayBase.exists_extremeRay_apply_neg_of_compact_base
 #print axioms PSDRangeOneExtreme.ker_add_eq_inf

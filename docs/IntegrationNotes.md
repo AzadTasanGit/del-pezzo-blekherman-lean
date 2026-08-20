@@ -440,7 +440,13 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
 
 - identifies `SOSConeDual.sosCone` with the project-wide finite-sum SOS cone;
 - transfers Gram-model closedness to the named convex-cone representation using only Gram
-  compatibility and the faithful positive-semidefinite kernel criterion.
+  compatibility and the faithful positive-semidefinite kernel criterion;
+- constructs the coordinate basis and Gram map internally from any finite-dimensional
+  multiplication space, and derives the kernel criterion from compatible point evaluations that
+  separate degree one, yielding a closedness endpoint with no public Gram data;
+- specializes that endpoint to an internally graded real algebra, constructing degree-one
+  multiplication and both evaluation maps from algebra homomorphisms and leaving only the
+  paper's density-to-separation premise.
 
 ## Verification
 
@@ -451,15 +457,15 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
 
 ## Remaining bridge work
 
-- derive finiteness, flat rank `c + 2`, and the appropriate homogeneous module structure from
-  the arithmetically Gorenstein/Hilbert-series hypotheses;
-- derive the checked equation-(1) Hilbert certificate and instantiate
-  `SuccessiveDegreeOneReductionComponentExactSequences` from the homogeneous short exact
-  sequences of the actual regular sequence, the identification of the reduction's degree-two component with the
-  canonical quotient socle, the
-  socle-annihilator property, and the finite free polynomial-module basis from the PDF's
-  arithmetically Gorenstein/Cohen--Macaulay regular-sequence hypotheses; cancellation to
-  `(1,c,1)` and all later kernel/rank reasoning are already automatic;
+- derive the generic rank `c + 2` of the now-native finite hsop extension from the literal
+  Hilbert equation and regular-reduction hypotheses, via a concrete graded parameter quotient
+  and the missing length/multiplicity theorem;
+- construct the homogeneous short exact sequences of the actual regular sequence and use them
+  to identify the parameter reduction's Hilbert function as `(1,c,1)` without exposing
+  `SuccessiveDegreeOneReductionComponentExactSequences` or another renamed certificate at a
+  paper-level endpoint;
+- derive degree-one separation for the coordinate ring from the paper's real Zariski-density
+  hypothesis and apply `gradedSOSCone_isClosed_of_separating_evaluations`;
 - identify the paper's concrete fiber evaluation isomorphism with the checked complex-block
   quadratic model and prove its relation-kernel nonnegativity and block non-isotropy;
 - realize the constructed real algebra points with nonzero degree-one generator vector as points
