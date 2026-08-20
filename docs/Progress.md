@@ -267,6 +267,8 @@
   `toArtinianReductionHilbertSeriesCertificateOfInitialEquiv` construct the quotient's
   denominator identity and full Artinian Hilbert certificate from that same ambient
   identification.
+- Routed the strongest exact-sequence rank endpoint through that transported Artinian
+  certificate directly, so its proof no longer re-enters the intermediate recurrence interface.
 - Composed that indexed exact-sequence bridge with the checked formal-series cancellation:
   `toArtinianReductionHilbertSeriesCertificate` now turns the actual chain and ambient
   equation-(1) certificate directly into the final Artinian `(1,c,1)` Hilbert certificate.

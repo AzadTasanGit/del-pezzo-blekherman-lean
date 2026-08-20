@@ -260,6 +260,8 @@ development state; the current integration outcome is recorded at the end.
 74. Exposed the same initial-component transport for the complete regular-reduction Hilbert
     calculation: it now directly produces both `ArtinianReductionDenominatorRelation` and the
     final `(1,c,1)` Artinian certificate from the ambient equation-(1) certificate.
+75. Routed the strongest varying-carrier exact-sequence rank endpoint through that transported
+    Artinian certificate directly, eliminating its intermediate recurrence conversion.
 73. Composed the indexed exact-sequence bridge with recurrence iteration and formal-series
     cancellation. It now constructs the final Artinian `(1,c,1)` Hilbert-series certificate
     directly from the ambient equation-(1) certificate.

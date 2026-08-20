@@ -421,9 +421,11 @@ theorem hankelKernel_eq_parameterSpan_and_rank_of_successiveDegreeOneReductionEx
         Submodule.span K (Set.range parameters) ∧
       @LinearMap.BilinForm.finiteRank K (𝒜 1) _ _ _ hHilbert.moduleFinite_one
         ((gradedDegreeOneMultiplication 𝒜).compr₂ ell) = c :=
-  hankelKernel_eq_parameterSpan_and_rank_of_successiveLinearReductions
+  hankelKernel_eq_parameterSpan_and_rank_of_artinianReductionHilbertSeriesCertificate
     𝒜 hgenerated ell hell parameters hparameters hparametersKernel hHilbert
     (𝒞 ⟨m + 1, by omega⟩)
-    (hReductions.toComponentsRelationOfInitialEquiv 𝒜 eInitial) eSocle hann
+    (hReductions.toArtinianReductionHilbertSeriesCertificateOfInitialEquiv
+      𝒜 eInitial hHilbert)
+    eSocle hann
 
 end ArtinianGorensteinDegreeOneCertificate
