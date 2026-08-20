@@ -494,4 +494,27 @@ theorem hankelKernel_eq_parameterSpace_and_rank_of_perfectPairingCertificate
   hankelKernel_eq_parameterSpace_and_rank_of_gorensteinCertificate
     W mul hsymm ell hell hmul hWker hAG.toGorensteinCertificate hU hWfinrank
 
+/-- Parameter-sequence endpoint matching the construction in PDF Theorem 4.3.  The parameter
+space is exhibited as the span of an explicitly linearly independent `(m+1)`-tuple, so its
+dimension is derived rather than assumed. -/
+theorem hankelKernel_eq_parameterSpace_and_rank_of_linearIndependentParameters
+    (W : Submodule K U)
+    (mul : U →ₗ[K] U →ₗ[K] Q)
+    (hsymm : ∀ x y, mul x y = mul y x)
+    (ell : Q →ₗ[K] K) (hell : ell ≠ 0)
+    (hmul : Function.Surjective (symmetricSquareMultiplication mul hsymm))
+    (hWker : W ≤ LinearMap.ker (mul.compr₂ ell))
+    (hAG : ParameterProductPerfectPairingCertificate W mul hsymm)
+    {m c : ℕ}
+    (parameters : Fin (m + 1) → U)
+    (hparameters : LinearIndependent K parameters)
+    (hW : W = Submodule.span K (Set.range parameters))
+    (hU : Module.finrank K U = m + c + 1) :
+    LinearMap.ker (mul.compr₂ ell) = W ∧
+      LinearMap.BilinForm.finiteRank (mul.compr₂ ell) = c := by
+  apply hankelKernel_eq_parameterSpace_and_rank_of_perfectPairingCertificate
+    W mul hsymm ell hell hmul hWker hAG hU
+  rw [hW, finrank_span_eq_card hparameters]
+  simp
+
 end ArtinianGorensteinDegreeOneCertificate

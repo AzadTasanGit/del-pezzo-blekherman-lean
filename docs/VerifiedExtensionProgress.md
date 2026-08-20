@@ -200,6 +200,10 @@ development state; the current integration outcome is recorded at the end.
     socle-valued multiplication directly. Proved that any canonical coordinate on its
     one-dimensional target preserves nondegeneracy, while intrinsic perfectness directly gives
     the annihilator certificate used by the ambient rank theorem.
+61. Replaced the bare numerical parameter-space dimension input at the strongest endpoint by
+    the actual data chosen in Theorem 4.3: a linearly independent family indexed by
+    `Fin (m+1)` whose range spans `W`. Lean derives `dim W=m+1` from this family and completes
+    the same exact-kernel/rank calculation.
 
 ### Integration outcome
 

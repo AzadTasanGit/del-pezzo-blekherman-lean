@@ -37,7 +37,8 @@ one-dimensional socle + perfect Gorenstein multiplication pairing
   -> the actual scalar Hankel pairing is perfect
   -> ambient Hankel form equals the quotient pullback
   -> its actual radical equals the parameter space
-  + dim parameter space = m+1
+  + parameter space is spanned by a linearly independent (m+1)-tuple
+  -> dim parameter space = m+1
   + dim R1 = m+c+1
   -> dim(R1 / parameter space) = c
   -> dim W = m+1 and Hankel rank = c

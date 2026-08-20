@@ -122,6 +122,9 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
   own intrinsic form: a one-dimensional socle whose socle-valued degree-one multiplication is
   nondegenerate. Perfectness proves the annihilator property internally; choosing the canonical
   socle coordinate is separately proved to produce a nondegenerate scalar pairing.
+- an explicit linearly independent `Fin (m+1)` parameter family spanning `W` now derives
+  `dim W=m+1` and feeds the final kernel/rank endpoint, matching the parameter choice made in
+  Theorem 4.3.
 
 ## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`
 

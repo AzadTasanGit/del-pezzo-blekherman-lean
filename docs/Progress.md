@@ -207,3 +207,6 @@
   nondegeneracy of the socle-valued multiplication itself, exactly as in Proposition 2.2, with
   no chosen coordinate. Proved separately that the canonical coordinate on the one-dimensional
   socle yields the earlier nondegenerate scalar pairing.
+- Added the explicit parameter-sequence endpoint: a linearly independent `Fin (m+1)` family
+  spanning the parameter space now proves `dim W=m+1` internally and yields the same exact
+  ambient Hankel kernel and rank `c` conclusion.
