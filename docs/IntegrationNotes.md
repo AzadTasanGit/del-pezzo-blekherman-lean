@@ -157,9 +157,10 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
   quotienting by the `(m+1)` linear parameters. Its conversion theorem uses exact cancellation
   to construct `ArtinianReductionHilbertSeriesCertificate`, so the strongest endpoint no longer
   asks for that downstream certificate independently.
-- `DegreeOneReductionFinrankRelation` is the local recurrence furnished by the homogeneous
-  short exact sequence for one degree-one nonzerodivisor. Lean proves that it multiplies the
-  Hilbert series by `1-t`, iterates a supplied chain of `(m+1)` such recurrences, and constructs
+- `DegreeOneReductionComponentExactSequence.toFinrankRelation` now derives
+  `DegreeOneReductionFinrankRelation` from the finite-dimensional homogeneous short exact
+  sequence for one degree-one nonzerodivisor. Lean then proves that it multiplies the Hilbert
+  series by `1-t`, iterates a supplied chain of `(m+1)` such recurrences, and constructs
   `ArtinianReductionDenominatorRelation`. The strongest graded endpoint now consumes this chain.
 
 ## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`
@@ -440,9 +441,9 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
 
 - derive finiteness, flat rank `c + 2`, and the appropriate homogeneous module structure from
   the arithmetically Gorenstein/Hilbert-series hypotheses;
-- derive the checked equation-(1) Hilbert certificate and each
-  `DegreeOneReductionFinrankRelation` from the homogeneous short exact sequences of the actual
-  regular sequence, the identification of the reduction's degree-two component with the
+- derive the checked equation-(1) Hilbert certificate and instantiate
+  `DegreeOneReductionComponentExactSequence` from the homogeneous short exact sequences of the
+  actual regular sequence, the identification of the reduction's degree-two component with the
   canonical quotient socle, the
   socle-annihilator property, and the finite free polynomial-module basis from the PDF's
   arithmetically Gorenstein/Cohen--Macaulay regular-sequence hypotheses; cancellation to

@@ -6,6 +6,7 @@ Authors: Codex
 import Mathlib.Data.Int.Basic
 import Mathlib.LinearAlgebra.Basis.VectorSpace
 import Mathlib.LinearAlgebra.Dimension.Free
+import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.RingTheory.PowerSeries.WellKnown
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
@@ -44,6 +45,47 @@ dimension plus the preceding ambient dimension equals the ambient dimension in d
 structure DegreeOneReductionFinrankRelation (h reduced : ℕ → ℕ) : Prop where
   zero : reduced 0 = h 0
   succ : ∀ d, reduced (d + 1) + h d = h (d + 1)
+
+/-- Componentwise data of the short exact sequence obtained by quotienting a graded module
+by one degree-one nonzerodivisor.  The quotient in positive degree is presented as the cokernel
+of multiplication by that element; keeping the cokernel equivalence explicit makes this usable
+with any concrete model of homogeneous components. -/
+structure DegreeOneReductionComponentExactSequence
+    (K : Type u) {A : Type v} {B : Type w}
+    [Field K] [AddCommGroup A] [Module K A] [AddCommGroup B] [Module K B]
+    (𝒜 : ℕ → Submodule K A) (ℬ : ℕ → Submodule K B) where
+  finite : ∀ d, Module.Finite K (𝒜 d)
+  reducedFinite : ∀ d, Module.Finite K (ℬ d)
+  zeroEquiv : 𝒜 0 ≃ₗ[K] ℬ 0
+  multiplication : ∀ d, 𝒜 d →ₗ[K] 𝒜 (d + 1)
+  multiplication_injective : ∀ d, Function.Injective (multiplication d)
+  cokernelEquiv : ∀ d,
+    (𝒜 (d + 1) ⧸ LinearMap.range (multiplication d)) ≃ₗ[K] ℬ (d + 1)
+
+/-- The finite-dimensional degreewise short exact sequence for a degree-one nonzerodivisor
+implies the numerical recurrence used by the Hilbert-series argument. -/
+theorem DegreeOneReductionComponentExactSequence.toFinrankRelation
+    {K : Type u} {A : Type v} {B : Type w}
+    [Field K] [AddCommGroup A] [Module K A] [AddCommGroup B] [Module K B]
+    {𝒜 : ℕ → Submodule K A} {ℬ : ℕ → Submodule K B}
+    (h : DegreeOneReductionComponentExactSequence K 𝒜 ℬ) :
+    DegreeOneReductionFinrankRelation
+      (fun d ↦ Module.finrank K (𝒜 d))
+      (fun d ↦ Module.finrank K (ℬ d)) := by
+  classical
+  refine ⟨?_, fun d ↦ ?_⟩
+  · exact h.zeroEquiv.finrank_eq.symm
+  · letI : Module.Finite K (𝒜 d) := h.finite d
+    letI : Module.Finite K (𝒜 (d + 1)) := h.finite (d + 1)
+    letI : Module.Finite K (ℬ (d + 1)) := h.reducedFinite (d + 1)
+    calc
+      Module.finrank K (ℬ (d + 1)) + Module.finrank K (𝒜 d) =
+          Module.finrank K (𝒜 (d + 1) ⧸ LinearMap.range (h.multiplication d)) +
+            Module.finrank K (LinearMap.range (h.multiplication d)) := by
+        rw [h.cokernelEquiv d |>.finrank_eq,
+          LinearMap.finrank_range_of_inj (h.multiplication_injective d)]
+      _ = Module.finrank K (𝒜 (d + 1)) :=
+        Submodule.finrank_quotient_add_finrank (LinearMap.range (h.multiplication d))
 
 /-- One degree-one reduction multiplies the Hilbert series by `1-X`. -/
 theorem DegreeOneReductionFinrankRelation.hilbertFunctionSeries_eq_mul_one_sub_X

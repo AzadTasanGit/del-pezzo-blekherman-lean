@@ -244,6 +244,10 @@ development state; the current integration outcome is recorded at the end.
     nonzerodivisor. Proved a single recurrence multiplies the Hilbert series by `1-t`, iterated
     a chain of `(m+1)` recurrences, tied its endpoints to the ambient and Artinian component
     finranks, and made the strongest graded rank endpoint consume this successive-reduction data.
+71. Added `DegreeOneReductionComponentExactSequence`, a finite-dimensional degreewise short
+    exact-sequence interface with an injective multiplication map and explicit cokernel
+    equivalence. Its `toFinrankRelation` theorem derives the local Hilbert-function recurrence,
+    closing the generic numerical step from the homogeneous regular-sequence exact sequence.
 
 ### Integration outcome
 

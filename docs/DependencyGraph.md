@@ -168,9 +168,9 @@ proper subspace of the Hankel radical
 
 ## Remaining upstream bridges
 
-1. Construct the equation-(1) component Hilbert-series certificate and prove the checked
-   component-finrank recurrence for each successive quotient by the chosen linear regular
-   sequence, together with the
+1. Construct the equation-(1) component Hilbert-series certificate and instantiate the checked
+   degreewise short exact-sequence interface for each successive quotient by the chosen linear
+   regular sequence (which now proves its component-finrank recurrence), together with the
    reduction-to-canonical-quotient socle equivalence, the socle-annihilator property, and the
    stronger `(1,c,1)` homogeneous free-basis certificate directly from the PDF's arithmetically
    Gorenstein, Cohen--Macaulay, Hilbert-series, regular-sequence, and homogeneous-system-of-

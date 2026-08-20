@@ -248,3 +248,8 @@
   degree-one nonzerodivisor. Proved one step multiplies the Hilbert series by `1-t`, proved the
   `(m+1)`-step iteration, connected the first and last Hilbert functions to the ambient ring and
   Artinian reduction, and added the corresponding direct Theorem 4.3 endpoint.
+- Added `DegreeOneReductionComponentExactSequence`: a finite-dimensional homogeneous short exact
+  sequence, expressed through an injective multiplication map and its cokernel equivalence, now
+  mechanically yields the one-step component-finrank recurrence. This removes the numerical
+  derivation from the remaining regular-sequence bridge; only construction of the concrete
+  graded exact sequences from the paper's AG/CM hypotheses remains.
