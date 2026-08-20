@@ -228,3 +228,8 @@
 - Proved the zero-annihilator Gorenstein certificate equivalent to the intrinsic perfect-pairing
   certificate using symmetry of quotient multiplication. The strongest pointwise and graded
   rank endpoints now accept the weaker one-dimensional-socle/zero-annihilator data directly.
+- Replaced the informal Hilbert coefficient comments by an exact integer formal power series
+  for `(1+c t+t²)/(1-t)^(m+1)`. Proved its coefficients in degrees zero, one, and two, added a
+  component-finrank certificate, and used its positive degree-one coefficient to remove both
+  the separate finite-dimensionality and `dim R₁=m+c+1` hypotheses from the strongest
+  internal-graded Theorem 4.3 endpoint.

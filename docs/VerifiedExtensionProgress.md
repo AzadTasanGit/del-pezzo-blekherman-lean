@@ -227,6 +227,10 @@ development state; the current integration outcome is recorded at the end.
     multiplication's symmetry turns the Gorenstein zero-annihilator certificate into the
     intrinsic perfect-pairing certificate, added the pointwise Gorenstein endpoint, and made the
     internal-graded endpoint consume this weaker certificate directly.
+67. Formalized equation (1) itself as an integer formal power series using mathlib's
+    `PowerSeries.invOneSubPow`, proved the coefficients in degrees zero, one, and two, and added
+    a certificate equating those coefficients with homogeneous-component finranks. The strongest
+    graded rank theorem now derives finite-dimensionality and `dim R₁=m+c+1` from this certificate.
 
 ### Integration outcome
 

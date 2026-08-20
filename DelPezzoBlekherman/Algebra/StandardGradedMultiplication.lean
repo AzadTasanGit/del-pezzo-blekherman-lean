@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 import DelPezzoBlekherman.Algebra.QuotientMultiplication
+import DelPezzoBlekherman.Algebra.HilbertArithmetic
 import Mathlib.LinearAlgebra.TensorProduct.Submodule
 import Mathlib.RingTheory.GradedAlgebra.Basic
 
@@ -257,5 +258,32 @@ theorem hankelKernel_eq_parameterSpan_and_rank_of_degreeTwoGeneratedByDegreeOne
     (gradedDegreeOneMultiplication_symmetric 𝒜) ell hell
     (symmetricSquare_gradedDegreeOneMultiplication_surjective 𝒜 hgenerated)
     parameters hparameters hparametersKernel hAG hR₁
+
+/-- Hilbert-series form of the internal-graded Theorem 4.3 endpoint.  The equation-(1)
+certificate derives `dim R₁ = m+c+1`, so that numerical hypothesis is no longer supplied
+separately. -/
+theorem hankelKernel_eq_parameterSpan_and_rank_of_hilbertSeriesCertificate
+    (𝒜 : ℕ → Submodule K A) [SetLike.GradedMonoid 𝒜]
+    (hgenerated : DegreeTwoGeneratedByDegreeOne 𝒜)
+    (ell : 𝒜 2 →ₗ[K] K) (hell : ell ≠ 0)
+    {m c : ℕ}
+    (parameters : Fin (m + 1) → 𝒜 1)
+    (hparameters : LinearIndependent K parameters)
+    (hparametersKernel : ∀ i,
+      parameters i ∈ LinearMap.ker ((gradedDegreeOneMultiplication 𝒜).compr₂ ell))
+    (hAG : ParameterProductGorensteinCertificate
+      (Submodule.span K (Set.range parameters))
+      (gradedDegreeOneMultiplication 𝒜)
+      (gradedDegreeOneMultiplication_symmetric 𝒜))
+    (hHilbert : DelPezzoBlekherman.DelPezzoHilbertSeriesCertificate 𝒜 m c) :
+    LinearMap.ker ((gradedDegreeOneMultiplication 𝒜).compr₂ ell) =
+        Submodule.span K (Set.range parameters) ∧
+      @LinearMap.BilinForm.finiteRank K (𝒜 1) _ _ _ hHilbert.moduleFinite_one
+        ((gradedDegreeOneMultiplication 𝒜).compr₂ ell) = c := by
+  let _ : Module.Finite K (𝒜 1) := hHilbert.moduleFinite_one
+  exact hankelKernel_eq_parameterSpan_and_rank_of_degreeTwoGeneratedByDegreeOne
+    𝒜 hgenerated ell hell parameters hparameters hparametersKernel hAG <| by
+      simpa only [DelPezzoBlekherman.hilbertDegreeOne, add_assoc, add_comm, add_left_comm]
+        using hHilbert.finrank_one
 
 end ArtinianGorensteinDegreeOneCertificate

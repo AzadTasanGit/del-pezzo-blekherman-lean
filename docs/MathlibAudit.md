@@ -30,6 +30,9 @@ checked in compiling scratch files before use.
 - `SetLike.GradedMonoid` supplies homogeneous multiplication for internal component submodules;
   combined with `Submodule.mul_le`, it places `R₁ * R₁` inside `R₂`, while surjectivity of the
   degree-two tensor multiplication proves the reverse inclusion.
+- `PowerSeries.invOneSubPow` is mathlib's formal inverse of `(1-X)^d`, with binomial
+  coefficients exposed by `invOneSubPow_val_succ_eq_mk_add_choose`; it supports exact extraction
+  of the degree-zero, degree-one, and degree-two coefficients of PDF equation (1).
 - Hausdorff compactness and density APIs, used for the Euclidean perturbation
   from a point outside the compact real image into the dense good-fiber locus.
 - Analyticity of multivariate-polynomial evaluation, analytic uniqueness on

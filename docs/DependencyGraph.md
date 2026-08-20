@@ -31,6 +31,11 @@ internal multiplicative grading + surjective Sym²(R1) -> R2
   -> R1 * R1 = R2
   -> surjective standard-graded multiplication Sym²(R1) -> R2
 
+equation-(1) component Hilbert-series certificate
+  -> dim R0 = 1
+  -> dim R1 = m+c+1
+  -> dim R2 = binomial(m+2,2) + c(m+1) + 1
+
 one-dimensional socle + perfect Gorenstein multiplication pairing
   -> zero degree-one annihilator
   + J defined canonically as span(W * R1)
@@ -150,10 +155,11 @@ proper subspace of the Hankel radical
 
 ## Remaining upstream bridges
 
-1. Derive the `(1,c,1)` homogeneous free-basis certificate, the required Hilbert dimensions, and
-   the socle-annihilator property directly from the PDF's arithmetically Gorenstein,
+1. Construct the equation-(1) component Hilbert-series certificate and derive the `(1,c,1)`
+   homogeneous free-basis certificate and socle-annihilator property directly from the PDF's
+   arithmetically Gorenstein,
    Cohen--Macaulay, Hilbert-series, and homogeneous-system-of-parameters hypotheses, including
-   `ParameterProductPerfectPairingCertificate` for the canonical quotient. Once it is supplied, ambient
+   `ParameterProductGorensteinCertificate` for the canonical quotient. Once it is supplied, ambient
    multiplication and the paper's functional now descend automatically, and the passage from
    the specific nonzero induced socle functional to its perfect Hankel pairing is checked.
 2. Identify the paper's concrete projective fiber evaluation maps with the checked abstract

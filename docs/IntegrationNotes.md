@@ -140,6 +140,10 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
   `𝒜 1 × 𝒜 1 → 𝒜 2`. The paper's literal degree-two standard-graded consequence—surjectivity
   of `Sym²(𝒜 1) → 𝒜 2`—proves `𝒜 1 * 𝒜 1 = 𝒜 2` and supplies the strongest graded endpoint;
   equivalence with tensor surjectivity is used only inside the proof.
+- `Algebra.HilbertArithmetic` now defines the exact formal power series from equation (1) using
+  mathlib's inverse `(1-t)^{-(m+1)}`, proves its coefficients through degree two, and packages
+  coefficient/finrank compatibility. The strongest graded rank endpoint uses that certificate
+  to derive finite-dimensionality and `dim R₁=m+c+1` instead of accepting either separately.
 
 ## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`
 

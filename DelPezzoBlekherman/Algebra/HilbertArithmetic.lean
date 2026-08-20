@@ -4,6 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 import Mathlib.Data.Int.Basic
+import Mathlib.LinearAlgebra.Basis.VectorSpace
+import Mathlib.LinearAlgebra.Dimension.Free
+import Mathlib.RingTheory.PowerSeries.WellKnown
+import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
 /-!
@@ -16,12 +20,103 @@ forms on an `n`-dimensional space.
 
 namespace DelPezzoBlekherman
 
+open PowerSeries
+
 /-- The coefficient of `t` in `(1 + c t + t²)/(1-t)^(m+1)`. -/
 def hilbertDegreeOne (m c : ℕ) : ℕ := m + 1 + c
 
 /-- The coefficient of `t²` in `(1 + c t + t²)/(1-t)^(m+1)`. -/
 def hilbertDegreeTwo (m c : ℕ) : ℕ :=
   (m + 2) * (m + 1) / 2 + c * (m + 1) + 1
+
+/-- The exact formal power series
+`(1 + c t + t²) / (1 - t)^(m+1)` from PDF equation (1), with integer coefficients. -/
+noncomputable def delPezzoHilbertSeries (m c : ℕ) : PowerSeries ℤ :=
+  (1 + C (c : ℤ) * X + X ^ 2) * (invOneSubPow ℤ (m + 1)).val
+
+/-- The constant coefficient of the PDF Hilbert series is one. -/
+theorem coeff_zero_delPezzoHilbertSeries (m c : ℕ) :
+    coeff 0 (delPezzoHilbertSeries m c) = 1 := by
+  simp [delPezzoHilbertSeries, invOneSubPow_val_succ_eq_mk_add_choose]
+
+/-- Formal coefficient extraction in degree one gives `m+c+1`. -/
+theorem coeff_one_delPezzoHilbertSeries (m c : ℕ) :
+    coeff 1 (delPezzoHilbertSeries m c) = hilbertDegreeOne m c := by
+  norm_num [delPezzoHilbertSeries, hilbertDegreeOne,
+    invOneSubPow_val_succ_eq_mk_add_choose, coeff_mul, Finset.Nat.antidiagonal_succ]
+
+/-- Formal coefficient extraction in degree two gives the quadratic expression used in
+Proposition 2.1. -/
+theorem coeff_two_delPezzoHilbertSeries (m c : ℕ) :
+    coeff 2 (delPezzoHilbertSeries m c) = hilbertDegreeTwo m c := by
+  rw [show hilbertDegreeTwo m c = Nat.choose (m + 2) 2 + c * (m + 1) + 1 by
+    simp [hilbertDegreeTwo, Nat.choose_two_right]]
+  norm_num [delPezzoHilbertSeries, invOneSubPow_val_succ_eq_mk_add_choose, coeff_mul,
+    Finset.Nat.antidiagonal_succ, PowerSeries.coeff_X, PowerSeries.coeff_C]
+  rw [Nat.choose_symm_add (a := m) (b := 2)]
+  have hc : PowerSeries.coeff 1 (c : PowerSeries ℤ) = 0 := by
+    induction c with
+    | zero => simp
+    | succ c ih =>
+      rw [Nat.cast_succ, map_add, ih]
+      simp
+  rw [hc]
+  omega
+
+section GradedComponents
+
+universe u v
+
+variable {K : Type u} {A : Type v}
+variable [Field K] [AddCommGroup A] [Module K A]
+
+/-- A concrete bridge from a family of homogeneous components to equation (1): the integer
+coefficient of the PDF's formal Hilbert series equals the finrank of every component.  This
+isolates the missing construction of a Hilbert series for an internally graded algebra while
+making all coefficient consequences machine-checked. -/
+structure DelPezzoHilbertSeriesCertificate
+    (𝒜 : ℕ → Submodule K A) (m c : ℕ) : Prop where
+  finrank_eq_coeff : ∀ d,
+    (Module.finrank K (𝒜 d) : ℤ) = coeff d (delPezzoHilbertSeries m c)
+
+/-- Equation (1) forces the degree-zero component to have dimension one. -/
+theorem DelPezzoHilbertSeriesCertificate.finrank_zero
+    {𝒜 : ℕ → Submodule K A} {m c : ℕ}
+    (h : DelPezzoHilbertSeriesCertificate 𝒜 m c) :
+    Module.finrank K (𝒜 0) = 1 := by
+  have hd := h.finrank_eq_coeff 0
+  rw [coeff_zero_delPezzoHilbertSeries] at hd
+  exact_mod_cast hd
+
+/-- Equation (1) forces `dim R₁ = m+c+1`. -/
+theorem DelPezzoHilbertSeriesCertificate.finrank_one
+    {𝒜 : ℕ → Submodule K A} {m c : ℕ}
+    (h : DelPezzoHilbertSeriesCertificate 𝒜 m c) :
+    Module.finrank K (𝒜 1) = hilbertDegreeOne m c := by
+  have hd := h.finrank_eq_coeff 1
+  rw [coeff_one_delPezzoHilbertSeries] at hd
+  exact_mod_cast hd
+
+/-- The positive degree-one coefficient also supplies finite-dimensionality of `R₁`; callers
+need not assume `Module.Finite` separately. -/
+theorem DelPezzoHilbertSeriesCertificate.moduleFinite_one
+    {𝒜 : ℕ → Submodule K A} {m c : ℕ}
+    (h : DelPezzoHilbertSeriesCertificate 𝒜 m c) :
+    Module.Finite K (𝒜 1) :=
+  Module.finite_of_finrank_pos <| by
+    rw [h.finrank_one]
+    simp [hilbertDegreeOne]
+
+/-- Equation (1) forces the degree-two dimension formula in Proposition 2.1. -/
+theorem DelPezzoHilbertSeriesCertificate.finrank_two
+    {𝒜 : ℕ → Submodule K A} {m c : ℕ}
+    (h : DelPezzoHilbertSeriesCertificate 𝒜 m c) :
+    Module.finrank K (𝒜 2) = hilbertDegreeTwo m c := by
+  have hd := h.finrank_eq_coeff 2
+  rw [coeff_two_delPezzoHilbertSeries] at hd
+  exact_mod_cast hd
+
+end GradedComponents
 
 /-- Twice the quadratic-dimension computation in Proposition 2.1. -/
 theorem quadratic_deficiency_one_twice (m c : ℤ) :
