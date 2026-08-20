@@ -10,6 +10,15 @@ graded evaluation + radical Proj functoriality
   -> chartwise finiteness from a finite graded ring map
   -> finite morphism
 
+degreewise finite standard grading
+  + finitely generated irrelevant ideal
+  + basepoint-free degree-one parameters
+  -> a power of the irrelevant ideal lies in the parameter ideal
+  -> finitely many lower homogeneous bases generate over the parameter polynomial ring
+  -> finite graded ring map
+  + algebraically independent parameters
+  -> finite surjective projective kernel morphism
+
 (1,c,1) homogeneous free-basis certificate
   -> module rank c+2
   -> injective polynomial-to-coordinate-ring map
@@ -177,9 +186,12 @@ proper subspace of the Hankel radical
    -> ker Q_ell = span(parameters), rank Q_ell = c
    ```
    This public arrow exposes none of the older Hilbert, exact-sequence, or parameter-product
-   certificates. The remaining algebraic bridge is the finite surjective Proj morphism of degree
-   `c+2` without `HVectorOneCOneFreeCertificate`; use the finite-Proj/Hilbert-function argument
-   before attempting a global free-module basis.
+   certificates. The native basepoint-free standard-grading theorem now constructs finiteness,
+   and algebraic independence of the hsop gives surjectivity, without a basis or supplied
+   `RingHom.Finite`. The remaining algebraic bridge is only degree `c+2`: prove that the generic
+   rank of this finite graded parameter extension equals the Hilbert numerator evaluated at one.
+   The legacy `Module.finrank` statement additionally requires proving projectivity/freeness;
+   otherwise downstream degree and fiber-rank results should be recast using fraction-field rank.
 2. Identify the paper's concrete projective fiber evaluation maps with the checked abstract
    degree-one hyperplane, degree-two multiplication, and normalized complex-block models.
 3. Instantiate the already checked closed SOS-cone theorem for the coordinate ring using the

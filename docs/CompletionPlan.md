@@ -71,8 +71,8 @@ signature.
 
 | Milestone | Owner | Exact next boundary | Acceptance condition | State |
 |---|---|---|---|---|
-| 1. Native algebraic boundary | Sol High | Introduce the operational regular-reduction predicate and make the actual Hankel rank endpoint consume it plus the literal Hilbert equation. Next extend this boundary to the degree-`c+2` Proj morphism without a free-basis certificate. | The rank declaration exposes none of the four algebra certificates listed above; the morphism declaration eventually exposes none either. | Rank endpoint complete; morphism bridge specified and blocked on two reusable graded-commutative-algebra lemmas |
-| 2. Concrete SOS and Hankel layer | Terra Medium | Define the square map, multiplication/Hankel embedding, dual cone, and point evaluations for `𝒜 1` and `𝒜 2`. Prove closedness from the compact normalized-square argument and Zariski density, then instantiate `kernel_face_criterion` and `extreme_psd_evaluation_xor_basepointFree`. | `theorem1_1_i` and the evaluation branch and exclusive dichotomy of `theorem1_1_ii` compile with no Gram-kernel or abstract-dichotomy input. | queued after milestone 1 morphism decision |
+| 1. Native algebraic boundary | Sol High | Complete the degree computation for the now-native finite surjective Proj morphism: prove that the parameter extension has generic rank `c+2` from the literal Hilbert numerator and regular hsop data, without a supplied free basis. | The rank and finite-surjective declarations expose none of the four algebra certificates listed above; the degree declaration must not expose one either. | Hankel rank and finite-surjective Proj endpoints complete; degree `c+2` blocked on one graded multiplicity/generic-rank theorem |
+| 2. Concrete SOS and Hankel layer | Terra Medium | Define the square map, multiplication/Hankel embedding, dual cone, and point evaluations for `𝒜 1` and `𝒜 2`. Prove closedness from the compact normalized-square argument and Zariski density, then instantiate `kernel_face_criterion` and `extreme_psd_evaluation_xor_basepointFree`. | `theorem1_1_i` and the evaluation branch and exclusive dichotomy of `theorem1_1_ii` compile with no Gram-kernel or abstract-dichotomy input. | queued after milestone 1 degree decision |
 | 3. Kernel morphism and reduced fibers | Terra Medium; Sol High for a recorded blocker | Connect the concrete basepoint-free kernel to `AlgebraicGeometry.Proj.projectiveAevalOfRadical`; prove finite surjectivity and rank `c+2`, instantiate the discriminant open locus, evaluation hyperplane, nonzero relation coefficients, and degree-two evaluation equivalence. | `theorem1_1_iii` compiles without an H-vector/free-basis certificate or supplied fiber data. | queued |
 | 4. Fiber classifications and topology | Terra Medium | Identify the concrete evaluation form with `ComplexBlockFamily`; prove relation-kernel nonnegativity and block non-isotropy; instantiate the pair bound and both reciprocal classifications. Prove ordinary evaluation continuity and identify the real coordinate-ring source with `X(ℝ)` compatibly with projective evaluation. | `theorem1_1_iv`, `theorem1_1_v`, and every premise required by the concrete SOS-length theorem compile without block or continuity assumptions. | queued |
 | 5. Final composition | Sol High review, Terra Medium integration | Add `theorem1_1_i` through `theorem1_1_vi`, compose them in `theorem1_1`, and reconcile every status document and audit entry. | All conditions in “Definition of done” hold. | queued |
@@ -90,11 +90,22 @@ signature.
   actual Hankel kernel equality and rank `c` without any project-specific algebra certificate in
   its signature.
 
+`DelPezzoBlekherman/Geometry/Proj/Finite.lean` and `Geometry/Proj/Surjectivity.lean` now provide:
+
+- `MvPolynomial.standardGradedAevalHom_toRingHom_finite_of_basepointFree`, which constructs
+  module finiteness from finite homogeneous pieces, finite generation of the irrelevant ideal,
+  the standard-grading degree-power property, and basepoint-freeness;
+- `AlgebraicGeometry.Proj.projectiveAevalOfRadical_isFinite_of_standardGraded_basepointFree`;
+- `AlgebraicGeometry.Proj.projectiveAevalOfRadical_isFinite_surjective_of_standardGraded_hsop`,
+  which adds algebraic independence of the parameters and concludes finite surjectivity without
+  accepting `RingHom.Finite`, a polynomial-module basis, or an H-vector certificate.
+
 The internal construction of old interfaces in a proof is permitted; exposing one in a final
-signature is not. The currently open algebra task is the finite-Proj/degree bridge. It is
-specified precisely in the blocker log below. A global polynomial-module basis may be
-introduced only if it is proved internally from the native hypotheses and removes, in the same
-change, the `HVectorOneCOneFreeCertificate` hypothesis from the public morphism declaration.
+signature is not. The currently open algebra task is only the degree-`c+2` half of the old
+finite-Proj/degree bridge. It is specified precisely in the blocker log below. A global
+polynomial-module basis may be introduced only if it is proved internally from the native
+hypotheses and used immediately to prove the degree; finiteness and surjectivity no longer need
+such a basis.
 
 ## Task handoff format
 
@@ -156,9 +167,9 @@ reduction-exact-sequence package, `RingHom.Finite`, or the asserted finrank equa
    polynomial ring or generic rank `c+2`. Assuming either fact directly would only rename the
    old certificate and was therefore rejected.
 
-There is consequently no honest compiling replacement theorem from the *current* native setup:
-the obstruction is a missing formal bridge, not a Lean elaboration error in a nearly complete
-proof.
+Those routes did not construct the polynomial-module finiteness directly from the operational
+Artinian reduction. The obstruction was mathematical infrastructure rather than a Lean
+elaboration error in a nearly complete proof.
 
 **Smallest mathematically explicit strengthening.** The paper-level coordinate-ring setup
 should record that `C` is a finite-type standard graded `K`-algebra (equivalently here, a
@@ -168,20 +179,44 @@ The chosen parameters should be stated as a homogeneous system of parameters; al
 independence may be a field of that setup if it cannot first be derived from regularity and the
 dimension encoded by the Hilbert series.
 
-With that setup fixed, the missing implementation should consist of two reusable theorems, not
-new certificate structures:
+**Progress on 2026-08-20.** The first required bridge is now proved, in a geometric form that is
+both certificate-free and slightly more general than the proposed regular-reduction statement:
 
-1. `moduleFinite_parameterAeval_of_regular_artinianReduction`: graded Nakayama/induction lifts
-   finite homogeneous generators of the actual quotient `C/(g)` and proves
-   `(MvPolynomial.standardGradedAevalHom 𝒸 g hg).toRingHom.Finite`.
-2. `finrank_parameterAeval_eq_numeratorAtOne`: for this finite graded parameter extension, the
+```text
+finite homogeneous components
++ finitely generated irrelevant ideal
++ every degree-n component lies in irrelevant^n
++ basepoint-free parameters
+-> standardGradedAevalHom_toRingHom_finite_of_basepointFree
+-> projectiveAevalOfRadical_isFinite_of_standardGraded_basepointFree
+
++ algebraic independence of the parameters
+-> projectiveAevalOfRadical_isFinite_surjective_of_standardGraded_hsop
+```
+
+The proof obtains a uniform power of the irrelevant ideal inside the parameter ideal, chooses
+bases only in the finitely many lower homogeneous degrees, and uses strong induction plus graded
+projection of the parameter coefficients to prove that those elements generate `C` over the
+parameter polynomial ring. Thus it constructs `RingHom.Finite` internally rather than receiving
+it or a basis as input. Algebraic independence is then exactly the hsop input needed by the
+existing finite-plus-injective surjectivity theorem. This removes supplied `RingHom.Finite` and
+the free-basis certificate from the public finite-surjective endpoint.
+
+**Remaining exact blocker.** One reusable theorem remains, not a new certificate structure:
+
+1. `finrank_parameterAeval_eq_numeratorAtOne`: for this finite graded parameter extension, the
    regular-reduction coefficient recurrence and literal Hilbert equation prove generic rank
    `1 + c + 1 = c + 2` (without requiring a globally supplied free basis).
 
-The first theorem also unlocks existing finite-Proj machinery; injectivity/algebraic
-independence then unlocks the existing surjectivity theorem. The second removes the final
-`HVectorOneCOneFreeCertificate` use from the degree statement. Until these two lemmas exist,
-milestone 3 must not consume the old certificate through a differently named adapter.
+No suitable Hilbert-polynomial/multiplicity theorem was found in the imported Mathlib API.
+Moreover, the legacy conclusion `Module.finrank (MvPolynomial I K) C = c + 2` uses an instance
+of `Module.Free`; module finiteness alone cannot synthesize it. The next implementation must
+therefore do one of two honest things: prove projectivity/freeness from the regular-sequence or
+Cohen--Macaulay data (then apply the Hilbert numerator calculation), or formulate degree as the
+fraction-field generic rank and adapt the downstream fiber-rank results to that invariant. The
+literal Hilbert-series equation must be used to prove the value, never accepted as the target
+rank equality. Until this lemma exists, milestone 3 must not consume the old certificate through
+a differently named adapter.
 
 ## Milestone verification
 

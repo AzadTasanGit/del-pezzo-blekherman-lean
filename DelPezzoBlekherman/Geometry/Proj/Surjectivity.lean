@@ -1,5 +1,6 @@
 import DelPezzoBlekherman.Algebra.HVectorCertificate
 import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
+import Mathlib.RingTheory.AlgebraicIndependent.Basic
 import Mathlib.RingTheory.Spectrum.Prime.Topology
 
 universe u
@@ -110,6 +111,40 @@ theorem projectiveAevalOfRadical_surjective_of_toRingHom_finite_injective
     exact HomogeneousLocalization.Away.map_finite_of_toRingHom_finite f hfinite
       (MvPolynomial.isHomogeneous_X (R := K) i)
   · exact hinjective
+
+/-- Native finite-and-surjective endpoint for a basepoint-free homogeneous system of
+parameters in a degreewise finite standard-graded coordinate ring.
+
+Unlike the legacy endpoints below, this theorem accepts neither `RingHom.Finite` nor a module
+basis.  Module finiteness is constructed from the standard grading, and algebraic independence
+is the native system-of-parameters input that supplies injectivity. -/
+theorem projectiveAevalOfRadical_isFinite_surjective_of_standardGraded_hsop
+    {K C I : Type u} [Field K] [CommRing C] [Algebra K C] [Finite I]
+    (𝒞 : ℕ → Submodule K C) [GradedRing 𝒞]
+    (g : I → C) (hg : ∀ i, g i ∈ 𝒞 1)
+    (hbasepointFree : (HomogeneousIdeal.irrelevant 𝒞).toIdeal ≤
+      (Ideal.span (Set.range g)).radical)
+    (hirrelevantFG : (HomogeneousIdeal.irrelevant 𝒞).toIdeal.FG)
+    (hcomponentFinite : ∀ n, Module.Finite K (𝒞 n))
+    (hstandard : ∀ n (x : C), x ∈ 𝒞 n →
+      x ∈ (HomogeneousIdeal.irrelevant 𝒞).toIdeal ^ n)
+    (halgebraicIndependent : AlgebraicIndependent K g) :
+    IsFinite (projectiveAevalOfRadical 𝒞 g hg hbasepointFree) ∧
+      Surjective (projectiveAevalOfRadical 𝒞 g hg hbasepointFree) := by
+  classical
+  letI : Fintype I := Fintype.ofFinite I
+  let f := MvPolynomial.standardGradedAevalHom 𝒞 g hg
+  have hfinite : f.toRingHom.Finite :=
+    MvPolynomial.standardGradedAevalHom_toRingHom_finite_of_basepointFree
+      𝒞 g hg hbasepointFree hirrelevantFG hcomponentFinite hstandard
+  have hinjective : Function.Injective f.toRingHom := by
+    change Function.Injective (MvPolynomial.aeval g)
+    exact algebraicIndependent_iff_injective_aeval.mp halgebraicIndependent
+  exact ⟨
+    projectiveAevalOfRadical_isFinite_of_toRingHom_finite
+      𝒞 g hg hbasepointFree hfinite,
+    projectiveAevalOfRadical_surjective_of_toRingHom_finite_injective
+      𝒞 g hg hbasepointFree hfinite hinjective⟩
 
 /-- Over a domain coordinate ring, a nonempty finite free basis supplies injectivity as well as
 finiteness.  Hence the `(1,c,1)`-style basis certificate gives a finite surjective projective

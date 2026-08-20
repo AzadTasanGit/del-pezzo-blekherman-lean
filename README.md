@@ -38,6 +38,9 @@ The root build reaches every theorem module. The audit module is checked separat
 The codebase contains no `sorry`, `admit`, or custom `axiom` declarations. The first native
 algebra boundary now states the regular Artinian reduction and perfect socle multiplication
 directly and proves the paper's Hankel kernel/rank conclusion from that predicate and the literal
-Hilbert equation. The finite-Proj/degree bridge and the concrete geometric instantiations remain.
+Hilbert equation. A basepoint-free homogeneous system of parameters now gives a finite
+surjective Proj morphism from explicit standard-graded hypotheses, without a supplied module
+basis or finiteness certificate. The Hilbert-numerator proof of degree `c+2` and the concrete
+geometric instantiations remain.
 See `docs/CompletionPlan.md` for the authoritative critical path and
 `docs/FormalizationStatus.md` for the detailed inventory.
