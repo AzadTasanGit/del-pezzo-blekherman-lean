@@ -257,3 +257,6 @@
   sequences, with a different quotient carrier permitted at every step, now constructs the
   complete successive-reduction component relation automatically. The regular-sequence bridge
   is therefore reduced to supplying the concrete exact sequences themselves.
+- Composed that indexed exact-sequence bridge with the checked formal-series cancellation:
+  `toArtinianReductionHilbertSeriesCertificate` now turns the actual chain and ambient
+  equation-(1) certificate directly into the final Artinian `(1,c,1)` Hilbert certificate.

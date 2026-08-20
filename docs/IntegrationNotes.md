@@ -162,8 +162,9 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
   sequence for one degree-one nonzerodivisor. An indexed family of those exact sequences,
   even when the quotient carrier changes at every stage, automatically constructs
   `SuccessiveLinearReductionComponentsRelation`. Lean then multiplies the Hilbert series by
-  `1-t` at each stage and constructs `ArtinianReductionDenominatorRelation`. The strongest
-  graded endpoint now consumes this chain.
+  `1-t` at each stage and directly constructs both `ArtinianReductionDenominatorRelation` and
+  the final `(1,c,1)` Hilbert-series certificate. The strongest graded endpoint now consumes
+  this chain.
 
 ## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`
 

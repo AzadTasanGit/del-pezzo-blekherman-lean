@@ -334,6 +334,28 @@ theorem ArtinianReductionDenominatorRelation.toHilbertSeriesCertificate
     rw [← delPezzoHilbertSeries_mul_one_sub_pow m c]
     exact h.finrank_eq_coeff d
 
+/-- An indexed family of degree-one reduction exact sequences turns the ambient equation-(1)
+Hilbert certificate directly into the denominator relation for the final quotient. -/
+theorem SuccessiveDegreeOneReductionComponentExactSequences.toArtinianReductionDenominatorRelation
+    {K : Type u} {m c : ℕ} {C : Fin (m + 2) → Type v}
+    [Field K] [∀ i, AddCommGroup (C i)] [∀ i, Module K (C i)]
+    {𝒞 : ∀ i, ℕ → Submodule K (C i)}
+    (h : SuccessiveDegreeOneReductionComponentExactSequences K (m + 1) C 𝒞)
+    (hHilbert : DelPezzoHilbertSeriesCertificate (𝒞 0) m c) :
+    ArtinianReductionDenominatorRelation (𝒞 ⟨m + 1, by omega⟩) m c :=
+  h.toComponentsRelation.toArtinianReductionDenominatorRelation hHilbert
+
+/-- Consequently, an indexed family of degree-one reduction exact sequences constructs the
+`(1,c,1)` Hilbert-series certificate of the final Artinian reduction. -/
+theorem SuccessiveDegreeOneReductionComponentExactSequences.toArtinianReductionHilbertSeriesCertificate
+    {K : Type u} {m c : ℕ} {C : Fin (m + 2) → Type v}
+    [Field K] [∀ i, AddCommGroup (C i)] [∀ i, Module K (C i)]
+    {𝒞 : ∀ i, ℕ → Submodule K (C i)}
+    (h : SuccessiveDegreeOneReductionComponentExactSequences K (m + 1) C 𝒞)
+    (hHilbert : DelPezzoHilbertSeriesCertificate (𝒞 0) m c) :
+    ArtinianReductionHilbertSeriesCertificate (𝒞 ⟨m + 1, by omega⟩) c :=
+  h.toArtinianReductionDenominatorRelation hHilbert |>.toHilbertSeriesCertificate
+
 /-- Equation (1) forces the degree-zero component to have dimension one. -/
 theorem DelPezzoHilbertSeriesCertificate.finrank_zero
     {𝒜 : ℕ → Submodule K A} {m c : ℕ}
