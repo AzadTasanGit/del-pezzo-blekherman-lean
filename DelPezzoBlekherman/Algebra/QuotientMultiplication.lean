@@ -1,10 +1,11 @@
 import DelPezzoBlekherman.Algebra.SoclePairing
+import DelPezzoBlekherman.Algebra.HilbertArithmetic
 import Mathlib.LinearAlgebra.Quotient.Bilinear
 import Mathlib.LinearAlgebra.TensorProduct.Basic
 
 noncomputable section
 
-universe u v w
+universe u v w z
 
 open LinearMap
 open scoped TensorProduct
@@ -304,6 +305,23 @@ structure ParameterProductPerfectPairingCertificate
     (hsymm : ∀ x y, mul x y = mul y x) : Prop where
   socleFinrankOne : Module.finrank K (Q ⧸ parameterProductSubmodule W mul) = 1
   perfect : (parameterProductQuotientMultiplication W mul hsymm).Nondegenerate
+
+/-- Construct the quotient Gorenstein certificate from the `(1,c,1)` Hilbert-series
+certificate of an Artinian reduction, an identification of its degree-two component with the
+canonical quotient socle, and the remaining zero-annihilator property. -/
+theorem ParameterProductGorensteinCertificate.ofArtinianReductionHilbertSeriesCertificate
+    {W : Submodule K U} {mul : U →ₗ[K] U →ₗ[K] Q}
+    {hsymm : ∀ x y, mul x y = mul y x}
+    {A : Type z} [AddCommGroup A] [Module K A]
+    (𝒜 : ℕ → Submodule K A) {c : ℕ}
+    (hHilbert : DelPezzoBlekherman.ArtinianReductionHilbertSeriesCertificate 𝒜 c)
+    (eSocle : 𝒜 2 ≃ₗ[K] (Q ⧸ parameterProductSubmodule W mul))
+    (hann : ∀ x,
+      (∀ y, parameterProductQuotientMultiplication W mul hsymm x y = 0) → x = 0) :
+    ParameterProductGorensteinCertificate W mul hsymm where
+  socleFinrankOne := by
+    rw [← eSocle.finrank_eq, hHilbert.finrank_two]
+  socleAnnihilator := hann
 
 /-- The Gorenstein annihilator formulation already implies the intrinsic perfect-pairing
 formulation: symmetry turns the supplied left nondegeneracy into right nondegeneracy. -/

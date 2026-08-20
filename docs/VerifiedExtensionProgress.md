@@ -231,6 +231,11 @@ development state; the current integration outcome is recorded at the end.
     `PowerSeries.invOneSubPow`, proved the coefficients in degrees zero, one, and two, and added
     a certificate equating those coefficients with homogeneous-component finranks. The strongest
     graded rank theorem now derives finite-dimensionality and `dim R₁=m+c+1` from this certificate.
+68. Formalized the Proposition 2.2 Artinian-reduction Hilbert series. Proved exact cancellation
+    of equation (1) to `1+c t+t²`, all numerator coefficients `(1,c,1,0,...)`, and their
+    component-finrank consequences. Transported the degree-two value through an explicit socle
+    equivalence to construct the canonical quotient's one-dimensional-socle certificate, and
+    added a direct graded Theorem 4.3 endpoint requiring only the remaining zero-annihilator fact.
 
 ### Integration outcome
 

@@ -32,7 +32,9 @@ checked in compiling scratch files before use.
   degree-two tensor multiplication proves the reverse inclusion.
 - `PowerSeries.invOneSubPow` is mathlib's formal inverse of `(1-X)^d`, with binomial
   coefficients exposed by `invOneSubPow_val_succ_eq_mk_add_choose`; it supports exact extraction
-  of the degree-zero, degree-one, and degree-two coefficients of PDF equation (1).
+  of the degree-zero, degree-one, and degree-two coefficients of PDF equation (1). Its unit
+  identity `invOneSubPow_inv_eq_one_sub_pow` and inverse law support the checked cancellation of
+  equation (1) to the Artinian numerator `1+cX+X²`.
 - Hausdorff compactness and density APIs, used for the Euclidean perturbation
   from a point outside the compact real image into the dense good-fiber locus.
 - Analyticity of multivariate-polynomial evaluation, analytic uniqueness on
@@ -83,6 +85,7 @@ axiomatized silently.
 
 The project therefore proves the independent finite-dimensional theorems directly,
 packages the perfect-pairing conclusion needed from the Gorenstein reduction as a
-transparent algebraic interface, and keeps the unproved derivation of that interface
-from the PDF's ring hypotheses as a named bridge task. No theorem currently marked
-proved assumes an unexplained custom axiom.
+transparent algebraic interface. The Artinian numerator and its `(1,c,1,0,...)` component
+dimensions are now checked locally; deriving the corresponding component certificate, socle
+equivalence, and annihilator property from the PDF's ring-theoretic hypotheses remains a named
+bridge task. No theorem currently marked proved assumes an unexplained custom axiom.

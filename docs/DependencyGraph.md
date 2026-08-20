@@ -36,6 +36,13 @@ equation-(1) component Hilbert-series certificate
   -> dim R1 = m+c+1
   -> dim R2 = binomial(m+2,2) + c(m+1) + 1
 
+equation (1) * (1-t)^(m+1)
+  -> exact numerator 1+c t+t^2
+  -> Artinian-reduction Hilbert function (1,c,1,0,...)
+  -> one-dimensional degree-two reduction component
+  + linear equivalence with the canonical quotient socle
+  -> one-dimensional canonical quotient socle
+
 one-dimensional socle + perfect Gorenstein multiplication pairing
   -> zero degree-one annihilator
   + J defined canonically as span(W * R1)
@@ -155,13 +162,13 @@ proper subspace of the Hankel radical
 
 ## Remaining upstream bridges
 
-1. Construct the equation-(1) component Hilbert-series certificate and derive the `(1,c,1)`
-   homogeneous free-basis certificate and socle-annihilator property directly from the PDF's
-   arithmetically Gorenstein,
-   Cohen--Macaulay, Hilbert-series, and homogeneous-system-of-parameters hypotheses, including
-   `ParameterProductGorensteinCertificate` for the canonical quotient. Once it is supplied, ambient
-   multiplication and the paper's functional now descend automatically, and the passage from
-   the specific nonzero induced socle functional to its perfect Hankel pairing is checked.
+1. Construct the equation-(1) and Artinian-reduction component Hilbert-series certificates,
+   the reduction-to-canonical-quotient socle equivalence, the socle-annihilator property, and the
+   stronger `(1,c,1)` homogeneous free-basis certificate directly from the PDF's arithmetically
+   Gorenstein, Cohen--Macaulay, Hilbert-series, regular-sequence, and homogeneous-system-of-
+   parameters hypotheses. Exact cancellation to the numerator and its full Hilbert function are
+   checked; once the equivalence and annihilator input are supplied, the one-dimensional quotient
+   socle certificate, ambient descent, and perfect-Hankel conclusion are now automatic.
 2. Identify the paper's concrete projective fiber evaluation maps with the checked abstract
    degree-one hyperplane, degree-two multiplication, and normalized complex-block models.
 3. Prove the SOS cone itself is closed (the checked dual theorem already handles its closure) and

@@ -53,6 +53,7 @@ These files were forced-fresh compiled with Lean `v4.33.0-rc2` and mathlib commi
 | Equality of the canonical product submodule with the named degree-two piece transports multiplication and the original functional into the rank theorem | `ArtinianGorensteinDegreeOneCertificate.submoduleMultiplicationToDegreeTwo`, `ArtinianGorensteinDegreeOneCertificate.symmetricSquare_submoduleMultiplicationToDegreeTwo_surjective`, `ArtinianGorensteinDegreeOneCertificate.hankelKernel_eq_parameterSpan_and_rank_of_degreeTwo_eq_product` | proved from `U * U = Q`; symmetry and generation are internal, leaving the standard-graded equality and Proposition 2.2 perfect quotient pairing as explicit upstream inputs |
 | The PDF's degree-two consequence of standard gradedness proves the product equality and gives a direct graded rank endpoint | `ArtinianGorensteinDegreeOneCertificate.DegreeTwoGeneratedByDegreeOne`, `ArtinianGorensteinDegreeOneCertificate.degreeOne_mul_self_eq_degreeTwo`, `ArtinianGorensteinDegreeOneCertificate.hankelKernel_eq_parameterSpan_and_rank_of_degreeTwoGeneratedByDegreeOne` | proved for internal homogeneous components; the literal hypothesis is surjectivity of `Sym²(R₁) → R₂`, which supplies `R₁ * R₁ = R₂` via the equivalent tensor map, leaving only the Proposition 2.2 zero-annihilator certificate and parameter construction upstream |
 | Equation (1) has machine-checked formal-power-series coefficients and supplies degree-one finite-dimensionality and dimension to the graded rank theorem | `DelPezzoBlekherman.delPezzoHilbertSeries`, `DelPezzoBlekherman.coeff_one_delPezzoHilbertSeries`, `DelPezzoBlekherman.coeff_two_delPezzoHilbertSeries`, `DelPezzoBlekherman.DelPezzoHilbertSeriesCertificate.moduleFinite_one`, `ArtinianGorensteinDegreeOneCertificate.hankelKernel_eq_parameterSpan_and_rank_of_hilbertSeriesCertificate` | proved; the remaining interface is construction of `DelPezzoHilbertSeriesCertificate` from the concrete homogeneous coordinate ring because mathlib has no packaged graded Hilbert-series API |
+| Equation (1) cancels exactly to the Artinian numerator, whose Hilbert function is `(1,c,1,0,...)`, and its degree-two value supplies the quotient socle dimension in the strongest graded rank endpoint | `DelPezzoBlekherman.delPezzoHilbertSeries_mul_one_sub_pow`, `DelPezzoBlekherman.ArtinianReductionHilbertSeriesCertificate`, `ArtinianGorensteinDegreeOneCertificate.ParameterProductGorensteinCertificate.ofArtinianReductionHilbertSeriesCertificate`, `ArtinianGorensteinDegreeOneCertificate.hankelKernel_eq_parameterSpan_and_rank_of_artinianReductionHilbertSeriesCertificate` | proved; construction of the reduction certificate and its socle equivalence from a regular sequence, plus the Gorenstein zero-annihilator property, remain explicit upstream inputs |
 | Index-one inertia forces at most one complex-conjugate pair | `QuadraticForm.NonrealPairNegativeDirections.card_le_one_of_restrict` | proved once evaluation blocks supply independent negative directions |
 | The real reciprocal identity and its converse | `ReciprocalHyperplane.reciprocal_identity_of_radical`, `ReciprocalHyperplane.radical_of_reciprocal_identity` | proved |
 | The fully-real sign pattern has exactly one negative coefficient | `ReciprocalHyperplane.ncard_negative_eq_one_of_reciprocal_identity` | proved |
@@ -99,9 +100,10 @@ These files were forced-fresh compiled with Lean `v4.33.0-rc2` and mathlib commi
 
 ## Conditional boundary
 
-`HVectorOneCOneFreeCertificate` is an explicit interface, not a proof of the PDF's
-Cohen--Macaulay/Gorenstein step.  The remaining upstream theorem must derive this certificate
-from the arithmetically Gorenstein standard graded coordinate ring with Hilbert series
+`HVectorOneCOneFreeCertificate` and `ArtinianReductionHilbertSeriesCertificate` are explicit
+interfaces, not proofs of the PDF's Cohen--Macaulay/Gorenstein step. The remaining upstream
+theorem must derive these certificates from the arithmetically Gorenstein standard graded
+coordinate ring with Hilbert series
 `(1 + c t + t^2)/(1-t)^(m+1)` and the chosen homogeneous system of parameters.  Current mathlib
 does not expose Hilbert-series, Cohen--Macaulay, regular-sequence, or graded Gorenstein
 infrastructure sufficient to state that derivation at the PDF's level without substantial new
@@ -122,8 +124,8 @@ this supplement treats an interface assumption as a proof of the original hypoth
 |---|---|---|
 | 1. SOS cone closedness and dual | dual proved, closedness pending | `SOSConeDual.nonnegative_on_sosCone_iff` and closure invariance are proved; prove the concrete cone is closed |
 | 2. Extreme-ray dichotomy | linear/convex ingredients proved, concrete dichotomy pending | kernel-face, rank-one evaluation extremality, compact-base extreme-ray selection are proved; classify the remaining concrete Hankel rays |
-| 3. `dim W_ell=m+1`, `rank Q_ell=c` | paper-faithful perfect-pairing theorem proved conditionally | construct the `m+1`-dimensional parameter span and derive `ParameterProductPerfectPairingCertificate` plus product generation from the PDF's AG/CM hypotheses; the annihilator property and all subsequent quotient/Hankel steps are internal |
-| 4. Finite kernel morphism of degree `c+2` | conditional finite, surjective, rank-`c+2` theorem proved | derive the `(1,c,1)` finite free certificate from the AG Hilbert series; all stated Proj consequences are proved from it |
+| 3. `dim W_ell=m+1`, `rank Q_ell=c` | paper-faithful Artinian-reduction endpoint proved conditionally | construct the independent parameter tuple, both Hilbert certificates, the reduction-to-quotient socle equivalence, and the zero-annihilator property from the PDF's AG/CM hypotheses; numerator cancellation, the `(1,c,1)` socle dimension, and all subsequent quotient/Hankel steps are internal |
+| 4. Finite kernel morphism of degree `c+2` | conditional finite, surjective, rank-`c+2` theorem proved | strengthen the checked Artinian `(1,c,1)` component certificate to the finite free polynomial-module certificate from the AG/CM regular reduction; all stated Proj consequences are proved from it |
 | 5. Reduced fibers and evaluation relations | substantial algebra proved | instantiate the abstract evaluation maps with the scheme fiber; relation uniqueness, nonzero-coefficient criterion, and degree-two isomorphism are proved |
 | 6. At most one conjugate pair | normalized block theorem and concrete-family adapter proved | identify the concrete fiber Hankel form with the normalized complex-block coefficients and discharge relation-kernel nonnegativity and block non-isotropy |
 | 7. Reciprocal identities and converses | proved in both fiber models | only the concrete evaluation-model identification remains |
@@ -133,8 +135,8 @@ this supplement treats an interface assumption as a proof of the original hypoth
 ## Verification
 
 - Seventy-three thematic source modules, the root import, and the axiom audit: 75 Lean files
-  totaling 11,600 source lines.
+  totaling 11,753 source lines.
 - No `sorry`, `admit`, custom `axiom`, `TODO`, `FIXME`, or `#check` in any extension source.
 - The declarations listed by `Audit/Axioms.lean` depend only on `propext`, `Classical.choice`, and
   `Quot.sound`.
-- The root build of all forty-nine modules and the separate `Audit/Axioms.lean` check exited zero.
+- The complete root import graph and the separate `Audit/Axioms.lean` check exited zero.

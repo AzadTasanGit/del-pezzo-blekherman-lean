@@ -34,6 +34,55 @@ def hilbertDegreeTwo (m c : ℕ) : ℕ :=
 noncomputable def delPezzoHilbertSeries (m c : ℕ) : PowerSeries ℤ :=
   (1 + C (c : ℤ) * X + X ^ 2) * (invOneSubPow ℤ (m + 1)).val
 
+/-- The Hilbert series of the Artinian reduction in Proposition 2.2. -/
+noncomputable def delPezzoHilbertNumerator (c : ℕ) : PowerSeries ℤ :=
+  1 + C (c : ℤ) * X + X ^ 2
+
+private theorem coeff_natCast_of_pos (c n : ℕ) (hn : 0 < n) :
+    coeff n (c : PowerSeries ℤ) = 0 := by
+  induction c with
+  | zero => simp
+  | succ c ih =>
+    rw [Nat.cast_succ, map_add, ih]
+    simp [coeff_one, hn.ne']
+
+/-- Multiplication by the denominator cancels equation (1) and gives the Artinian numerator
+`1+c t+t²`, exactly as used after quotienting by a linear regular sequence. -/
+theorem delPezzoHilbertSeries_mul_one_sub_pow (m c : ℕ) :
+    delPezzoHilbertSeries m c * (1 - X) ^ (m + 1) =
+      delPezzoHilbertNumerator c := by
+  rw [delPezzoHilbertSeries, delPezzoHilbertNumerator, mul_assoc,
+    ← invOneSubPow_inv_eq_one_sub_pow]
+  rw [(invOneSubPow ℤ (m + 1)).val_inv, mul_one]
+
+/-- The Artinian numerator has degree-zero coefficient one. -/
+theorem coeff_zero_delPezzoHilbertNumerator (c : ℕ) :
+    coeff 0 (delPezzoHilbertNumerator c) = 1 := by
+  simp [delPezzoHilbertNumerator]
+
+/-- The Artinian numerator has degree-one coefficient `c`. -/
+theorem coeff_one_delPezzoHilbertNumerator (c : ℕ) :
+    coeff 1 (delPezzoHilbertNumerator c) = c := by
+  norm_num [delPezzoHilbertNumerator, coeff_mul, Finset.Nat.antidiagonal_succ]
+
+/-- The Artinian numerator has degree-two coefficient one. -/
+theorem coeff_two_delPezzoHilbertNumerator (c : ℕ) :
+    coeff 2 (delPezzoHilbertNumerator c) = 1 := by
+  norm_num [delPezzoHilbertNumerator, coeff_mul, Finset.Nat.antidiagonal_succ,
+    PowerSeries.coeff_X, PowerSeries.coeff_C]
+  rw [coeff_natCast_of_pos c 1 (by omega)]
+
+/-- All coefficients of the Artinian numerator above degree two vanish. -/
+theorem coeff_delPezzoHilbertNumerator_eq_zero_of_three_le
+    (c : ℕ) {d : ℕ} (hd : 3 ≤ d) :
+    coeff d (delPezzoHilbertNumerator c) = 0 := by
+  have hcx : coeff d ((c : PowerSeries ℤ) * X) = 0 := by
+    rw [show (X : PowerSeries ℤ) = X ^ 1 by simp, coeff_mul_X_pow']
+    rw [if_pos (by omega)]
+    exact coeff_natCast_of_pos c (d - 1) (by omega)
+  simp [delPezzoHilbertNumerator, hcx, coeff_X_pow,
+    show d ≠ 0 by omega, show d ≠ 2 by omega]
+
 /-- The constant coefficient of the PDF Hilbert series is one. -/
 theorem coeff_zero_delPezzoHilbertSeries (m c : ℕ) :
     coeff 0 (delPezzoHilbertSeries m c) = 1 := by
@@ -79,6 +128,12 @@ structure DelPezzoHilbertSeriesCertificate
   finrank_eq_coeff : ∀ d,
     (Module.finrank K (𝒜 d) : ℤ) = coeff d (delPezzoHilbertSeries m c)
 
+/-- Componentwise Hilbert-series certificate for the Artinian reduction of Proposition 2.2. -/
+structure ArtinianReductionHilbertSeriesCertificate
+    (𝒜 : ℕ → Submodule K A) (c : ℕ) : Prop where
+  finrank_eq_coeff : ∀ d,
+    (Module.finrank K (𝒜 d) : ℤ) = coeff d (delPezzoHilbertNumerator c)
+
 /-- Equation (1) forces the degree-zero component to have dimension one. -/
 theorem DelPezzoHilbertSeriesCertificate.finrank_zero
     {𝒜 : ℕ → Submodule K A} {m c : ℕ}
@@ -115,6 +170,40 @@ theorem DelPezzoHilbertSeriesCertificate.finrank_two
   have hd := h.finrank_eq_coeff 2
   rw [coeff_two_delPezzoHilbertSeries] at hd
   exact_mod_cast hd
+
+/-- The Artinian reduction has Hilbert function value one in degree zero. -/
+theorem ArtinianReductionHilbertSeriesCertificate.finrank_zero
+    {𝒜 : ℕ → Submodule K A} {c : ℕ}
+    (h : ArtinianReductionHilbertSeriesCertificate 𝒜 c) :
+    Module.finrank K (𝒜 0) = 1 := by
+  have hd := h.finrank_eq_coeff 0
+  rw [coeff_zero_delPezzoHilbertNumerator] at hd
+  exact_mod_cast hd
+
+/-- The Artinian reduction has Hilbert function value `c` in degree one. -/
+theorem ArtinianReductionHilbertSeriesCertificate.finrank_one
+    {𝒜 : ℕ → Submodule K A} {c : ℕ}
+    (h : ArtinianReductionHilbertSeriesCertificate 𝒜 c) :
+    Module.finrank K (𝒜 1) = c := by
+  have hd := h.finrank_eq_coeff 1
+  rw [coeff_one_delPezzoHilbertNumerator] at hd
+  exact_mod_cast hd
+
+/-- The Artinian reduction has its one-dimensional socle in degree two. -/
+theorem ArtinianReductionHilbertSeriesCertificate.finrank_two
+    {𝒜 : ℕ → Submodule K A} {c : ℕ}
+    (h : ArtinianReductionHilbertSeriesCertificate 𝒜 c) :
+    Module.finrank K (𝒜 2) = 1 := by
+  have hd := h.finrank_eq_coeff 2
+  rw [coeff_two_delPezzoHilbertNumerator] at hd
+  exact_mod_cast hd
+
+/-- The positive degree-two coefficient supplies finite-dimensionality of the socle component. -/
+theorem ArtinianReductionHilbertSeriesCertificate.moduleFinite_two
+    {𝒜 : ℕ → Submodule K A} {c : ℕ}
+    (h : ArtinianReductionHilbertSeriesCertificate 𝒜 c) :
+    Module.Finite K (𝒜 2) :=
+  Module.finite_of_finrank_pos <| by rw [h.finrank_two]; simp
 
 end GradedComponents
 

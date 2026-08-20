@@ -144,6 +144,15 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
   mathlib's inverse `(1-t)^{-(m+1)}`, proves its coefficients through degree two, and packages
   coefficient/finrank compatibility. The strongest graded rank endpoint uses that certificate
   to derive finite-dimensionality and `dim R₁=m+c+1` instead of accepting either separately.
+- Multiplying equation (1) by `(1-t)^(m+1)` is now proved to cancel exactly to
+  `1+c t+t²`. Its coefficients are proved to be `(1,c,1,0,...)`, and
+  `ArtinianReductionHilbertSeriesCertificate` turns those coefficients into the component
+  dimensions of an abstract Artinian reduction.
+- A degree-two linear equivalence from that reduction to the canonical parameter-product
+  quotient transports the checked dimension-one result into
+  `ParameterProductGorensteinCertificate`; the strongest graded Theorem 4.3 endpoint now performs
+  this construction internally and retains only the zero-annihilator property as a separate
+  Gorenstein input.
 
 ## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`
 
@@ -414,7 +423,7 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
 
 ## Verification
 
-- Compilation succeeds for all forty-nine modules through the root import graph.
+- Compilation succeeds for the complete root import graph.
 - Placeholder search finds no `sorry`, `admit`, custom `axiom`, `TODO`, `FIXME`, or `#check`.
 - `#print axioms` for the principal new declarations reports only `propext`,
   `Classical.choice`, and `Quot.sound`.
@@ -423,9 +432,11 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
 
 - derive finiteness, flat rank `c + 2`, and the appropriate homogeneous module structure from
   the arithmetically Gorenstein/Hilbert-series hypotheses;
-- derive the explicit `(1,c,1)` Hilbert dimensions, socle-annihilator property, and finite free
-  polynomial-module basis from the PDF's arithmetically Gorenstein/Cohen--Macaulay hypotheses;
-  once those inputs are present, the kernel dimension/rank and geometric bridge are automatic;
+- derive the checked equation-(1) and Artinian-reduction Hilbert certificates, the identification
+  of the reduction's degree-two component with the canonical quotient socle, the
+  socle-annihilator property, and the finite free polynomial-module basis from the PDF's
+  arithmetically Gorenstein/Cohen--Macaulay regular-sequence hypotheses; cancellation to
+  `(1,c,1)` and all later kernel/rank reasoning are already automatic;
 - identify the paper's concrete fiber evaluation isomorphism with the checked complex-block
   quadratic model and prove its relation-kernel nonnegativity and block non-isotropy;
 - realize the constructed real algebra points with nonzero degree-one generator vector as points

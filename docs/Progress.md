@@ -233,3 +233,10 @@
   component-finrank certificate, and used its positive degree-one coefficient to remove both
   the separate finite-dimensionality and `dim R₁=m+c+1` hypotheses from the strongest
   internal-graded Theorem 4.3 endpoint.
+- Proved exact formal-series cancellation of equation (1) by `(1-t)^(m+1)`, computed every
+  coefficient of the numerator `1+c t+t²`, and introduced a componentwise Artinian-reduction
+  certificate deriving Hilbert function `(1,c,1,0,...)` and a finite degree-two component.
+- Transported the numerator's one-dimensional degree-two result across an explicit equivalence
+  with the canonical parameter-product quotient socle. The new strongest internal-graded
+  Theorem 4.3 endpoint constructs the quotient Gorenstein certificate from this reduction data
+  and the remaining zero-annihilator property.

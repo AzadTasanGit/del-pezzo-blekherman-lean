@@ -17,7 +17,7 @@ degree-one submodule inside a commutative algebra.
 
 noncomputable section
 
-universe u v
+universe u v z
 
 open scoped TensorProduct
 
@@ -285,5 +285,40 @@ theorem hankelKernel_eq_parameterSpan_and_rank_of_hilbertSeriesCertificate
     𝒜 hgenerated ell hell parameters hparameters hparametersKernel hAG <| by
       simpa only [DelPezzoBlekherman.hilbertDegreeOne, add_assoc, add_comm, add_left_comm]
         using hHilbert.finrank_one
+
+/-- Artinian-reduction form of the internal-graded Theorem 4.3 endpoint.  In addition to the
+ambient equation-(1) certificate, the caller supplies the reduction's `(1,c,1)` Hilbert-series
+certificate, identifies its degree-two component with the canonical quotient socle, and proves
+the Gorenstein zero-annihilator property.  The quotient certificate is then built internally. -/
+theorem hankelKernel_eq_parameterSpan_and_rank_of_artinianReductionHilbertSeriesCertificate
+    (𝒜 : ℕ → Submodule K A) [SetLike.GradedMonoid 𝒜]
+    (hgenerated : DegreeTwoGeneratedByDegreeOne 𝒜)
+    (ell : 𝒜 2 →ₗ[K] K) (hell : ell ≠ 0)
+    {m c : ℕ}
+    (parameters : Fin (m + 1) → 𝒜 1)
+    (hparameters : LinearIndependent K parameters)
+    (hparametersKernel : ∀ i,
+      parameters i ∈ LinearMap.ker ((gradedDegreeOneMultiplication 𝒜).compr₂ ell))
+    (hHilbert : DelPezzoBlekherman.DelPezzoHilbertSeriesCertificate 𝒜 m c)
+    {B : Type z} [AddCommGroup B] [Module K B]
+    (ℬ : ℕ → Submodule K B)
+    (hReductionHilbert :
+      DelPezzoBlekherman.ArtinianReductionHilbertSeriesCertificate ℬ c)
+    (eSocle : ℬ 2 ≃ₗ[K]
+      (𝒜 2 ⧸ parameterProductSubmodule
+        (Submodule.span K (Set.range parameters)) (gradedDegreeOneMultiplication 𝒜)))
+    (hann : ∀ x,
+      (∀ y, parameterProductQuotientMultiplication
+        (Submodule.span K (Set.range parameters))
+        (gradedDegreeOneMultiplication 𝒜)
+        (gradedDegreeOneMultiplication_symmetric 𝒜) x y = 0) → x = 0) :
+    LinearMap.ker ((gradedDegreeOneMultiplication 𝒜).compr₂ ell) =
+        Submodule.span K (Set.range parameters) ∧
+      @LinearMap.BilinForm.finiteRank K (𝒜 1) _ _ _ hHilbert.moduleFinite_one
+        ((gradedDegreeOneMultiplication 𝒜).compr₂ ell) = c :=
+  hankelKernel_eq_parameterSpan_and_rank_of_hilbertSeriesCertificate
+    𝒜 hgenerated ell hell parameters hparameters hparametersKernel
+    (ParameterProductGorensteinCertificate.ofArtinianReductionHilbertSeriesCertificate
+      ℬ hReductionHilbert eSocle hann) hHilbert
 
 end ArtinianGorensteinDegreeOneCertificate
