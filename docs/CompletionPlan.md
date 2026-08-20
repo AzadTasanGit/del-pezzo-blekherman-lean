@@ -82,6 +82,19 @@ signature.
 `DelPezzoBlekherman/Algebra/NativeGorenstein.lean` now provides:
 
 - `degreeOneParameterIdeal`, the actual homogeneous parameter ideal;
+- `degreeOneParameterIdeal_isHomogeneous`, proving that ideal homogeneous from the actual
+  degree-one generators;
+- `idealComponent`, `idealQuotientComponent`, and
+  `idealQuotientComponentEquivRange`, constructing each degree of the parameter quotient and
+  identifying it canonically with the corresponding image in the actual quotient;
+- `moduleFinite_idealQuotientComponent`, transporting finite-dimensionality to every concrete
+  quotient component;
+- `idealQuotientComponentMul`, the actual homogeneous multiplication map on these quotient
+  components, and `idealQuotientComponentMul_injective_of_isSMulRegular`, which derives its
+  injectivity from ring-theoretic regularity on the full ideal quotient;
+- `idealQuotientComponentMapOfLE`, the canonical degreewise map after enlarging the ideal,
+  together with its surjectivity and the proof that it composes to zero after multiplication by
+  an element of the enlarged ideal;
 - `IsArithmeticallyGorenstein`, the regular, Artinian, one-dimensional-socle and perfect-pairing
   predicate described above;
 - `moduleFinite_degreeOne_of_delPezzoHilbertSeries`, which consumes the literal equation rather
@@ -233,6 +246,16 @@ reduction-exact-sequence package, `RingHom.Finite`, or the asserted finrank equa
    Hilbert-length identification. An asymptotic Hilbert-leading-coefficient proof was also
    surveyed; the imported API has no graded finite-module Hilbert polynomial or multiplicity
    theorem from which to recover the generic rank.
+8. The proposed Mathlib Cohen--Macaulay PR `#26218` was inspected at pinned head
+   `f23bd79b64731268daa2f18db0682058a8b094c5`. It adds the depth/CM predicates, localization,
+   associated-prime consequences, and preservation under quotient by regular elements and
+   sequences. It does not add graded quotient components, a Hilbert-series or multiplicity API,
+   Artinian-reduction length, standard-graded module finiteness/freeness over an hsop, or the
+   generic-rank equality needed here. Pinning the whole project to that unmerged fork would
+   therefore add migration and cache risk without closing this blocker; the project stays on
+   its current Mathlib revision. The upstream `HilbertPoly` file likewise only treats rational
+   formal power series and explicitly does not construct Hilbert polynomials of finitely
+   generated graded modules.
 
 Those routes did not construct the polynomial-module finiteness directly from the operational
 Artinian reduction. The obstruction was mathematical infrastructure rather than a Lean
@@ -268,6 +291,17 @@ parameter polynomial ring. Thus it constructs `RingHom.Finite` internally rather
 it or a basis as input. Algebraic independence is then exactly the hsop input needed by the
 existing finite-plus-injective surjectivity theorem. This removes supplied `RingHom.Finite` and
 the free-basis certificate from the public finite-surjective endpoint.
+
+The concrete reduction infrastructure has also begun in
+`Algebra/NativeGorenstein.lean`: the degree-one parameter ideal is now proved homogeneous; its
+degree-`d` intersection with the actual homogeneous component is defined; and the quotient of
+that component is proved canonically equivalent to its range in the additive quotient by the
+ideal. Homogeneous multiplication now descends to these quotients, and regularity on the full
+ring quotient proves its degreewise injectivity. Enlarging the ideal also gives the canonical
+surjective right-hand map, and its composite with multiplication is proved zero. This constructs
+both maps, injectivity, surjectivity, and the complex condition of the missing exact sequence
+without a certificate. The remaining local step is the reverse kernel-to-range inclusion after
+adjoining the next parameter; the global numerical degree `c+2` is therefore still open.
 
 **Remaining exact blocker.** One reusable theorem remains, not a new certificate structure:
 
