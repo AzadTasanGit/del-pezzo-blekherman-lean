@@ -262,6 +262,9 @@ development state; the current integration outcome is recorded at the end.
     final `(1,c,1)` Artinian certificate from the ambient equation-(1) certificate.
 75. Routed the strongest varying-carrier exact-sequence rank endpoint through that transported
     Artinian certificate directly, eliminating its intermediate recurrence conversion.
+76. Identified the named convex SOS cone with the existing finite-sum cone under nonnegative
+    square scaling, and transferred the faithful Gram-model closedness theorem to obtain
+    `SOSConeDual.sosCone_isClosed_of_gram` without adding a separate conic interface.
 73. Composed the indexed exact-sequence bridge with recurrence iteration and formal-series
     cancellation. It now constructs the final Artinian `(1,c,1)` Hilbert-series certificate
     directly from the ambient equation-(1) certificate.

@@ -436,6 +436,12 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
 - this is the fully checked final logical composition for Theorem 1.1, conditional only on the
   explicitly listed cone representation/compactness and geometric dichotomy inputs.
 
+## `SOS/ClosedCone.lean`
+
+- identifies `SOSConeDual.sosCone` with the project-wide finite-sum SOS cone;
+- transfers Gram-model closedness to the named convex-cone representation using only Gram
+  compatibility and the faithful positive-semidefinite kernel criterion.
+
 ## Verification
 
 - Compilation succeeds for the complete root import graph.

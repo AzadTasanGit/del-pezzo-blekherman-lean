@@ -31,6 +31,7 @@ import DelPezzoBlekherman.Fiber.EvaluationHyperplane
 import DelPezzoBlekherman.Convexity.RankOneExtreme
 import DelPezzoBlekherman.Convexity.ConditionalSeparation
 import DelPezzoBlekherman.SOS.DualCone
+import DelPezzoBlekherman.SOS.ClosedCone
 import DelPezzoBlekherman.SOS.EvaluationContinuity
 import DelPezzoBlekherman.SOS.FiberFamilyLength
 import DelPezzoBlekherman.SOS.SurjectiveLength

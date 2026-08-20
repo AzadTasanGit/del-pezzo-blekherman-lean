@@ -60,6 +60,9 @@
 - Derived the Gram conic-scaling law automatically from rank-one matrices and
   replaced the raw evaluation-spanning assumption by the faithful statement that
   no nonzero linear functional vanishes on every real evaluation vector.
+- Identified `SOSConeDual.sosCone` with the finite-sum SOS cone under the same
+  nonnegative-scaling law, and transferred the Gram kernel closedness theorem
+  directly to the named convex-cone realization.
 - Completed all of Lemma 3.2: proved a compact-unit-sphere domination bound for a
   positive-definite form, lifted it across a complement of the PSD radical to get
   `Q ± εP`, and assembled the full equivalence as `kernel_face_criterion`.

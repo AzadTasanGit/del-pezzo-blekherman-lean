@@ -90,7 +90,7 @@ These files were forced-fresh compiled with Lean `v4.33.0-rc2` and mathlib commi
 | Exact minimal length from projective evaluation surjectivity | `SOSKernelLength.boundary_sos_has_exact_minimal_length_of_projective_surjective` | proved as the corresponding stronger conditional shortcut |
 | A point outside a proper cone has a strictly negative supporting functional | `ExtremeSeparator.properCone_separates` | proved via mathlib Farkas separation |
 | Negativity on a compact base occurs at an extreme point | `ExtremeSeparator.exists_extremePoint_apply_neg` | proved via an exposed minimizing face and Krein--Milman |
-| The SOS dual is exactly the functionals nonnegative on all squares, unchanged by closure | `SOSConeDual.nonnegative_on_sosCone_iff`, `SOSConeDual.nonnegative_on_closure_sosCone_iff` | proved |
+| The named SOS convex cone is the finite-sum cone and is closed under a faithful Gram representation; its dual is exactly the functionals nonnegative on all squares | `SOSConeDual.sosCone_eq_finiteSumCone`, `SOSConeDual.sosCone_isClosed_of_gram`, `SOSConeDual.nonnegative_on_sosCone_iff`, `SOSConeDual.nonnegative_on_closure_sosCone_iff` | proved conditionally on the explicit Gram kernel criterion |
 | Extreme points of a strictly positive cone base generate extreme rays | `ExtremeRayBase.isExtremeRay_of_extremePoint_base` | proved |
 | A negative point of a compact cone base can be replaced by a negative extreme-ray generator | `ExtremeRayBase.exists_extremeRay_apply_neg_of_compact_base` | proved |
 | PSD kernel-face criterion | `PSDRangeOneExtreme.ker_add_eq_inf` | proved |
@@ -122,7 +122,7 @@ this supplement treats an interface assumption as a proof of the original hypoth
 
 | Target | Status | Exact remaining boundary |
 |---|---|---|
-| 1. SOS cone closedness and dual | dual proved, closedness pending | `SOSConeDual.nonnegative_on_sosCone_iff` and closure invariance are proved; prove the concrete cone is closed |
+| 1. SOS cone closedness and dual | abstract Gram-model result proved; concrete instantiation pending | `SOSConeDual.sosCone_isClosed_of_gram` closes the named cone after the explicit Gram kernel criterion; construct that Gram map and criterion for the homogeneous coordinate ring |
 | 2. Extreme-ray dichotomy | linear/convex ingredients proved, concrete dichotomy pending | kernel-face, rank-one evaluation extremality, compact-base extreme-ray selection are proved; classify the remaining concrete Hankel rays |
 | 3. `dim W_ell=m+1`, `rank Q_ell=c` | paper-faithful successive-reduction endpoint proved conditionally | construct the independent parameter tuple, ambient Hilbert certificate, concrete indexed regular-sequence short exact sequences, reduction-to-quotient socle equivalence, and zero-annihilator property from the PDF's AG/CM hypotheses; the exact sequences now imply and assemble all one-step recurrences internally, and their iteration, the denominator/reduction certificates, `(1,c,1)` socle dimension, and all subsequent quotient/Hankel steps are internal |
 | 4. Finite kernel morphism of degree `c+2` | conditional finite, surjective, rank-`c+2` theorem proved | strengthen the checked Artinian `(1,c,1)` component certificate to the finite free polynomial-module certificate from the AG/CM regular reduction; all stated Proj consequences are proved from it |

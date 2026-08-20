@@ -39,6 +39,7 @@ import DelPezzoBlekherman.SOS.SurjectiveLength
 import DelPezzoBlekherman.Geometry.Proj.Surjectivity
 import DelPezzoBlekherman.Convexity.ExtremeSeparator
 import DelPezzoBlekherman.SOS.DualCone
+import DelPezzoBlekherman.SOS.ClosedCone
 import DelPezzoBlekherman.Convexity.ExtremeRayBase
 import DelPezzoBlekherman.Convexity.RankOneExtreme
 import DelPezzoBlekherman.Convexity.ConditionalSeparation
@@ -271,6 +272,8 @@ import DelPezzoBlekherman.Convexity.ConditionalSeparation
 #print axioms ExtremeSeparator.properCone_separates
 #print axioms SOSConeDual.nonnegative_on_sosCone_iff
 #print axioms SOSConeDual.nonnegative_on_closure_sosCone_iff
+#print axioms SOSConeDual.sosCone_eq_finiteSumCone
+#print axioms SOSConeDual.sosCone_isClosed_of_gram
 #print axioms ExtremeRayBase.isExtremeRay_of_extremePoint_base
 #print axioms ExtremeRayBase.exists_extremeRay_apply_neg_of_compact_base
 #print axioms PSDRangeOneExtreme.ker_add_eq_inf

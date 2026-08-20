@@ -1,5 +1,6 @@
 import Mathlib.Analysis.Convex.Cone.Basic
 import Mathlib.Topology.Algebra.Module.FiniteDimension
+import DelPezzoBlekherman.Convexity.SumSquaresDual
 
 noncomputable section
 
@@ -20,6 +21,39 @@ def sosCone (sq : V → Q) : ConvexCone ℝ Q :=
 @[simp]
 theorem square_mem_sosCone (sq : V → Q) (x : V) : sq x ∈ sosCone sq :=
   ConvexCone.subset_hull ⟨x, rfl⟩
+
+/-- When the square map is closed under nonnegative rescaling, its convex-cone
+realization is exactly the cone of finite sums of squares. -/
+theorem sosCone_eq_finiteSumCone [Nonempty V]
+    (sq : V → Q)
+    (hsq : ∀ (a : ℝ), 0 ≤ a → ∀ q, ∃ r, sq r = a • sq q) :
+    (sosCone sq : Set Q) = DelPezzoBlekherman.finiteSumCone sq := by
+  let C : ConvexCone ℝ Q := {
+    carrier := DelPezzoBlekherman.finiteSumCone sq
+    smul_mem' := by
+      intro a ha q hq
+      exact DelPezzoBlekherman.finiteSumCone_smul sq hsq ha.le hq
+    add_mem' := by
+      intro q hq q' hq'
+      exact DelPezzoBlekherman.finiteSumCone_add sq hq hq' }
+  apply Set.Subset.antisymm
+  · have hle : sosCone sq ≤ C := by
+      apply ConvexCone.hull_min
+      rintro _ ⟨q, rfl⟩
+      exact ⟨[q], by simp⟩
+    intro x hx
+    change x ∈ C
+    exact hle hx
+  · rintro _ ⟨qs, rfl⟩
+    obtain ⟨r, hr⟩ := hsq 0 le_rfl (Classical.choice inferInstance)
+    have hsqzero : sq r = 0 := by simpa using hr
+    have hzero : (0 : Q) ∈ sosCone sq := by
+      rw [← hsqzero]
+      exact square_mem_sosCone sq r
+    induction qs with
+    | nil => simpa using hzero
+    | cons q qs ih =>
+      simpa using (sosCone sq).add_mem (square_mem_sosCone sq q) ih
 
 /-- Dual characterization: it suffices to test a linear functional on individual squares. -/
 theorem nonnegative_on_sosCone_iff
