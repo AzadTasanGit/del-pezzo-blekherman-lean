@@ -48,6 +48,7 @@ These files were forced-fresh compiled with Lean `v4.33.0-rc2` and mathlib commi
 | The PDF's intrinsic socle-valued perfect Gorenstein multiplication implies its scalar form, the annihilator certificate, and the ambient rank theorem | `ArtinianGorensteinDegreeOneCertificate.ParameterProductPerfectPairingCertificate.scalarPairing_nondegenerate`, `ArtinianGorensteinDegreeOneCertificate.ParameterProductPerfectPairingCertificate.toGorensteinCertificate`, `ArtinianGorensteinDegreeOneCertificate.hankelKernel_eq_parameterSpace_and_rank_of_perfectPairingCertificate` | proved; the remaining upstream interface is now exactly the one-dimensional socle and intrinsic perfect multiplication pairing asserted by Proposition 2.2 |
 | An explicit independent `(m+1)`-parameter sequence supplies the parameter-space dimension in the strongest Theorem 4.3 endpoint | `ArtinianGorensteinDegreeOneCertificate.hankelKernel_eq_parameterSpace_and_rank_of_linearIndependentParameters` | proved; `W = span(range parameters)` and linear independence derive `dim W=m+1`, removing the bare dimension hypothesis |
 | Pointwise membership of the chosen parameters in the Hankel kernel supplies span containment and the final rank endpoint | `ArtinianGorensteinDegreeOneCertificate.hankelKernel_eq_parameterSpan_and_rank_of_parameters_mem_hankelKernel` | proved; the hypotheses now mirror the paper's choice `fᵢ ∈ W_ell`, and Lean identifies their span with the complete kernel |
+| Canonical multiplication in a commutative algebra supplies symmetry and symmetric-square generation automatically | `ArtinianGorensteinDegreeOneCertificate.submoduleProductMultiplication_symmetric`, `ArtinianGorensteinDegreeOneCertificate.symmetricSquare_submoduleProductMultiplication_surjective`, `ArtinianGorensteinDegreeOneCertificate.hankelKernel_eq_parameterSpan_and_rank_of_submoduleProductMultiplication` | proved using mathlib's surjective `Submodule.mulMap'`; the ring-theoretic rank endpoint retains only the perfect parameter-quotient pairing and Hilbert/parameter data |
 | Index-one inertia forces at most one complex-conjugate pair | `QuadraticForm.NonrealPairNegativeDirections.card_le_one_of_restrict` | proved once evaluation blocks supply independent negative directions |
 | The real reciprocal identity and its converse | `ReciprocalHyperplane.reciprocal_identity_of_radical`, `ReciprocalHyperplane.radical_of_reciprocal_identity` | proved |
 | The fully-real sign pattern has exactly one negative coefficient | `ReciprocalHyperplane.ncard_negative_eq_one_of_reciprocal_identity` | proved |
@@ -127,8 +128,8 @@ this supplement treats an interface assumption as a proof of the original hypoth
 
 ## Verification
 
-- Seventy-two thematic source modules, the root import, and the axiom audit: 74 tracked Lean
-  files totaling 11,150 source lines.
+- Seventy-three thematic source modules, the root import, and the axiom audit: 75 Lean files
+  totaling 11,252 source lines.
 - No `sorry`, `admit`, custom `axiom`, `TODO`, `FIXME`, or `#check` in any extension source.
 - The declarations listed by `Audit/Axioms.lean` depend only on `propext`, `Classical.choice`, and
   `Quot.sound`.

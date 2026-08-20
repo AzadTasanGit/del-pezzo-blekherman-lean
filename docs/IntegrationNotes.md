@@ -84,7 +84,7 @@ canonical `DelPezzoBlekherman/` hierarchy; the paths below are their current loc
 The same basis/discriminant certificate over `ℝ`, together with the paper's at-most-one-pair
 input, feeds directly into the fully-real/one-conjugate-pair closed-point dichotomy.
 
-## `Algebra/ArtinianGorenstein.lean`, `Algebra/SoclePairing.lean`, and `Algebra/QuotientMultiplication.lean`
+## `Algebra/ArtinianGorenstein.lean`, `Algebra/SoclePairing.lean`, `Algebra/QuotientMultiplication.lean`, and `Algebra/StandardGradedMultiplication.lean`
 
 - a nondegenerate bilinear form on `V/W`, pulled back to `V`, has radical exactly `W` and rank
   `dim(V/W)`;
@@ -127,6 +127,10 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
   Theorem 4.3.
 - the strongest endpoint only assumes each chosen parameter lies in `ker Q_ell`; span
   containment is proved internally, matching the pointwise choice `fᵢ ∈ W_ell` in the paper.
+- for a degree-one submodule `U` of an actual commutative algebra, canonical multiplication is
+  valued in `U * U`; mathlib's `Submodule.mulMap'_surjective` proves the tensor map is onto that
+  product submodule, and commutativity proves symmetry. The symmetric-square generation input
+  and both structural multiplication hypotheses are therefore discharged internally.
 
 ## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`
 

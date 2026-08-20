@@ -208,6 +208,11 @@ development state; the current integration outcome is recorded at the end.
     `parameters i ∈ ker Q_ell` for every index. Lean proves the span inclusion, builds the
     canonical quotient from that span, and concludes that the full Hankel kernel equals the
     parameter span and has rank `c`.
+63. Connected the abstract multiplication interface to an actual commutative algebra. Defined
+    the canonical bilinear multiplication `U × U → U * U`, proved its tensor lift is mathlib's
+    surjective `Submodule.mulMap'`, proved symmetry from commutativity, and therefore obtained
+    symmetric-square surjectivity automatically. The resulting ring-theoretic Theorem 4.3
+    endpoint no longer assumes symmetry or degree-two generation separately.
 
 ### Integration outcome
 

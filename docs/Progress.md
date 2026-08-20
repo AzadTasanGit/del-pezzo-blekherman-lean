@@ -213,3 +213,8 @@
 - Refined that endpoint to the paper's pointwise input. It now accepts proofs that each selected
   parameter belongs to the ambient Hankel kernel and proves internally that their entire span
   is contained there before identifying the span with the full kernel.
+- Added `Algebra/StandardGradedMultiplication.lean` to connect the abstract rank theorem to
+  multiplication in a commutative coordinate algebra. The canonical bilinear map
+  `U × U → U * U` is proved symmetric and symmetric-square-surjective using mathlib's
+  surjective submodule tensor multiplication, then instantiated in the pointwise parameter
+  kernel/rank theorem.

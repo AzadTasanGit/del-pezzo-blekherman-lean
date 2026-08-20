@@ -24,6 +24,9 @@ checked in compiling scratch files before use.
 - Basis extension and dual separation of a proper subspace by a nonzero linear
   functional, used to place a short independent family inside a prescribed
   codimension-one subspace.
+- `Submodule.mulMap'` canonically linearizes multiplication of two algebra submodules into their
+  product submodule, and `Submodule.mulMap'_surjective` proves it is onto; this supplies the
+  standard-graded degree-two generation bridge for `U * U`.
 - Hausdorff compactness and density APIs, used for the Euclidean perturbation
   from a point outside the compact real image into the dense good-fiber locus.
 - Analyticity of multivariate-polynomial evaluation, analytic uniqueness on

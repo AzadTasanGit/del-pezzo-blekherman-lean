@@ -20,6 +20,12 @@ graded evaluation + radical Proj functoriality
   -> nonempty reduced-fiber open locus
   -> c+2 geometric points in every fiber on that locus
 
+commutative coordinate algebra + degree-one submodule R1
+  -> canonical multiplication R1 x R1 -> R1 * R1
+  -> symmetric multiplication
+  -> surjective tensor multiplication onto R1 * R1
+  -> surjective symmetric-square multiplication
+
 one-dimensional socle + perfect Gorenstein multiplication pairing
   -> zero degree-one annihilator
   + J defined canonically as span(W * R1)
@@ -29,8 +35,8 @@ one-dimensional socle + perfect Gorenstein multiplication pairing
   -> ambient multiplication descends through R1/W in both arguments
   -> ell descends to the quotient socle R2/J
   -> the original ambient Hankel form factors through these constructed maps
-  + the standard-graded multiplication Sym²(R1) -> R2 is surjective
-  -> the tensor-linearized multiplication is surjective
+  + identify R2 with the canonical product submodule R1 * R1
+  -> the standard-graded multiplication Sym²(R1) -> R2 is surjective
   + ell is nonzero on R2
   -> the original ambient Hankel form is nonzero
   + the specific induced socle functional is nonzero
