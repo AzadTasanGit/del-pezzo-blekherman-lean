@@ -111,6 +111,39 @@ structure SuccessiveLinearReductionFinrankRelations
     (h : ℕ → ℕ → ℕ) (n : ℕ) : Prop where
   step : ∀ i, i < n → DegreeOneReductionFinrankRelation (h i) (h (i + 1))
 
+/-- Degreewise short exact sequences for all stages of a sequence of degree-one reductions.
+The carriers are allowed to vary from stage to stage, as they do for successive quotient
+modules. -/
+structure SuccessiveDegreeOneReductionComponentExactSequences
+    (K : Type u) (n : ℕ) (C : Fin (n + 1) → Type v)
+    [Field K] [∀ i, AddCommGroup (C i)] [∀ i, Module K (C i)]
+    (𝒞 : ∀ i, ℕ → Submodule K (C i)) where
+  exactSequence : ∀ i (hi : i < n),
+    DegreeOneReductionComponentExactSequence K
+      (𝒞 ⟨i, by omega⟩) (𝒞 ⟨i + 1, by omega⟩)
+
+/-- A family of finite-dimensional degreewise short exact sequences gives the numerical
+recurrence package for all successive linear reductions. -/
+theorem SuccessiveDegreeOneReductionComponentExactSequences.toFinrankRelations
+    {K : Type u} {n : ℕ} {C : Fin (n + 1) → Type v}
+    [Field K] [∀ i, AddCommGroup (C i)] [∀ i, Module K (C i)]
+    {𝒞 : ∀ i, ℕ → Submodule K (C i)}
+    (h : SuccessiveDegreeOneReductionComponentExactSequences K n C 𝒞) :
+    SuccessiveLinearReductionFinrankRelations
+      (fun i d ↦ Module.finrank K (𝒞 ⟨min i n, by omega⟩ d)) n := by
+  refine ⟨fun i hi ↦ ?_⟩
+  have hi_le : i ≤ n := Nat.le_of_lt hi
+  have hsucc_le : i + 1 ≤ n := by omega
+  convert (h.exactSequence i hi).toFinrankRelation using 1
+  · funext d
+    have hindex : (⟨min i n, by omega⟩ : Fin (n + 1)) = ⟨i, by omega⟩ :=
+      Fin.ext (Nat.min_eq_left hi_le)
+    rw [hindex]
+  · funext d
+    have hindex : (⟨min (i + 1) n, by omega⟩ : Fin (n + 1)) = ⟨i + 1, by omega⟩ :=
+      Fin.ext (Nat.min_eq_left hsucc_le)
+    rw [hindex]
+
 /-- Iterating `n` degree-one reductions multiplies the initial Hilbert series by `(1-X)^n`. -/
 theorem SuccessiveLinearReductionFinrankRelations.hilbertFunctionSeries_eq_mul_pow
     {h : ℕ → ℕ → ℕ} {n : ℕ}
@@ -249,6 +282,23 @@ structure SuccessiveLinearReductionComponentsRelation
   initial : ∀ d, hilbertFunctions 0 d = Module.finrank K (𝒜 d)
   final : ∀ d, hilbertFunctions n d = Module.finrank K (ℬ d)
   reductions : SuccessiveLinearReductionFinrankRelations hilbertFunctions n
+
+/-- The exact-sequence data for a succession of quotient modules supplies the component
+relation consumed by the regular-reduction Hilbert-series argument. -/
+noncomputable def SuccessiveDegreeOneReductionComponentExactSequences.toComponentsRelation
+    {K : Type u} {n : ℕ} {C : Fin (n + 1) → Type v}
+    [Field K] [∀ i, AddCommGroup (C i)] [∀ i, Module K (C i)]
+    {𝒞 : ∀ i, ℕ → Submodule K (C i)}
+    (h : SuccessiveDegreeOneReductionComponentExactSequences K n C 𝒞) :
+    SuccessiveLinearReductionComponentsRelation
+      (𝒞 0) (𝒞 ⟨n, by omega⟩) n where
+  hilbertFunctions i d := Module.finrank K (𝒞 ⟨min i n, by omega⟩ d)
+  initial d := by rfl
+  final d := by
+    have hindex : (⟨min n n, by omega⟩ : Fin (n + 1)) = ⟨n, by omega⟩ :=
+      Fin.ext (by simp)
+    rw [hindex]
+  reductions := h.toFinrankRelations
 
 /-- Successive one-step finrank recurrences, starting from equation (1), construct the exact
 denominator relation for the final reduction. -/

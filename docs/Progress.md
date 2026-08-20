@@ -253,3 +253,7 @@
   mechanically yields the one-step component-finrank recurrence. This removes the numerical
   derivation from the remaining regular-sequence bridge; only construction of the concrete
   graded exact sequences from the paper's AG/CM hypotheses remains.
+- Added `SuccessiveDegreeOneReductionComponentExactSequences`: an indexed chain of these exact
+  sequences, with a different quotient carrier permitted at every step, now constructs the
+  complete successive-reduction component relation automatically. The regular-sequence bridge
+  is therefore reduced to supplying the concrete exact sequences themselves.

@@ -248,6 +248,10 @@ development state; the current integration outcome is recorded at the end.
     exact-sequence interface with an injective multiplication map and explicit cokernel
     equivalence. Its `toFinrankRelation` theorem derives the local Hilbert-function recurrence,
     closing the generic numerical step from the homogeneous regular-sequence exact sequence.
+72. Added `SuccessiveDegreeOneReductionComponentExactSequences`: an indexed family of the
+    degreewise exact sequences, permitting a different carrier for every quotient module, now
+    derives the full `SuccessiveLinearReductionComponentsRelation` consumed by the strongest
+    graded rank endpoint.
 
 ### Integration outcome
 
