@@ -221,3 +221,7 @@
 - Added transport to a named degree-two graded piece. Given `U * U = Q`, Lean constructs
   `U × U → Q`, proves its symmetric-square map surjective, and states the rank theorem for the
   original functional on `Q`; no abstract multiplication map remains in this endpoint.
+- Closed the remaining standard-graded product-equality bridge. For internal homogeneous
+  components `𝒜`, the predicate `DegreeTwoGeneratedByDegreeOne 𝒜` states the paper's
+  surjectivity of `R₁ ⊗ R₁ → R₂`; Lean derives `R₁ * R₁ = R₂` and a direct graded Theorem 4.3
+  endpoint using `ell : R₂ → K`.

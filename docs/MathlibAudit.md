@@ -27,6 +27,9 @@ checked in compiling scratch files before use.
 - `Submodule.mulMap'` canonically linearizes multiplication of two algebra submodules into their
   product submodule, and `Submodule.mulMap'_surjective` proves it is onto; this supplies the
   standard-graded degree-two generation bridge for `U * U`.
+- `SetLike.GradedMonoid` supplies homogeneous multiplication for internal component submodules;
+  combined with `Submodule.mul_le`, it places `R₁ * R₁` inside `R₂`, while surjectivity of the
+  degree-two tensor multiplication proves the reverse inclusion.
 - Hausdorff compactness and density APIs, used for the Euclidean perturbation
   from a point outside the compact real image into the dense good-fiber locus.
 - Analyticity of multivariate-polynomial evaluation, analytic uniqueness on

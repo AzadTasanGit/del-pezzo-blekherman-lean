@@ -133,6 +133,9 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
   and both structural multiplication hypotheses are therefore discharged internally.
 - an explicit equality `U * U = Q` transports this multiplication to a named degree-two piece
   `Q`; the resulting endpoint accepts the paper's original functional `ell : Q → K` directly.
+- for an internal multiplicative grading `𝒜`, Lean constructs the canonical map
+  `𝒜 1 × 𝒜 1 → 𝒜 2`. The paper's exact degree-two standard-graded consequence—surjectivity of
+  its tensor lift—proves `𝒜 1 * 𝒜 1 = 𝒜 2` and supplies the strongest graded rank endpoint.
 
 ## `LinearAlgebra/NonrealPairInertia.lean` and `Fiber/RealInertia.lean`
 

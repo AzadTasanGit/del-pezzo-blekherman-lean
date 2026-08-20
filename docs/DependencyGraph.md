@@ -26,6 +26,11 @@ commutative coordinate algebra + degree-one submodule R1
   -> surjective tensor multiplication onto R1 * R1
   -> surjective symmetric-square multiplication
 
+internal multiplicative grading + surjective R1 tensor R1 -> R2
+  -> canonical graded multiplication R1 x R1 -> R2
+  -> R1 * R1 = R2
+  -> surjective standard-graded multiplication Sym²(R1) -> R2
+
 one-dimensional socle + perfect Gorenstein multiplication pairing
   -> zero degree-one annihilator
   + J defined canonically as span(W * R1)
@@ -35,8 +40,9 @@ one-dimensional socle + perfect Gorenstein multiplication pairing
   -> ambient multiplication descends through R1/W in both arguments
   -> ell descends to the quotient socle R2/J
   -> the original ambient Hankel form factors through these constructed maps
-  + identify R2 with the canonical product submodule R1 * R1
-  -> the standard-graded multiplication Sym²(R1) -> R2 is surjective
+  + standard-graded degree-two generation
+  -> identify R2 with the canonical product submodule R1 * R1
+  -> the multiplication Sym²(R1) -> R2 is surjective
   + ell is nonzero on R2
   -> the original ambient Hankel form is nonzero
   + the specific induced socle functional is nonzero

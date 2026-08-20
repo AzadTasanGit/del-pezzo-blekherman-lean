@@ -218,6 +218,10 @@ development state; the current integration outcome is recorded at the end.
     an exact-kernel/rank endpoint using the original functional `ell : Q → K`. The remaining
     standard-graded bridge is now the explicit equality itself, not an abstract surjectivity
     hypothesis.
+65. Discharged that product equality from the paper's standard-graded degree-two generation.
+    For an internal multiplicative grading, constructed `R₁ × R₁ → R₂`, defined the precise
+    generation predicate as surjectivity of its tensor lift, proved `R₁ * R₁ = R₂`, and obtained
+    a direct pointwise-parameter kernel/rank endpoint for the original functional on `R₂`.
 
 ### Integration outcome
 
