@@ -45,6 +45,9 @@ SOS cone is closed and identifies its dual with the positive-semidefinite Hankel
 It derives degree-one separation from genuine Zariski density in the spectrum of the reduced
 coordinate ring; the coordinate basis and Gram map stay internal, so no Gram representation,
 Gram-kernel, or supplied closedness assumption appears in its public interface. The
-Hilbert-numerator proof of degree `c+2` and the remaining five geometric parts remain.
+concrete point-evaluation branch and exclusive evaluation/basepoint-free-kernel dichotomy of
+Theorem 1.1(ii) are also proved without a supplied Gram-kernel or abstract dichotomy. Extracting
+regular parameters from that kernel, the Hilbert-numerator proof of degree `c+2`, and the
+remaining geometric conclusions still remain.
 See `docs/CompletionPlan.md` for the authoritative critical path and
 `docs/FormalizationStatus.md` for the detailed inventory.

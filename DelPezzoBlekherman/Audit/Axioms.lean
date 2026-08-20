@@ -297,3 +297,7 @@ import DelPezzoBlekherman.Convexity.ConditionalSeparation
 #print axioms DelPezzoBlekherman.gradedDegreeOneEvaluations_separate_of_zariskiDense
 #print axioms DelPezzoBlekherman.dualCone_gradedSOSCone_eq_psdHankel
 #print axioms DelPezzoBlekherman.theorem1_1_i
+#print axioms DelPezzoBlekherman.gradedHankelMap_injective_of_degreeTwoGeneratedByDegreeOne
+#print axioms DelPezzoBlekherman.gradedHankel_extreme_of_functional_extreme
+#print axioms DelPezzoBlekherman.theorem1_1_ii_pointEvaluation
+#print axioms DelPezzoBlekherman.theorem1_1_ii_dichotomy
