@@ -51,9 +51,10 @@ paper's indefinite-form argument now excludes every complex basepoint whose degr
 evaluation has real rank two, and the native Gorenstein theorem supplies the kernel dimension
 and Hankel rank once regular parameters have been selected. The actual successive regular
 quotients now derive the Artinian Hilbert function `(1,c,1)` and total length `c+2` directly from
-the literal Hilbert series. A basis-free origin-fiber theorem consequently proves generic degree
-`c+2` under flatness, with no H-vector or free-basis certificate. Identifying the native Proj
-points, extracting the regular parameters, deriving the standard CM-over-hsop flatness theorem,
-and completing the reduced-fiber and topological conclusions still remain.
+the literal Hilbert series. A local lifting theorem derives freeness at the parameter origin from
+the regular sequence, so the basis-free origin-fiber theorem proves generic degree `c+2` without
+flatness, local/global freeness, an H-vector certificate, or a free-basis certificate in its public
+signature. Identifying the native Proj points, extracting the regular parameters from the
+basepoint-free Hankel kernel, and completing the reduced-fiber and topological conclusions remain.
 See `docs/CompletionPlan.md` for the authoritative critical path and
 `docs/FormalizationStatus.md` for the detailed inventory.

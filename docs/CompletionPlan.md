@@ -71,9 +71,9 @@ signature.
 
 | Milestone | Owner | Exact next boundary | Acceptance condition | State |
 |---|---|---|---|---|
-| 1. Native algebraic boundary | Sol High | Prove that the finite parameter extension is flat from the paper's Cohen--Macaulay/regular-hsop hypotheses. | The finite-surjective and degree-`c+2` declarations expose none of the four algebra certificates listed above and flatness is derived rather than assumed. | Actual regular quotient Hilbert function and total dimension `c+2` are complete; basis-free generic rank `c+2` is complete under the single remaining native flatness input |
+| 1. Native algebraic boundary | Sol High | Derive the actual parameter quotient and generic degree from regular degree-one parameters and the literal Hilbert equation. | The finite-surjective and degree-`c+2` declarations expose none of the four algebra certificates, flatness/local freeness, or a chosen basis. | complete: quotient length `c+2`, origin-stalk freeness from regularity, and basis-free generic rank all compile |
 | 2. Concrete SOS and Hankel layer | Terra Medium | Instantiate `kernel_face_criterion` and the real/complex point-evaluation arguments for the concrete graded multiplication. | `theorem1_1_i`, the evaluation branch, the real-point dichotomy, and the rank-two complex-basepoint exclusion compile with no Gram-kernel or abstract-dichotomy input. | complete: the concrete part (i), real dichotomy, and paper's indefinite-form exclusion of nonreal rank-two evaluations compile |
-| 3. Kernel morphism and reduced fibers | Terra Medium; Sol High for a recorded blocker | Instantiate the proved real-locus kernel correspondence for a native complex Proj point type, extract a regular hsop from the complex-basepoint-free kernel, derive flatness, connect it to `projectiveAevalOfRadical`, and construct the reduced-fiber data. | `theorem1_1_ii` and `theorem1_1_iii` compile without an H-vector/free-basis certificate, assumed flatness, or supplied fiber data. | active: complex linear-algebra exclusion, the real/nonreal projective dichotomy, native kernel rank, actual reduction length, and basis-free generic degree are complete; native Proj-point instantiation, regular-parameter selection, flatness, and reduced-fiber specialization remain |
+| 3. Kernel morphism and reduced fibers | Terra Medium; Sol High for a recorded blocker | Instantiate the proved real-locus kernel correspondence for a native complex Proj point type, extract a regular hsop from the complex-basepoint-free kernel, connect it to `projectiveAevalOfRadical`, and construct the reduced-fiber data. | `theorem1_1_ii` and `theorem1_1_iii` compile without an H-vector/free-basis certificate, assumed flatness/local freeness, or supplied fiber data. | active: complex linear-algebra exclusion, real/nonreal projective dichotomy, native kernel rank, actual reduction length, local freeness, and basis-free generic degree are complete; native Proj-point instantiation, regular-parameter selection, and reduced-fiber specialization remain |
 | 4. Fiber classifications and topology | Terra Medium | Identify the concrete evaluation form with `ComplexBlockFamily`; prove relation-kernel nonnegativity and block non-isotropy; instantiate the pair bound and both reciprocal classifications. Prove ordinary evaluation continuity and identify the real coordinate-ring source with `X(ℝ)` compatibly with projective evaluation. | `theorem1_1_iv`, `theorem1_1_v`, and every premise required by the concrete SOS-length theorem compile without block or continuity assumptions. | queued |
 | 5. Final composition | Sol High review, Terra Medium integration | Add `theorem1_1_i` through `theorem1_1_vi`, compose them in `theorem1_1`, and reconcile every status document and audit entry. | All conditions in “Definition of done” hold. | queued |
 
@@ -153,10 +153,18 @@ signature.
 `DelPezzoBlekherman/Algebra/NativeParameterRank.lean`, `Algebra/GenericFiber.lean`, and
 `Geometry/Proj/KernelFiber.lean` additionally provide:
 
-- `genericRank_eq_degreeOneParameterIdeal_quotient_of_flat`, which identifies the basis-free
-  generic rank with the actual parameter-origin fiber for a finite flat extension;
-- `genericRank_eq_add_two_of_flat`, which combines this with the literal Hilbert calculation to
-  prove generic rank `c+2`, without a chosen module basis or project-specific certificate;
+- `finrank_fiber_eq_finrank_of_free_atPrime`, which equates generic rank with the dimension of a
+  prime fiber using freeness only at that prime;
+- `Module.free_of_isRegular_of_span_eq_maximalIdeal`, which lifts freeness backwards through a
+  regular sequence spanning a local ring's maximal ideal;
+- `degreeOneParameter_free_at_origin_of_isRegular`, which applies that lemma at the polynomial
+  parameter-space origin;
+- `genericRank_eq_degreeOneParameterIdeal_quotient_of_free_at_origin`, which identifies the
+  parameter-origin fiber with the actual parameter quotient;
+- `genericRank_eq_degreeOneParameterIdeal_quotient_of_isRegular` and `genericRank_eq_add_two`,
+  which derive local freeness internally and prove generic rank `c+2` without flatness, an assumed
+  free stalk, a chosen module basis, or a project-specific certificate. The older local-free and
+  flat declarations remain implementation-level wrappers;
 
 - `Module.exists_nonzero_free_away_and_finrank_eq`, which proves that a finite module over a
   Noetherian domain becomes free after inverting one nonzero element, with localized rank equal
@@ -170,10 +178,10 @@ signature.
   endpoint.
 
 The internal construction of old interfaces in a proof is permitted; exposing one in a final
-signature is not. The numerical degree half of the old finite-Proj bridge is now complete under
-flatness. The remaining algebra task is the standard Cohen--Macaulay implication that a finite
-coordinate ring over its polynomial hsop subring is flat. A global polynomial-module basis is
-not needed for the degree, finiteness, or surjectivity.
+signature is not. The numerical degree half of the old finite-Proj bridge is now complete: local
+freeness is derived from the regular sequence and then consumed internally. Flatness, supplied
+local/global freeness, and a global polynomial-module basis are not needed for degree, finiteness,
+or surjectivity.
 
 ## Task handoff format
 
@@ -311,27 +319,18 @@ series, and proves
 
 `Algebra/NativeParameterRank.lean` then implements the successful origin-fiber route. It proves
 that the kernel of constant coefficient is the polynomial irrelevant ideal, identifies its map
-with the actual parameter ideal, uses `Ideal.finrank_fiber_eq_finrank`, and concludes
-`genericRank_eq_add_two_of_flat`. This computes the basis-free generic rank as `c+2`; no global
-free basis, H-vector certificate, exact-sequence certificate, or asserted rank is accepted.
+with the actual parameter ideal, and proves a generic-rank/fiber equality from freeness at one
+prime. It then localizes the regular parameter sequence and applies
+`Module.free_quotSMulTop_iff_free` backwards to derive that freeness internally. The final
+`genericRank_eq_add_two` computes the basis-free generic rank as `c+2`; no flatness, assumed local
+or global freeness, free basis, H-vector certificate, exact-sequence certificate, or asserted rank
+is accepted. The unmerged Cohen--Macaulay stack is therefore not required for this bridge.
 
-**Remaining exact blocker: flatness.** The only extra algebraic hypothesis in the new generic
-rank theorem is
-
-```lean
-let f := degreeOneParameterAevalHom 𝒞 parameters
-letI := f.toRingHom.toAlgebra
-Module.Flat (MvPolynomial (Fin (m + 1)) K) C
-```
-
-For the paper's Cohen--Macaulay coordinate ring and regular homogeneous system of parameters,
-this is the standard maximal-Cohen--Macaulay-over-a-regular-ring implication. It has not yet been
-derived in the current Mathlib API. This assumption is mathematically native, but it must be
-eliminated before the final public `theorem1_1_iii` signature. The next algebra task is therefore
-a focused theorem deriving this flatness (or an equivalent local freeness/projectivity result)
-from the paper-level CM/AG and regular-hsop setup. The unmerged CM PR provides definitions and
-regular-sequence quotient results but, as previously audited, not this finite hsop flatness
-theorem itself.
+**Remaining exact blocker: native geometric instantiation.** The next missing result must turn a
+basepoint-free extreme Hankel kernel for the paper's coordinate ring into the regular hsop used by
+the algebra theorem and the concrete finite Proj morphism. After that, the reduced-fiber open and
+evaluation isomorphism must be specialized to this morphism. This is a geometric integration gap,
+not a missing freeness or multiplicity theorem.
 
 The concrete SOS cone task was completed while this algebraic route was being isolated: no Gram
 map, Gram-kernel criterion, or numerical degree assumption appears in its public theorem.

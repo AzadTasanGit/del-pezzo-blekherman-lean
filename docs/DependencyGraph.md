@@ -27,7 +27,7 @@ literal Hilbert equation
   -> concrete successive quotient short exact sequences
   -> Artinian parameter-quotient Hilbert function (1,c,1,0,...)
   -> total parameter-quotient dimension c+2
-  + finite flat parameter extension
+  + finite parameter extension and regular parameters
   -> origin-fiber dimension = basis-free generic Module.finrank
   -> generic degree c+2
 
@@ -218,10 +218,10 @@ proper subspace of the Hankel radical
    and algebraic independence of the hsop gives surjectivity, without a basis or supplied
    `RingHom.Finite`. The actual regular parameter quotient and its successive degreewise exact
    sequences are now constructed, its Hilbert function is proved to be `(1,c,1)`, and its total
-   dimension is `c+2`. The origin-fiber theorem identifies this with the basis-free generic rank
-   under `Module.Flat`, so the numerical degree is checked without a basis. The remaining
-   algebraic bridge is precisely to derive flatness of the finite parameter extension from the
-   paper's Cohen--Macaulay/arithmetically Gorenstein and regular-hsop hypotheses.
+   dimension is `c+2`. The local lifting theorem derives origin-stalk freeness from regularity,
+   and the origin-fiber theorem identifies that dimension with the basis-free generic rank;
+   global `Module.Flat` is only a wrapper. The remaining bridge is geometric: select the regular
+   hsop from the native Hankel kernel and instantiate the associated Proj morphism.
 2. Identify the paper's concrete projective fiber evaluation maps with the checked abstract
    degree-one hyperplane, degree-two multiplication, and normalized complex-block models.
 3. Prove that a nonreal projective point gives a real-rank-two (hence surjective) complex
