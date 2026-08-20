@@ -14,6 +14,7 @@ Lean interfaces is recorded without silently weakening the main theorem.
 - `DelPezzoBlekherman/` -- Lean modules grouped by mathematical subject.
 - `DelPezzoBlekherman/Audit/Axioms.lean` -- explicit axiom audit (kept outside the root import
   because it prints audit results).
+- `docs/CompletionPlan.md` -- authoritative critical path and final public-signature policy.
 - `docs/FormalizationStatus.md` -- PDF-to-Lean statement correspondence and remaining gaps.
 - `docs/DependencyGraph.md` -- checked theorem chain and outstanding bridges.
 - `docs/Progress.md` and `docs/VerifiedExtensionProgress.md` -- chronological work logs.
@@ -34,7 +35,9 @@ The root build reaches every theorem module. The audit module is checked separat
 
 ## Current status
 
-The codebase contains no `sorry`, `admit`, or custom `axiom` declarations. Several final results
-are deliberately stated behind explicit interfaces where current mathlib does not yet provide the
-Hilbert-series/Cohen--Macaulay/Gorenstein infrastructure needed to derive them directly from the
-paper's geometric hypotheses. See `docs/FormalizationStatus.md` for the exact boundary.
+The codebase contains no `sorry`, `admit`, or custom `axiom` declarations. The first native
+algebra boundary now states the regular Artinian reduction and perfect socle multiplication
+directly and proves the paper's Hankel kernel/rank conclusion from that predicate and the literal
+Hilbert equation. The finite-Proj/degree bridge and the concrete geometric instantiations remain.
+See `docs/CompletionPlan.md` for the authoritative critical path and
+`docs/FormalizationStatus.md` for the detailed inventory.

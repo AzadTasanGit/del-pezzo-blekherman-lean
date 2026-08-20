@@ -168,21 +168,23 @@ proper subspace of the Hankel radical
 
 ## Remaining upstream bridges
 
-1. Construct the equation-(1) component Hilbert-series certificate and instantiate the checked
-   indexed degreewise short exact-sequence interface for the chosen linear regular sequence
-   (which now proves every component-finrank recurrence, assembles their iteration, and feeds the
-   complete graded rank endpoint through explicit initial-component identifications), together with the
-   reduction-to-canonical-quotient socle equivalence, the socle-annihilator property, and the
-   stronger `(1,c,1)` homogeneous free-basis certificate directly from the PDF's arithmetically
-   Gorenstein, Cohen--Macaulay, Hilbert-series, regular-sequence, and homogeneous-system-of-
-   parameters hypotheses. Iteration of those local recurrences, the denominator relation, the
-   Artinian component certificate, and the full numerator Hilbert function are checked; once the
-   equivalence and annihilator input are supplied, the one-dimensional quotient socle certificate,
-   ambient descent, and perfect-Hankel conclusion are automatic.
+1. The native rank arrow is now checked:
+   ```text
+   literal Hilbert equation
+   + regular degree-one parameters and Artinian quotient
+   + one-dimensional degree-two socle and perfect degree-one multiplication
+   -> hankelKernel_eq_parameterSpan_and_rank_of_arithmeticallyGorenstein
+   -> ker Q_ell = span(parameters), rank Q_ell = c
+   ```
+   This public arrow exposes none of the older Hilbert, exact-sequence, or parameter-product
+   certificates. The remaining algebraic bridge is the finite surjective Proj morphism of degree
+   `c+2` without `HVectorOneCOneFreeCertificate`; use the finite-Proj/Hilbert-function argument
+   before attempting a global free-module basis.
 2. Identify the paper's concrete projective fiber evaluation maps with the checked abstract
    degree-one hyperplane, degree-two multiplication, and normalized complex-block models.
-3. Prove the SOS cone itself is closed (the checked dual theorem already handles its closure) and
-   instantiate the compact strictly positive base for the concrete Hankel dual cone.
+3. Instantiate the already checked closed SOS-cone theorem for the coordinate ring using the
+   compact normalized-square and Zariski-density argument, and instantiate the compact strictly
+   positive base for the concrete Hankel dual cone.
 4. Prove the full extreme-ray dichotomy inside the concrete Hankel subspace, using the checked PSD
    kernel-face and rank-one evaluation extremality results.
 5. Supply ordinary evaluation continuity and identify real algebra points of the coordinate ring
@@ -194,3 +196,5 @@ proper subspace of the Hankel radical
 Once these bridges are supplied, the checked arrows above compose to the separation and SOS-length
 conclusions of Theorem 1.1. None of these bridges is declared as an axiom in the completed
 modules.
+
+`docs/CompletionPlan.md` is authoritative for ordering, target public signatures, and escalation.

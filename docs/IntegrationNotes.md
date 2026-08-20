@@ -465,4 +465,4 @@ input, feeds directly into the fully-real/one-conjugate-pair closed-point dichot
 - realize the constructed real algebra points with nonzero degree-one generator vector as points
   of `X(ℝ)`, prove compatibility with projective evaluation, and establish ordinary evaluation
   continuity;
-- complete the final theorem-chain audit after workspace access is restored.
+- complete the final theorem-chain audit after the native geometric bridges are closed.
