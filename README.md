@@ -1,3 +1,6 @@
+This is a Lean 4 formalization project in real algebraic geometry. It develops a machine-checked version of a separation theorem for positive-semidefinite (PSD) and sums-of-squares (SOS) cones, extending a classical phenomenon from isolated cases to an infinite class of algebraic varieties, including maximal Del Pezzo varieties.
+
+
 # Del Pezzo--Blekherman formalization
 
 Lean 4 formalization of results from *A Del Pezzo--Blekherman Separation Theorem for
